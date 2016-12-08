@@ -1,0 +1,206 @@
+/*===  ACCORDION ===*/
+.accordionCommon{
+	.panel{
+		margin-bottom: 30px;
+		border: none;
+	}
+	.panel-heading{
+		display: block;
+		padding: 15px 20px;
+		font-weight: 600;
+		color: #ffffff;
+		font-size: 14px;
+		text-transform: uppercase;
+		position: relative;
+		background-color: $primary-color;
+		span.iconBlock{
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			background-color: #ffffff;
+			color: #000;
+			display: inline-block;
+			float: right;
+			&.iconTransparent{
+				background-color: transparent;
+				box-shadow: none;
+				color: #ffffff;
+			}
+		}
+	}
+	span.separator{
+		width: 1px;
+		height: 100%;
+		background-color: rgba(255,255,255, 0.25);
+		position: absolute;
+		top: 0;
+		right: 60px;
+	}
+	.panel-body{
+		padding: 30px;
+		background-color: #f8f8f8;
+		border-top: none !important;
+		p{
+			margin-bottom: 35px;
+			&:last-child{
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+/*===  TABS ===*/
+.tabCommon{
+	.tab-bottom{
+		@include add-border(5px, $border-light, bottom);
+		margin-top: -4px;
+		margin-bottom: 25px;
+	}
+	.nav{
+		border:none;
+		li{
+			display: inline-block;
+			float: none;
+			margin-right: 15px;
+			@include tablet {
+				margin-right: 25px;
+			}
+			a{
+				padding:0;
+				height:  35px;
+				font-size: 13px;
+    			font-weight: 700;
+				color: $secondary-color;
+				text-transform: uppercase;
+				display: inline-block;
+				background-color:transparent;
+				@include border-radius(0);
+				@include tablet {
+					height:  40px;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+	.nav-tabs>li.active>a, 
+	.nav-tabs>li.active>a:focus, 
+	.nav-tabs>li.active>a:hover{
+	    background-color:transparent;
+		color: $secondary-color;
+	    border: none;
+	    @include add-border(5px, $primary-color, bottom);
+	}
+	.nav-tabs>li>a,
+	.nav-tabs>li>a:hover,
+	.nav-tabs>li>a:focus {
+	    border: none;
+	}
+}
+
+/*===  SELECT DROPDOWN ===*/
+.dropGeneral .sbHolder, .dropGeneral .sbSelector{
+	width: 100% !important;
+	height: 50px !important;
+}
+
+.dropGeneral .sbHolder{
+	background-color: transparent;
+	border: 2px solid #dedede;
+	margin: 0 0 30px 0;
+	border-radius: 0;
+}
+.dropGeneral.border-color .sbHolder{
+	border-color: $primary-color;
+}
+.dropGeneral.grayBg .sbHolder{
+	background-color: #f8f8f8;
+	border-color: #f8f8f8;
+}
+.dropGeneral.colorBg .sbHolder{
+	background-color: $primary-color;
+	border-color: $primary-color;
+}
+.dropGeneral.border-color .sbHolder{
+	border-color: $primary-color;
+}
+.dropGeneral.roundOne .sbHolder{
+	border-radius: 7px;
+}
+.dropGeneral.roundTwo .sbHolder{
+	border-radius: 25px;
+}
+.dropGeneral.roundThree .sbHolder{
+	border-radius: 3px;
+}
+
+.dropGeneral .sbSelector:link, 
+.dropGeneral .sbSelector:visited, 
+.dropGeneral .sbSelector:hover{
+	color: #000 !important;
+	text-transform: capitalize;
+}
+.dropGeneral.colorBg .sbSelector:link, 
+.dropGeneral.colorBg .sbSelector:visited, 
+.dropGeneral.colorBg .sbSelector:hover{
+	color: #ffffff !important;
+	text-transform: capitalize;
+}
+.dropGeneral .sbSelector{
+	font-family: 'Open Sans', sans-serif;
+	color: #666666;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 48px;
+	text-indent: 20px;
+}
+.dropGeneral.colorBg .sbSelector{
+	color: #ffffff;
+}
+.dropGeneral .sbToggle {
+	background: rgba(0, 0, 0, 0) url("../img/arrows/drop-down-arrow.jpg") no-repeat scroll 0 0;
+	height: 6px;
+	right: 20px;
+	top: 21px;
+	width: 11px;
+}
+.dropGeneral.colorBg .sbToggle{
+	background: rgba(0, 0, 0, 0) url("../img/arrows/down-arrow-white.png") no-repeat scroll 0 0;
+}
+.dropGeneral.grayBg .sbToggle{
+	background: rgba(0, 0, 0, 0) url("../img/arrows/down-arrow-gray.png") no-repeat scroll 0 0;
+}
+
+.dropGeneral .sbOptions{
+	width: 100% !important;
+	background-color: #ffffff;
+	border: 1px solid #dedede;
+	right: 0 !important;
+	border-radius: 4px;
+	z-index: 100;
+}
+.dropGeneral .sbOptions li{
+	padding: 4px;
+	border-bottom: 1px solid #dedede;
+}
+.dropGeneral .sbOptions li:last-child{
+	border-bottom: none;
+}
+.dropGeneral .sbOptions a{
+	color: #969696 !important;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	padding: 11px 17px;
+	text-transform: capitalize;
+}
+.dropGeneral .sbOptions a:hover{
+    color: $primary-color !important;
+    background-color: transparent;
+}
+.dropGeneral.addCircle .sbHolder{
+	border-radius: 25px;
+}
+/*===  ALERT ===*/
+.alert-link{
+	text-decoration:underline !important;
+}
