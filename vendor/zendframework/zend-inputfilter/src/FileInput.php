@@ -70,7 +70,7 @@ class FileInput extends Input
                 $value = $filter->filter($value);
             } else {
                 // Multi file input (multiple attribute set)
-                $newValue = array();
+                $newValue = [];
                 foreach ($value as $fileData) {
                     if (is_array($fileData) && isset($fileData['tmp_name'])) {
                         $newValue[] = $filter->filter($fileData);
@@ -91,7 +91,7 @@ class FileInput extends Input
      */
     public function isEmptyFile($rawValue)
     {
-        if (!is_array($rawValue)) {
+        if (! is_array($rawValue)) {
             return true;
         }
 
@@ -113,16 +113,28 @@ class FileInput extends Input
     public function isValid($context = null)
     {
         $rawValue        = $this->getRawValue();
+        $hasValue        = $this->hasValue();
         $empty           = $this->isEmptyFile($rawValue);
         $required        = $this->isRequired();
         $allowEmpty      = $this->allowEmpty();
         $continueIfEmpty = $this->continueIfEmpty();
 
+        if (! $hasValue && ! $required) {
+            return true;
+        }
+
+        if (! $hasValue && $required && ! $this->hasFallback()) {
+            if ($this->errorMessage === null) {
+                $this->errorMessage = $this->prepareRequiredValidationFailureMessage();
+            }
+            return false;
+        }
+
         if ($empty && ! $required && ! $continueIfEmpty) {
             return true;
         }
 
-        if ($empty && $required && $allowEmpty && ! $continueIfEmpty) {
+        if ($empty && $allowEmpty && ! $continueIfEmpty) {
             return true;
         }
 
@@ -130,24 +142,24 @@ class FileInput extends Input
         $validator = $this->getValidatorChain();
         //$value   = $this->getValue(); // Do not run the filters yet for File uploads (see getValue())
 
-        if (!is_array($rawValue)) {
+        if (! is_array($rawValue)) {
             // This can happen in an AJAX POST, where the input comes across as a string
-            $rawValue = array(
+            $rawValue = [
                 'tmp_name' => $rawValue,
                 'name'     => $rawValue,
                 'size'     => 0,
                 'type'     => '',
                 'error'    => UPLOAD_ERR_NO_FILE,
-            );
+            ];
         }
         if (is_array($rawValue) && isset($rawValue['tmp_name'])) {
             // Single file input
             $this->isValid = $validator->isValid($rawValue, $context);
-        } elseif (is_array($rawValue) && !empty($rawValue) && isset($rawValue[0]['tmp_name'])) {
+        } elseif (is_array($rawValue) && isset($rawValue[0]['tmp_name'])) {
             // Multi file input (multiple attribute set)
             $this->isValid = true;
             foreach ($rawValue as $value) {
-                if (!$validator->isValid($value, $context)) {
+                if (! $validator->isValid($value, $context)) {
                     $this->isValid = false;
                     break; // Do not continue processing files if validation fails
                 }
@@ -162,7 +174,7 @@ class FileInput extends Input
      */
     protected function injectUploadValidator()
     {
-        if (!$this->autoPrependUploadValidator) {
+        if (! $this->autoPrependUploadValidator) {
             return;
         }
         $chain = $this->getValidatorChain();
@@ -176,11 +188,13 @@ class FileInput extends Input
             return;
         }
 
-        $chain->prependByName('fileuploadfile', array(), true);
+        $chain->prependByName('fileuploadfile', [], true);
         $this->autoPrependUploadValidator = false;
     }
 
     /**
+     * @deprecated 2.4.8 See note on parent class. Removal does not affect this class.
+     *
      * No-op, NotEmpty validator does not apply for FileInputs.
      * See also: BaseInputFilter::isValid()
      *

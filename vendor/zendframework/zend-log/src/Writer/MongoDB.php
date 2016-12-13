@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-log for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -47,7 +46,7 @@ class MongoDB extends AbstractWriter
      * @param array $saveOptions
      * @throws Exception\InvalidArgumentException
      */
-    public function __construct($mongo, $database = null, $collection = null, array $saveOptions = array())
+    public function __construct($mongo, $database = null, $collection = null, array $saveOptions = [])
     {
         if ($mongo instanceof Traversable) {
             // Configuration may be multi-dimensional due to save options
@@ -55,7 +54,7 @@ class MongoDB extends AbstractWriter
         }
         if (is_array($mongo)) {
             parent::__construct($mongo);
-            $saveOptions = isset($mongo['save_options']) ? $mongo['save_options'] : array();
+            $saveOptions = isset($mongo['save_options']) ? $mongo['save_options'] : [];
             $collection  = isset($mongo['collection']) ? $mongo['collection'] : null;
             $database    = isset($mongo['database']) ? $mongo['database'] : null;
             $mongo       = isset($mongo['mongo']) ? $mongo['mongo'] : null;

@@ -42,7 +42,7 @@ abstract class AbstractAccept implements HeaderInterface
      *
      * @var stdClass[]
      */
-    protected $fieldValueParts = array();
+    protected $fieldValueParts = [];
 
     protected $regexAddType;
 
@@ -107,7 +107,7 @@ abstract class AbstractAccept implements HeaderInterface
             );
         }
 
-        $out = array();
+        $out = [];
         foreach ($values[0] as $value) {
             $value = trim($value);
             $out[] = $this->parseFieldValuePart($value);
@@ -138,7 +138,7 @@ abstract class AbstractAccept implements HeaderInterface
         $format = '*';
         $subtype = '*';
 
-        return (object) array(
+        return (object) [
                             'typeString' => trim($fieldValuePart),
                             'type'       => $type,
                             'subtype'    => $subtype,
@@ -147,7 +147,7 @@ abstract class AbstractAccept implements HeaderInterface
                             'priority'   => isset($params['q']) ? $params['q'] : 1,
                             'params'     => $params,
                             'raw'        => trim($raw)
-        );
+        ];
     }
 
     /**
@@ -158,7 +158,7 @@ abstract class AbstractAccept implements HeaderInterface
      */
     protected function getParametersFromFieldValuePart($fieldValuePart)
     {
-        $params = array();
+        $params = [];
         if ((($pos = strpos($fieldValuePart, ';')) !== false)) {
             preg_match_all('/(?:[^;"]|"(?:[^\\\"]|\\\.)*")+/', $fieldValuePart, $paramsStrings);
 
@@ -170,7 +170,12 @@ abstract class AbstractAccept implements HeaderInterface
             foreach ($paramsStrings as $param) {
                 $explode = explode('=', $param, 2);
 
-                $value = trim($explode[1]);
+                if (count($explode) === 2) {
+                    $value = trim($explode[1]);
+                } else {
+                    $value = null;
+                }
+
                 if (isset($value[0]) && $value[0] == '"' && substr($value, -1) == '"') {
                     $value = substr(substr($value, 1), 0, -1);
                 }
@@ -190,15 +195,15 @@ abstract class AbstractAccept implements HeaderInterface
      */
     public function getFieldValue($values = null)
     {
-        if (!$values) {
+        if ($values === null) {
             return $this->getFieldValue($this->fieldValueParts);
         }
 
-        $strings = array();
+        $strings = [];
         foreach ($values as $value) {
             $params = $value->params;
-            array_walk($params, array($this, 'assembleAcceptParam'));
-            $strings[] = implode(';', array($value->typeString) + $params);
+            array_walk($params, [$this, 'assembleAcceptParam']);
+            $strings[] = implode(';', [$value->typeString] + $params);
         }
 
         return implode(', ', $strings);
@@ -214,8 +219,8 @@ abstract class AbstractAccept implements HeaderInterface
      */
     protected function assembleAcceptParam(&$value, $key)
     {
-        $separators = array('(', ')', '<', '>', '@', ',', ';', ':',
-                            '/', '[', ']', '?', '=', '{', '}',  ' ',  "\t");
+        $separators = ['(', ')', '<', '>', '@', ',', ';', ':',
+                            '/', '[', ']', '?', '=', '{', '}',  ' ',  "\t"];
 
         $escaped = preg_replace_callback(
             '/[[:cntrl:]"\\\\]/', // escape cntrl, ", \
@@ -226,9 +231,9 @@ abstract class AbstractAccept implements HeaderInterface
         );
 
         if ($escaped == $value && !array_intersect(str_split($value), $separators)) {
-            $value = $key . '=' . $value;
+            $value = $key . ($value ? '=' . $value : '');
         } else {
-            $value = $key . '="' . $escaped . '"';
+            $value = $key . ($value ? '="' . $escaped . '"' : '');
         }
 
         return $value;
@@ -243,7 +248,7 @@ abstract class AbstractAccept implements HeaderInterface
      * @throws Exception\InvalidArgumentException
      * @return Accept
      */
-    protected function addType($type, $priority = 1, array $params = array())
+    protected function addType($type, $priority = 1, array $params = [])
     {
         if (!preg_match($this->regexAddType, $type)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -264,11 +269,11 @@ abstract class AbstractAccept implements HeaderInterface
         }
 
         if ($priority != 1) {
-            $params = array('q' => sprintf('%01.1f', $priority)) + $params;
+            $params = ['q' => sprintf('%01.1f', $priority)] + $params;
         }
 
         $assembledString = $this->getFieldValue(
-            array((object) array('typeString' => $type, 'params' => $params))
+            [(object) ['typeString' => $type, 'params' => $params]]
         );
 
         $value = $this->parseFieldValuePart($assembledString);
@@ -414,7 +419,7 @@ abstract class AbstractAccept implements HeaderInterface
             }
 
             // Asterisks
-            $values = array('type', 'subtype', 'format');
+            $values = ['type', 'subtype', 'format'];
             foreach ($values as $value) {
                 if ($a->$value == '*' && $b->$value != '*') {
                     return 1;

@@ -2,8 +2,8 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-log for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -33,7 +33,7 @@ class Mail extends AbstractWriter
      *
      * @var array
      */
-    protected $eventsToMail = array();
+    protected $eventsToMail = [];
 
     /**
      * Mail message instance to use
@@ -54,7 +54,7 @@ class Mail extends AbstractWriter
      *
      * @var array
      */
-    protected $numEntriesPerPriority = array();
+    protected $numEntriesPerPriority = [];
 
     /**
      * Subject prepend text.
@@ -89,6 +89,9 @@ class Mail extends AbstractWriter
             $mail      = isset($mail['mail']) ? $mail['mail'] : null;
             if (is_array($mail)) {
                 $mail = MailMessageFactory::getInstance($mail);
+            }
+            if (is_array($transport)) {
+                $transport = Transport\Factory::create($transport);
             }
         }
 
@@ -212,7 +215,7 @@ class Mail extends AbstractWriter
      */
     protected function getFormattedNumEntriesPerPriority()
     {
-        $strings = array();
+        $strings = [];
 
         foreach ($this->numEntriesPerPriority as $priority => $numEntries) {
             $strings[] = "{$priority}={$numEntries}";

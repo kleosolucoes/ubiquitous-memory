@@ -1,11 +1,11 @@
 <?php
 /**
  * Zend Framework (http://framework.zend.com/)
-*
-* @link      http://github.com/zendframework/zf2 for the canonical source repository
-* @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
-* @license   http://framework.zend.com/license/new-bsd New BSD License
-*/
+ *
+ * @link      http://github.com/zendframework/zend-log for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
 
 namespace Zend\Log\Processor;
 
@@ -35,7 +35,7 @@ class RequestId implements ProcessorInterface
         }
 
         if (!isset($event['extra'])) {
-            $event['extra'] = array();
+            $event['extra'] = [];
         }
 
         $event['extra']['requestId'] = $this->getIdentifier();
@@ -53,9 +53,7 @@ class RequestId implements ProcessorInterface
             return $this->identifier;
         }
 
-        $requestTime = (PHP_VERSION_ID >= 50400)
-                     ? $_SERVER['REQUEST_TIME_FLOAT']
-                     : $_SERVER['REQUEST_TIME'];
+        $requestTime = $_SERVER['REQUEST_TIME_FLOAT'];
 
         if (Console::isConsole()) {
             $this->identifier = md5($requestTime);

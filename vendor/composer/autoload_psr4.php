@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Zend\\XmlRpc\\' => array($vendorDir . '/zendframework/zend-xmlrpc/src'),
     'Zend\\View\\' => array($vendorDir . '/zendframework/zend-view/src'),
     'Zend\\Version\\' => array($vendorDir . '/zendframework/zend-version/src'),
@@ -20,6 +21,7 @@ return array(
     'Zend\\ServiceManager\\' => array($vendorDir . '/zendframework/zend-servicemanager/src'),
     'Zend\\Server\\' => array($vendorDir . '/zendframework/zend-server/src'),
     'Zend\\Serializer\\' => array($vendorDir . '/zendframework/zend-serializer/src'),
+    'Zend\\Psr7Bridge\\' => array($vendorDir . '/zendframework/zend-psr7bridge/src'),
     'Zend\\ProgressBar\\' => array($vendorDir . '/zendframework/zend-progressbar/src'),
     'Zend\\Permissions\\Rbac\\' => array($vendorDir . '/zendframework/zend-permissions-rbac/src'),
     'Zend\\Permissions\\Acl\\' => array($vendorDir . '/zendframework/zend-permissions-acl/src'),
@@ -36,6 +38,7 @@ return array(
     'Zend\\Json\\' => array($vendorDir . '/zendframework/zend-json/src'),
     'Zend\\InputFilter\\' => array($vendorDir . '/zendframework/zend-inputfilter/src'),
     'Zend\\I18n\\' => array($vendorDir . '/zendframework/zend-i18n/src'),
+    'Zend\\Hydrator\\' => array($vendorDir . '/zendframework/zend-hydrator/src'),
     'Zend\\Http\\' => array($vendorDir . '/zendframework/zend-http/src'),
     'Zend\\Form\\' => array($vendorDir . '/zendframework/zend-form/src'),
     'Zend\\Filter\\' => array($vendorDir . '/zendframework/zend-filter/src'),
@@ -44,6 +47,7 @@ return array(
     'Zend\\EventManager\\' => array($vendorDir . '/zendframework/zend-eventmanager/src'),
     'Zend\\Escaper\\' => array($vendorDir . '/zendframework/zend-escaper/src'),
     'Zend\\Dom\\' => array($vendorDir . '/zendframework/zend-dom/src'),
+    'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
     'Zend\\Di\\' => array($vendorDir . '/zendframework/zend-di/src'),
     'Zend\\Debug\\' => array($vendorDir . '/zendframework/zend-debug/src'),
     'Zend\\Db\\' => array($vendorDir . '/zendframework/zend-db/src'),
@@ -55,5 +59,10 @@ return array(
     'Zend\\Cache\\' => array($vendorDir . '/zendframework/zend-cache/src'),
     'Zend\\Barcode\\' => array($vendorDir . '/zendframework/zend-barcode/src'),
     'Zend\\Authentication\\' => array($vendorDir . '/zendframework/zend-authentication/src'),
+    'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
 );

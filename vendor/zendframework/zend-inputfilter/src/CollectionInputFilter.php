@@ -13,30 +13,30 @@ use Traversable;
 
 class CollectionInputFilter extends InputFilter
 {
-    /*
+    /**
      * @var bool
      */
     protected $isRequired = false;
 
-    /*
+    /**
      * @var int
      */
     protected $count = null;
 
-    /*
-     * @var array
+    /**
+     * @var array[]
      */
-    protected $collectionValues = array();
+    protected $collectionValues = [];
 
-    /*
-     * @var array
+    /**
+     * @var array[]
      */
-    protected $collectionRawValues = array();
+    protected $collectionRawValues = [];
 
-    /*
+    /**
      * @var array
      */
-    protected $collectionMessages = array();
+    protected $collectionMessages = [];
 
     /**
      * @var BaseInputFilter
@@ -56,11 +56,11 @@ class CollectionInputFilter extends InputFilter
             $inputFilter = $this->getFactory()->createInputFilter($inputFilter);
         }
 
-        if (!$inputFilter instanceof BaseInputFilter) {
+        if (! $inputFilter instanceof BaseInputFilter) {
             throw new Exception\RuntimeException(sprintf(
                 '%s expects an instance of %s; received "%s"',
                 __METHOD__,
-                'Zend\InputFilter\BaseInputFilter',
+                BaseInputFilter::class,
                 (is_object($inputFilter) ? get_class($inputFilter) : gettype($inputFilter))
             ));
         }
@@ -139,7 +139,29 @@ class CollectionInputFilter extends InputFilter
      */
     public function setData($data)
     {
+        if (! (is_array($data) || $data instanceof Traversable)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                '%s expects an array or Traversable collection; invalid collection of type %s provided',
+                __METHOD__,
+                is_object($data) ? get_class($data) : gettype($data)
+            ));
+        }
+
+        foreach ($data as $item) {
+            if (is_array($item) || $item instanceof Traversable) {
+                continue;
+            }
+
+            throw new Exception\InvalidArgumentException(sprintf(
+                '%s expects each item in a collection to be an array or Traversable; '
+                . 'invalid item in collection of type %s detected',
+                __METHOD__,
+                is_object($item) ? get_class($item) : gettype($item)
+            ));
+        }
+
         $this->data = $data;
+        return $this;
     }
 
     /**
@@ -156,13 +178,11 @@ class CollectionInputFilter extends InputFilter
             }
         }
 
-        if (is_scalar($this->data)
-            || count($this->data) < $this->getCount()
-        ) {
+        if (count($this->data) < $this->getCount()) {
             $valid = false;
         }
 
-        if (empty($this->data) || is_scalar($this->data)) {
+        if (! $this->data) {
             $this->clearValues();
             $this->clearRawValues();
 
@@ -170,9 +190,6 @@ class CollectionInputFilter extends InputFilter
         }
 
         foreach ($this->data as $key => $data) {
-            if (!is_array($data)) {
-                $data = array();
-            }
             $inputFilter->setData($data);
 
             if (null !== $this->validationGroup) {
@@ -226,21 +243,21 @@ class CollectionInputFilter extends InputFilter
     /**
      * Clear collectionValues
      *
-     * @access public
+     * @return array[]
      */
     public function clearValues()
     {
-        return $this->collectionValues = array();
+        return $this->collectionValues = [];
     }
 
     /**
      * Clear collectionRawValues
      *
-     * @access public
+     * @return array[]
      */
     public function clearRawValues()
     {
-        return $this->collectionRawValues = array();
+        return $this->collectionRawValues = [];
     }
 
     /**
@@ -249,5 +266,31 @@ class CollectionInputFilter extends InputFilter
     public function getMessages()
     {
         return $this->collectionMessages;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnknown()
+    {
+        if (! $this->data) {
+            throw new Exception\RuntimeException(sprintf(
+                '%s: no data present!',
+                __METHOD__
+            ));
+        }
+
+        $inputFilter = $this->getInputFilter();
+
+        $unknownInputs = [];
+        foreach ($this->data as $key => $data) {
+            $inputFilter->setData($data);
+
+            if ($unknown = $inputFilter->getUnknown()) {
+                $unknownInputs[$key] = $unknown;
+            }
+        }
+
+        return $unknownInputs;
     }
 }

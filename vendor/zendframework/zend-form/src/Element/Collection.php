@@ -195,11 +195,6 @@ class Collection extends Fieldset
             ));
         }
 
-        // Can't do anything with empty data
-        if (empty($data)) {
-            return;
-        }
-
         if (!$this->allowRemove && count($data) < $this->count) {
             throw new Exception\DomainException(sprintf(
                 'There are fewer elements than specified in the collection (%s). Either set the allow_remove option '
@@ -209,7 +204,7 @@ class Collection extends Fieldset
         }
 
         // Check to see if elements have been replaced or removed
-        $toRemove = array();
+        $toRemove = [];
         foreach ($this as $name => $elementOrFieldset) {
             if (isset($data[$name])) {
                 continue;
@@ -266,16 +261,18 @@ class Collection extends Fieldset
      * Bind values to the object
      *
      * @param array $values
+     * @param array $validationGroup
+     *
      * @return array|mixed|void
      */
-    public function bindValues(array $values = array())
+    public function bindValues(array $values = [], array $validationGroup = null)
     {
-        $collection = array();
+        $collection = [];
         foreach ($values as $name => $value) {
             $element = $this->get($name);
 
             if ($element instanceof FieldsetInterface) {
-                $collection[] = $element->bindValues($value);
+                $collection[] = $element->bindValues($value, $validationGroup);
             } else {
                 $collection[] = $value;
             }
@@ -512,10 +509,10 @@ class Collection extends Fieldset
         }
 
         if (!is_array($this->object)) {
-            return array();
+            return [];
         }
 
-        $values = array();
+        $values = [];
 
         foreach ($this->object as $key => $value) {
             // If a hydrator is provided, our work here is done

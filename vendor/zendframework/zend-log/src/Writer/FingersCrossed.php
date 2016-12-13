@@ -2,20 +2,21 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-log for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 namespace Zend\Log\Writer;
 
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
 use Zend\Log\Exception;
 use Zend\Log\Filter\FilterInterface;
 use Zend\Log\Filter\Priority as PriorityFilter;
 use Zend\Log\Formatter\FormatterInterface;
 use Zend\Log\Logger;
 use Zend\Log\WriterPluginManager;
+use Zend\ServiceManager\ServiceManager;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Buffers all events until the strategy determines to flush them.
@@ -58,7 +59,7 @@ class FingersCrossed extends AbstractWriter
      *
      * @var array
      */
-    protected $buffer = array();
+    protected $buffer = [];
 
     /**
      * Constructor
@@ -130,7 +131,7 @@ class FingersCrossed extends AbstractWriter
     public function getWriterPluginManager()
     {
         if (null === $this->writerPlugins) {
-            $this->setWriterPluginManager(new WriterPluginManager());
+            $this->setWriterPluginManager(new WriterPluginManager(new ServiceManager()));
         }
         return $this->writerPlugins;
     }

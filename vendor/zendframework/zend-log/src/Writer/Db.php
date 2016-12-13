@@ -2,8 +2,8 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-log for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -139,8 +139,8 @@ class Db extends AbstractWriter
     {
         $keys = array_keys($fields);
         $sql = 'INSERT INTO ' . $db->platform->quoteIdentifier($tableName) . ' (' .
-            implode(",", array_map(array($db->platform, 'quoteIdentifier'), $keys)) . ') VALUES (' .
-            implode(",", array_map(array($db->driver, 'formatParameterName'), $keys)) . ')';
+            implode(",", array_map([$db->platform, 'quoteIdentifier'], $keys)) . ') VALUES (' .
+            implode(",", array_map([$db->driver, 'formatParameterName'], $keys)) . ')';
 
         return $sql;
     }
@@ -155,10 +155,10 @@ class Db extends AbstractWriter
     protected function mapEventIntoColumn(array $event, array $columnMap = null)
     {
         if (empty($event)) {
-            return array();
+            return [];
         }
 
-        $data = array();
+        $data = [];
         foreach ($event as $name => $value) {
             if (is_array($value)) {
                 foreach ($value as $key => $subvalue) {
@@ -187,10 +187,10 @@ class Db extends AbstractWriter
     protected function eventIntoColumn(array $event)
     {
         if (empty($event)) {
-            return array();
+            return [];
         }
 
-        $data = array();
+        $data = [];
         foreach ($event as $name => $value) {
             if (is_array($value)) {
                 foreach ($value as $key => $subvalue) {
