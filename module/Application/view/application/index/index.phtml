@@ -1,6 +1,180 @@
-<div class="main-wrapper">
+<!-- HEADER -->
+<div class="header clearfix">
 
-   
+    <!-- TOPBAR -->
+    <div class="topBar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 hidden-sm hidden-xs">
+                    <ul class="list-inline">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                        <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <ul class="list-inline pull-right top-right">
+                        <li class="account-login"><span><a data-toggle="modal" href='.login-modal'>Log in</a><small>or</small><a data-toggle="modal" href='#signup'>Create an account</a></span></li>
+                        <li class="searchBox">
+                            <a href="#"><i class="fa fa-search"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <span class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search…" aria-describedby="basic-addon2">
+                                        <button type="submit" class="input-group-addon">Submit</button>
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown cart-dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i>$0</a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>Item(s) in your cart</li>
+                                <li>
+                                    <a href="single-product.html">
+                                        <div class="media">
+                                            <img class="media-left media-object" src="img/home/cart-items/cart-item-01.jpg" alt="cart-Image">
+                                            <div class="media-body">
+                                                <h5 class="media-heading">INCIDIDUNT UT <br><span>2 X $199</span></h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="single-product.html">
+                                        <div class="media">
+                                            <img class="media-left media-object" src="img/home/cart-items/cart-item-01.jpg" alt="cart-Image">
+                                            <div class="media-body">
+                                                <h5 class="media-heading">INCIDIDUNT UT <br><span>2 X $199</span></h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="btn-group" role="group" aria-label="...">
+                                        <button type="button" class="btn btn-default" onclick="location.href = 'cart-page.html';">Shopping Cart</button>
+                                        <button type="button" class="btn btn-default" onclick="location.href = 'checkout-step-1.html';">Checkout</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>    
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-main navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index-v1.html"><img src="img/logo.png" alt="logo"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">            
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown active">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                            <li class="active"><a href="index-v1.html">Home Default</a></li>
+                            <li><a href="index-v2.html">Home Classic</a></li>
+                            <li><a href="index-v3.html">Home Deals</a></li>
+                            <li><a href="index-v4.html">Home Mega</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown megaDropMenu">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="true" aria-expanded="false">Shop</b></a>
+                        <ul class="dropdown-menu row">
+                            <li class="col-sm-3 col-xs-12">
+                                <ul class="list-unstyled">
+                                    <li>Products Grid View</li>
+                                    <li><a href="product-grid-left-sidebar.html">Products Sidebar Left</a></li>
+                                    <li><a href="product-grid-right-sidebar.html">Products Sidebar Right</a></li>
+                                    <li><a href="product-grid-3-col-filter.html">Products 3 Columns V1</a></li>
+                                    <li><a href="product-grid-3-col.html">Products 3 Columns V2</a></li>
+                                    <li><a href="product-grid-4-col.html">Products 4 Columns</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-sm-3 col-xs-12">
+                                <ul class="list-unstyled">
+                                    <li>Products List View</li>
+                                    <li><a href="product-list-left-sidebar.html">Products Sidebar Left</a></li>
+                                    <li><a href="product-list-right-sidebar.html">Products Sidebar Right</a></li>
+                                    <li class="listHeading">Others</li>
+                                    <li><a href="single-product.html">Single Product</a></li>
+                                    <li><a href="cart-page.html">Cart Page</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-sm-3 col-xs-12">
+                                <ul class="list-unstyled">
+                                    <li>Checkout</li>
+                                    <li><a href="checkout-step-1.html">Step 1 - Address</a></li>
+                                    <li><a href="checkout-step-2.html">Step 2 - Shipping</a></li>
+                                    <li><a href="checkout-step-3.html">Step 3 - Payment</a></li>
+                                    <li><a href="checkout-step-4.html">Step 4 - Payment</a></li>
+                                    <li><a href="checkout-complete.html">Order Complete</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-sm-3 col-xs-12">
+                                <a href="#" class="menu-photo"><img src="img/menu-photo.jpg" alt="menu-img"></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">pages</a>
+                        <ul class="dropdown-menu dropdown-menu-left">
+                            <li><a href="about-us.html">About Us</a></li>
+                            <li><a href="signup.html">Register</a></li>
+                            <li><a href="signup-login.html">Register or Login</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="lost-password.html">Password Recovery</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms-and-conditions.html">Terms &amp; Conditions</a></li>
+                            <li><a href="404.html">404 Not Found</a></li>
+                            <li><a href="short-code.html">Short Code</a></li>
+                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">blog</a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="blog-right-sidebar.html">Right Sidebar</a></li>
+                            <li><a href="blog-left-sidebar.html">Left Sidebar</a></li>
+                            <li><a href="blog-fullwidth.html">Full Width</a></li>
+                            <li><a href="blog-single-fullwidth.html">Single Post</a></li>
+                            <li><a href="blog-single-right-sidebar.html">Single Right Sidebar</a></li>
+                            <li><a href="blog-single-left-sidebar.html">Single Left Sidebar</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account</a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="account-dashboard.html">Dashboard</a></li>
+                            <li><a href="account-profile.html">Profile</a></li>
+                            <li><a href="account-all-orders.html">All Orders</a></li>
+                            <li><a href="account-single-order.html">Single Order</a></li>
+                            <li><a href="account-wishlist.html">Wishlist</a></li>
+                            <li><a href="account-address.html">Address</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+
+</div>
+
+<div class="main-wrapper">
 
     <!-- BANNER -->
     <div class="bannercontainer bannerV1">
@@ -412,7 +586,149 @@
         </div>
     </section>
 
-   
 
-  
+
+
+</div>
+
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="owl-carousel partnersLogoSlider">
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-01.png" alt="partner-img">
+                        </div>
+                    </div>  
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-02.png" alt="partner-img">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-03.png" alt="partner-img">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-04.png" alt="partner-img">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-05.png" alt="partner-img">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-01.png" alt="partner-img">
+                        </div>
+                    </div>  
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-02.png" alt="partner-img">
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="partnersLogo clearfix">
+                            <img src="img/home/partners/partner-03.png" alt="partner-img">
+                        </div>
+                    </div>
+                </div>              
+            </div>
+        </div>
+    </div>
+</section>
+<!-- FOOTER -->
+<div class="footer clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2 col-xs-12">
+                <div class="footerLink">
+                    <h5>Accessories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Body care </a></li>
+                        <li><a href="#">Chambray </a></li>
+                        <li><a href="#">Floral </a></li>
+                        <li><a href="#">Rejuvination </a></li>
+                        <li><a href="#">Shaving </a></li>
+                        <li><a href="#">Toilette </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12">
+                <div class="footerLink">
+                    <h5>BRANDS</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Barbour </a></li>
+                        <li><a href="#">Brioni </a></li>
+                        <li><a href="#">Oliver Spencer</a></li>
+                        <li><a href="#">Belstaff</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12">
+                <div class="footerLink">
+                    <h5>Accessories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Body care </a></li>
+                        <li><a href="#">Chambray </a></li>
+                        <li><a href="#">Floral </a></li>
+                        <li><a href="#">Rejuvination </a></li>
+                        <li><a href="#">Shaving </a></li>
+                        <li><a href="#">Toilette </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12">
+                <div class="footerLink">
+                    <h5>Get in Touch</h5>
+                    <ul class="list-unstyled">
+                        <li>Call us at (555)-555-5555</li>
+                        <li><a href="mailto:support@iamabdus.com">support@iamabdus.com</a></li>
+                    </ul>
+                    <ul class="list-inline">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                        <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="newsletter clearfix">
+                    <h4>Newsletter</h4>
+                    <h3>Sign up now</h3>
+                    <p>Enter your email address and get notified about new products. We hate spam!</p>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="your email address" aria-describedby="basic-addon2">
+                        <a href="#" class="input-group-addon" id="basic-addon2">go <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- COPY RIGHT -->
+<div class="copyRight clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-xs-12">
+                <p>&copy; 2016 Copyright Bigbag Store Bootstrap Template by <a target="_blank" href="http://www.iamabdus.com/">Abdus</a>.</p>
+            </div>
+            <div class="col-sm-5 col-xs-12">
+                <ul class="list-inline">
+                    <li><img src="img/home/footer/card1.png"></li>
+                    <li><img src="img/home/footer/card2.png"></li>
+                    <li><img src="img/home/footer/card3.png"></li>
+                    <li><img src="img/home/footer/card4.png"></li>
+                </ul> 
+            </div>
+        </div>
+    </div>
 </div>

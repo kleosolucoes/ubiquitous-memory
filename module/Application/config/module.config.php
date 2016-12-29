@@ -91,6 +91,7 @@ return array(
         'exception_template' => 'error/index',
         'template_map' => array(
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/adm' => __DIR__ . '/../view/layout/layout-adm.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'application/adm/empresa' => __DIR__ . '/../view/application/adm/empresa.phtml',
             'application/adm/empresa-cadastro' => __DIR__ . '/../view/application/adm/empresa-cadastro.phtml',

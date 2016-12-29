@@ -12,19 +12,25 @@ use Zend\View\Helper\AbstractHelper;
 class InputFormulario extends AbstractHelper {
 
     private $label;
+    private $tamanhoGrid;
 
     public function __construct() {
         
     }
 
-    public function __invoke($label) {
+    public function __invoke($label, $tamanhoGrid = null) {
         $this->setLabel($label);
+        $this->setTamanhoGrid($tamanhoGrid);
         return $this->renderHtml();
     }
 
     public function renderHtml() {
         $html = '';
-        $html .= '<div class="form-group">';
+        $tamanhoGrid = 12;
+        if ($this->getTamanhoGrid()) {
+            $tamanhoGrid = $this->getTamanhoGrid();
+        }
+        $html .= '<div class="form-group col-lg-' . $tamanhoGrid . '">';
         $html .= '<label for="">' . $this->getLabel() . '</label>';
         $html .= '<input type="text" class="form-control" id="">';
         $html .= '</div>';
@@ -37,6 +43,14 @@ class InputFormulario extends AbstractHelper {
 
     function setLabel($label) {
         $this->label = $label;
+    }
+
+    function getTamanhoGrid() {
+        return $this->tamanhoGrid;
+    }
+
+    function setTamanhoGrid($tamanhoGrid) {
+        $this->tamanhoGrid = $tamanhoGrid;
     }
 
 }

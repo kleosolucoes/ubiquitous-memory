@@ -20,6 +20,7 @@ class AdmController extends AbstractActionController {
     }
 
     public function empresaCadastroAction() {
+        $this->setLayoutAdm();
         return new ViewModel();
     }
 
@@ -28,7 +29,15 @@ class AdmController extends AbstractActionController {
     }
 
     public function empresasAction() {
+        $this->setLayoutAdm();
         return new ViewModel();
+    }
+
+    /**
+     * Seta o layout da administracao
+     */
+    private function setLayoutAdm() {
+        $this->layout('layout/adm');
     }
 
 }
