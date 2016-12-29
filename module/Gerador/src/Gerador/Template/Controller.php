@@ -12,31 +12,33 @@ use Application\Entity\${CtrlName};
  */ 
 class ${CtrlName}Controller extends AbstractActionController
 {
-	
-	/**             
-	 * @var Doctrine\ORM\EntityManager
-	 */                
-	protected $em;
+    
+    private $_doctrineORMEntityManager;
 
-	public function setEntityManager(EntityManager $em)
-    {
-        $this->em = $em; 
-        $conn = $em->getConnection();
-		$conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+    /**
+     * Contrutor sobrecarregado com os serviços de ORM
+     */
+    public function __construct(EntityManager $doctrineORMEntityManager = null) {
+
+        if (!is_null($doctrineORMEntityManager)) {
+            $this->_doctrineORMEntityManager = $doctrineORMEntityManager;
+        }
     }
-
-	public function getEntityManager()
-	{
-		if (null === $this->em) {
-			$this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-		}
-		return $this->em;
-	}
+    
+      /**
+     * Recupera ORM
+     * @return EntityManager
+     */
+    public function getDoctrineORMEntityManager() {
+        return $this->_doctrineORMEntityManager;
+    }
+	
 
 	public function indexAction()
 	{
 		return new ViewModel(array(
-			'${ctrlNames}' => $this->getEntityManager()->getRepository('Application\Entity\${CtrlName}')->findAll()
+//			'${ctrlNames}' => $this->getDoctrineORMEntityManager()->getRepository('Application\Entity\${CtrlName}')->findAll()
+                        '${ctrlNames}' => null
 			)
 		);
 	}
@@ -51,7 +53,7 @@ class ${CtrlName}Controller extends AbstractActionController
 		}
 
 		try {
-			$${ctrlName} = $this->getEntityManager()->find('Application\Entity\${CtrlName}', $id);
+			$${ctrlName} = $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id);
 		}
 		catch (\Exception $ex) {
 			return $this->redirect()->toRoute('${ctrlName}', array(
@@ -78,8 +80,8 @@ class ${CtrlName}Controller extends AbstractActionController
 
 			if ($form->isValid()) {
 				$${ctrlName}->populate($form->getData());
-				$this->getEntityManager()->persist($${ctrlName});
-				$this->getEntityManager()->flush();
+				$this->getDoctrineORMEntityManager()->persist($${ctrlName});
+				$this->getDoctrineORMEntityManager()->flush();
 
 				return $this->redirect()->toRoute('${ctrlName}');
 			}
@@ -98,7 +100,7 @@ class ${CtrlName}Controller extends AbstractActionController
 		}
 
 		try {
-			$${ctrlName} = $this->getEntityManager()->find('Application\Entity\${CtrlName}', $id);
+			$${ctrlName} = $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id);
 		}
 		catch (\Exception $ex) {
 			return $this->redirect()->toRoute('${ctrlName}', array(
@@ -116,7 +118,7 @@ class ${CtrlName}Controller extends AbstractActionController
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$this->getEntityManager()->flush();
+				$this->getDoctrineORMEntityManager()->flush();
 
 				return $this->redirect()->toRoute('${ctrlName}');
 			}
@@ -141,10 +143,10 @@ class ${CtrlName}Controller extends AbstractActionController
 
 			if ($del == 'Sim') {
 				$id = (int) $request->getPost('id');
-				$${ctrlName} = $this->getEntityManager()->find('Application\Entity\${CtrlName}', $id);
+				$${ctrlName} = $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id);
 				if ($${ctrlName}) {
-					$this->getEntityManager()->remove($${ctrlName});
-					$this->getEntityManager()->flush();
+					$this->getDoctrineORMEntityManager()->remove($${ctrlName});
+					$this->getDoctrineORMEntityManager()->flush();
 				}
 			}
 
@@ -153,7 +155,7 @@ class ${CtrlName}Controller extends AbstractActionController
 
 		return array(
 			'id'    => $id,
-			'${ctrlName}' => $this->getEntityManager()->find('Application\Entity\${CtrlName}', $id)
+			'${ctrlName}' => $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id)
 			);
 	}
 }

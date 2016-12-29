@@ -7,7 +7,7 @@
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Zf2CodeGenerator;
+namespace Gerador;
 
 class Module
 {
