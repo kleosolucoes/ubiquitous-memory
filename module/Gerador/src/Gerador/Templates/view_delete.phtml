@@ -1,9 +1,9 @@
 <?php
 /**             
- * Caminho module/Modulo/view/modulo/${ctrlName}/delete.phtml
+ * Caminho module/${nomeModulo}/view/${nomeModulo}/${nomeTabela}/delete.phtml
  */
 
-$title = 'Apagar ${CtrlName}';
+$title = 'Apagar ${nomeTabela}';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -11,14 +11,14 @@ $this->headTitle($title);
 <p>Tem certeza que deseja apagar o registro?
 </p>
 <?php
-$url = $this->url('${ctrlName}', array(
+$url = $this->url('${nomeTabela}', array(
 	'action' => 'delete',
 	'id'     => $this->${id},
 	));
 	?>
 	<form action="<?php echo $url; ?>" method="post">
 		<div>
-			<input type="hidden" name="id" value="<?php echo (int) $${ctrlName}->${id}; ?>" />
+			<input type="hidden" name="id" value="<?php echo (int) $${nomeVariavel}->${id}; ?>" />
 			<input type="submit" name="del" value="Sim" />
 			<input type="submit" name="del" value="Não" />
 		</div>

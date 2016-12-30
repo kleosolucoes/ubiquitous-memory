@@ -56,6 +56,16 @@ return array(
                     ),
                 ),
             ),
+            'Pessoa' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/pessoa',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Pessoa',
+                        'action' => 'list',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -81,6 +91,9 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => IndexController::class,
             'Application\Controller\Adm' => AdmController::class
+        ),
+        'factories' => array(
+            'Application\Controller\Pessoa' => 'Application\Controller\Factory\PessoaControllerFactory',
         ),
     ),
     'view_manager' => array(

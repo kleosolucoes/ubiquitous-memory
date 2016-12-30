@@ -1,16 +1,16 @@
 <?php
-namespace Application\Controller;
+namespace ${nomeModulo}\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Form\${CtrlName}Form;   
+use ${nomeModulo}\Form\${nomeTabela}Form;   
 use Doctrine\ORM\EntityManager;   
-use Application\Entity\${CtrlName};          
+use ${nomeModulo}\Entity\${nomeTabela};          
          
 /**             
- * Caminho module/Modulo/src/Modulo/Controller/${CtrlName}Controller.php
+ * Caminho module/${nomeModulo}/src/${nomeModulo}/Controller/${nomeTabela}Controller.php
  */ 
-class ${CtrlName}Controller extends AbstractActionController
+class ${nomeTabela}Controller extends AbstractActionController
 {
     
     private $_doctrineORMEntityManager;
@@ -34,93 +34,93 @@ class ${CtrlName}Controller extends AbstractActionController
     }
 	
 
-	public function indexAction()
+	public function listAction()
 	{
 		return new ViewModel(array(
-//			'${ctrlNames}' => $this->getDoctrineORMEntityManager()->getRepository('Application\Entity\${CtrlName}')->findAll()
-                        '${ctrlNames}' => null
+//			'${nomeNoPlural}' => $this->getDoctrineORMEntityManager()->getRepository('${nomeModulo}\Entity\${nomeTabela}')->findAll()
+                        '${nomeNoPlural}' => null
 			)
 		);
 	}
 
-	public function viewAction()
+	public function recoverAction()
 	{
 		$id = (int) $this->params()->fromRoute('id', 0);
 		if (!$id) {			
-			return $this->redirect()->toRoute('${ctrlName}', array(
+			return $this->redirect()->toRoute('${nomeTabela}', array(
 				'action' => 'index'
 				));
 		}
 
 		try {
-			$${ctrlName} = $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id);
+			$${nomeVariavel} = $this->getDoctrineORMEntityManager()->find('${nomeModulo}\Entity\${nomeTabela}', $id);
 		}
 		catch (\Exception $ex) {
-			return $this->redirect()->toRoute('${ctrlName}', array(
+			return $this->redirect()->toRoute('${nomeTabela}', array(
 				'action' => 'index'
 				));
 		}	
 
 		return array(
 			'id' => $id,
-			'${ctrlName}' => $${ctrlName},
+			'${nomeVariavel}' => $${nomeVariavel},
 			);
 	}
 
-	public function addAction()
+	public function createAction()
 	{
-		$form = new ${CtrlName}Form();
+		$form = new ${nomeTabela}Form();
 		$form->get('submit')->setValue('Add');
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
-			$${ctrlName} = new ${CtrlName}();
-			$form->setInputFilter($${ctrlName}->getInputFilter());
+			$${nomeVariavel} = new ${nomeTabela}();
+			$form->setInputFilter($${nomeVariavel}->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$${ctrlName}->populate($form->getData());
-				$this->getDoctrineORMEntityManager()->persist($${ctrlName});
+				$${nomeVariavel}->populate($form->getData());
+				$this->getDoctrineORMEntityManager()->persist($${nomeVariavel});
 				$this->getDoctrineORMEntityManager()->flush();
 
-				return $this->redirect()->toRoute('${ctrlName}');
+				return $this->redirect()->toRoute('${nomeTabela}');
 			}
 		}
 
 		return array('form' => $form);
 	}
 
-	public function editAction()
+	public function updateAction()
 	{
 		$id = (int) $this->params()->fromRoute('id', 0);
 		if (!$id) {
-			return $this->redirect()->toRoute('${ctrlName}', array(
-				'action' => 'add'
+			return $this->redirect()->toRoute('${nomeTabela}', array(
+				'action' => 'create'
 				));
 		}
 
 		try {
-			$${ctrlName} = $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id);
+			$${nomeVariavel} = $this->getDoctrineORMEntityManager()->find('${nomeModulo}\Entity\${nomeTabela}', $id);
 		}
 		catch (\Exception $ex) {
-			return $this->redirect()->toRoute('${ctrlName}', array(
+			return $this->redirect()->toRoute('${nomeTabela}', array(
 				'action' => 'index'
 				));
 		}
 
-		$form  = new ${CtrlName}Form();
-		$form->bind($${ctrlName});
+		$form  = new ${nomeTabela}Form();
+		$form->bind($${nomeVariavel});
 		$form->get('submit')->setAttribute('value', 'Edit');
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
-			$form->setInputFilter($${ctrlName}->getInputFilter());
+			$form->setInputFilter($${nomeVariavel}->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
 				$this->getDoctrineORMEntityManager()->flush();
 
-				return $this->redirect()->toRoute('${ctrlName}');
+				return $this->redirect()->toRoute('${nomeTabela}');
 			}
 		}
 
@@ -134,7 +134,7 @@ class ${CtrlName}Controller extends AbstractActionController
 	{
 		$id = (int) $this->params()->fromRoute('id', 0);
 		if (!$id) {
-			return $this->redirect()->toRoute('${ctrlName}');
+			return $this->redirect()->toRoute('${nomeTabela}');
 		}
 
 		$request = $this->getRequest();
@@ -143,19 +143,19 @@ class ${CtrlName}Controller extends AbstractActionController
 
 			if ($del == 'Sim') {
 				$id = (int) $request->getPost('id');
-				$${ctrlName} = $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id);
-				if ($${ctrlName}) {
-					$this->getDoctrineORMEntityManager()->remove($${ctrlName});
+				$${nomeVariavel} = $this->getDoctrineORMEntityManager()->find('${nomeModulo}\Entity\${nomeTabela}', $id);
+				if ($${nomeVariavel}) {
+					$this->getDoctrineORMEntityManager()->remove($${nomeVariavel});
 					$this->getDoctrineORMEntityManager()->flush();
 				}
 			}
 
-			return $this->redirect()->toRoute('${ctrlName}');
+			return $this->redirect()->toRoute('${nomeTabela}');
 		}
 
 		return array(
 			'id'    => $id,
-			'${ctrlName}' => $this->getDoctrineORMEntityManager()->find('Application\Entity\${CtrlName}', $id)
+			'${nomeVariavel}' => $this->getDoctrineORMEntityManager()->find('${nomeModulo}\Entity\${nomeTabela}', $id)
 			);
 	}
 }

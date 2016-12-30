@@ -1,5 +1,5 @@
 <?php
-namespace Application\Entity;
+namespace ${nomeModulo}\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;

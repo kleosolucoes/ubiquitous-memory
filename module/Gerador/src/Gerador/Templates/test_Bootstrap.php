@@ -1,6 +1,6 @@
 <?php
 
-namespace ${ModuleName}Test;
+namespace ${nomeModulo}Test;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;

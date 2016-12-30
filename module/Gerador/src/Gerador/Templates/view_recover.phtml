@@ -1,0 +1,40 @@
+<?php
+/**             
+ * Caminho module/${nomeModulo}/view/${nomeModulo}/${nomeTabela}/view.phtml
+ */
+
+$title = 'Ver ${nomeTabela}';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class="collapse navbar-collapse">
+	<ul class="nav navbar-nav">
+	    <li>
+	        <a href="<?php echo $this->url('${nomeTabela}', array('action'=>'create'));?>">  
+	            <?php echo $this->translate('Criar novo registro') ?>
+	        </a>
+	    </li>
+	    <li>
+	        <a href="<?php echo $this->url('${nomeTabela}', array('action'=>'delete', 'id' => $this->${id}));?>">  
+	            <?php echo $this->translate('Remover registro') ?>
+	        </a>
+	    </li>
+	    <li>
+	        <a href="<?php echo $this->url('${nomeTabela}', array('action'=>'update', 'id' => $this->${id}));?>"> 
+	            <?php echo $this->translate('Editar registro') ?>
+	        </a>
+	    </li>
+	    <li>
+	        <a href="<?php echo $this->url('${nomeTabela}', array('action'=>'list', 'id' => $this->${id}));?>"> 
+	            <?php echo $this->translate('Listar registros') ?>
+	        </a>
+	    </li>
+	</ul>
+</div>
+<br />
+
+${cpsNames}
+
+
+
+

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace Gerador\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -16,7 +8,11 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController {
 
     public function indexAction() {
-        $this->gerarCodigo();
+        //      $nomeTabela = 'nome da entidade';
+        $nomeModulo = 'Application';
+        $nomeTabela = 'pessoa';
+        $geradoDeCodigo = new Gerador($nomeTabela, $nomeModulo);
+        $geradoDeCodigo->gerarCRUD();
         return new ViewModel();
     }
 
@@ -26,7 +22,6 @@ class IndexController extends AbstractActionController {
         ini_set('opcache.enable', 0);
 
 //        include("db.php");
-
 // RECUPERANDO DADOS E COLOCANDO PRIMEIRA LETRA MAIÚSCULA
         $modulo = 'Application';
         $name = 'Circuito';
@@ -278,8 +273,6 @@ class IndexController extends AbstractActionController {
         if (!empty($_SESSION['error'])) {
             array_unshift($_SESSION['error'], '<strong>Erros gerados para ' . $name . ':</strong>');
         }
-
-        
     }
 
 }

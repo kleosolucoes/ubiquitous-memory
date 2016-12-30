@@ -1,20 +1,20 @@
 <?php 
-namespace Application\Form;
+namespace ${nomeModulo}\Form;
 
 use Zend\Form\Form;
 
 /**             
- * Caminho module/Modulo/src/Modulo/Form/${CtrlName}Form.php
+ * Caminho module/${nomeModulo}/src/${nomeModulo}/Form/${nomeTabela}Form.php
  */
-class ${CtrlName}Form extends Form
+class ${nomeTabela}Form extends Form
 {
 	public function __construct($name = null)
 	{
          // we want to ignore the name passed
-		parent::__construct('${ctrlName}');
+		parent::__construct('${nomeTabela}');
 
 		$this->add(array(
-			'name' => '${id}',
+			'name' => 'id',
 			'type' => 'Hidden',
 			));
 

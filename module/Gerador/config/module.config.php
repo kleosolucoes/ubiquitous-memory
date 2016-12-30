@@ -23,13 +23,9 @@ return array(
     'router' => array(
         'routes' => array(
             'gerador' => array(
-                'type' => 'segment',
+                'type' => 'Literal',
                 'options' => array(
-                    'route' => '/gerador[/][:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
-                    ),
+                    'route' => '/gerador',
                     'defaults' => array(
                         'controller' => 'Gerador\Controller\Index',
                         'action' => 'index',
@@ -39,9 +35,11 @@ return array(
         ),
     ),
     'view_manager' => array(
-        'template_path_stack' => array(
-            'gerador' => __DIR__ . '/../view',
+        'template_map' => array(
             'gerador/index/index' => __DIR__ . '/../view/gerador/index/index.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
         ),
     )
 );
