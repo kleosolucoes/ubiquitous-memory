@@ -14,7 +14,6 @@ class Gerador {
     private $nomeVariavel;
     private $diretorios;
     private $templates;
-    private $mensagens;
 
     /* Diretorios */
 
@@ -230,27 +229,7 @@ class Gerador {
             $this->carregarDiretorios();
         }
         return $this->diretorios;
-    }
-
-    public function gerarEntidades() {
-        $map = '.././vendor/bin/doctrine-module orm:convert-mapping';
-        if (!empty($this->getNomeTabela())) {
-            $map .= ' --filter="' . $this->getNomeTabela() . '"';
-        }
-        $map .= ' --namespace=\'' . $this->getNomeModulo() . '\\Entity\\\' --force --from-database annotation ./module/' . $this->getNomeModulo() . '/src/';
-        if (exec($map)) {
-            $entities = '.././vendor/bin/doctrine-module orm:generate-entities ./module/' . $this->getNomeModulo() . '/src/';
-            if (!empty($this->getNomeTabela())) {
-                $entities .= ' --filter="' . $this->getNomeTabela() . '"';
-            }
-            $entities .= ' --generate-annotations=true --update-entities --extend="' . $this->getNomeModulo() . '\\Model\\BaseEntity"';
-            if (exec($entities)) {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
+    } 
 
     public function gerarRotas() {
         $diretorios = $this->getDiretorios();
@@ -321,15 +300,7 @@ class Gerador {
         $this->templates = $templates;
     }
 
-    private function getMensagens() {
-        return $this->mensagens;
-    }
-
-    private function setMensagens($mensagens) {
-        $this->mensagens = $mensagens;
-    }
-
-    private function getNomeVariavel() {
+       private function getNomeVariavel() {
         return $this->nomeVariavel;
     }
 
