@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ZendXml\\' => array($vendorDir . '/zendframework/zendxml/library'),
+    'ZendDeveloperTools' => array($vendorDir . '/zendframework/zend-developer-tools/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),

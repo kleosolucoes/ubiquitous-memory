@@ -443,5 +443,6 @@ return array(
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'ZendDeveloperTools\\Module' => $vendorDir . '/zendframework/zend-developer-tools/Module.php',
     'Zend\\I18n\\Translator\\Resources' => $vendorDir . '/zendframework/zend-i18n-resources/src/Resources.php',
 );
