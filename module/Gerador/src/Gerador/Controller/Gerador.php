@@ -180,8 +180,24 @@ class Gerador {
         $this->gravarArquivo($caminhoNovoForm, $this->subistituirVariaveisDosTemplates($templates[self::form]));
 
         /* CRIA O ARQUIVO DO VIEW LIST */
-        $caminhoNovoForm = $diretorios[self::view] . '/list.phtml';
-        $this->gravarArquivo($caminhoNovoForm, $this->subistituirVariaveisDosTemplates($templates[self::view_list]));
+        $caminhoNovoViewList = $diretorios[self::view] . '/list.phtml';
+        $this->gravarArquivo($caminhoNovoViewList, $this->subistituirVariaveisDosTemplates($templates[self::view_list]));
+
+        /* CRIA O ARQUIVO DO VIEW CREATE */
+        $caminhoNovoViewCreate = $diretorios[self::view] . '/create.phtml';
+        $this->gravarArquivo($caminhoNovoViewCreate, $this->subistituirVariaveisDosTemplates($templates[self::view_create]));
+
+        /* CRIA O ARQUIVO DO VIEW RECOVER */
+        $caminhoNovoViewRecover = $diretorios[self::view] . '/recover.phtml';
+        $this->gravarArquivo($caminhoNovoViewRecover, $this->subistituirVariaveisDosTemplates($templates[self::view_recover]));
+
+        /* CRIA O ARQUIVO DO VIEW UPDATE */
+        $caminhoNovoViewUpdate = $diretorios[self::view] . '/update.phtml';
+        $this->gravarArquivo($caminhoNovoViewUpdate, $this->subistituirVariaveisDosTemplates($templates[self::view_update]));
+
+        /* CRIA O ARQUIVO DO VIEW DELETE */
+        $caminhoNovoViewDelete = $diretorios[self::view] . '/delete.phtml';
+        $this->gravarArquivo($caminhoNovoViewDelete, $this->subistituirVariaveisDosTemplates($templates[self::view_delete]));
     }
 
     /**

@@ -56,7 +56,7 @@ return array(
                     ),
                 ),
             ),
-            'Pessoa' => array(
+            'pessoa' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/pessoa',

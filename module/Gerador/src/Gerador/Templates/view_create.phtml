@@ -10,7 +10,7 @@ $this->headTitle($title);
 <div class="collapse navbar-collapse">
 	<ul class="nav navbar-nav">
 	    <li>
-	        <a href="<?php echo $this->url('${nomeTabela}', array('action'=>'list'));?>">  
+	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'list'));?>">  
 	            <?php echo $this->translate('Listar registros') ?>
 	        </a>
 	    </li>
@@ -19,7 +19,7 @@ $this->headTitle($title);
 <br />
 
 <?php
-$form->setAttribute('action', $this->url('${nomeTabela}', array('action' => 'create')));
+$form->setAttribute('action', $this->url('${nomeVariavel}', array('action' => 'create')));
 $form->prepare();
 
 echo $this->form()->openTag($form);
