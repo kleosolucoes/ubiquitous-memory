@@ -1,12 +1,14 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
+    "name": "tonoshop.com.br",
+    "description": "To no Shop",
     "license": "BSD-3-Clause",
     "keywords": [
         "framework",
-        "zf2"
+        "zf2",
+        "tonoshop",
+        "shopping"
     ],
-    "homepage": "http://framework.zend.com/",
+    "homepage": "http://www.tonoshop.com.br",
     "require": {
         "php": ">=5.5",
         "zendframework/zendframework": "~2.5",
