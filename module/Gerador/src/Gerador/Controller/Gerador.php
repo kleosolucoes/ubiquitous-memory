@@ -232,6 +232,59 @@ class Gerador {
         return $this->diretorios;
     }
 
+    public function gerarEntidades() {
+        $map = '.././vendor/bin/doctrine-module orm:convert-mapping';
+        if (!empty($this->getNomeTabela())) {
+            $map .= ' --filter="' . $this->getNomeTabela() . '"';
+        }
+        $map .= ' --namespace=\'' . $this->getNomeModulo() . '\\Entity\\\' --force --from-database annotation ./module/' . $this->getNomeModulo() . '/src/';
+        if (exec($map)) {
+            $entities = '.././vendor/bin/doctrine-module orm:generate-entities ./module/' . $this->getNomeModulo() . '/src/';
+            if (!empty($this->getNomeTabela())) {
+                $entities .= ' --filter="' . $this->getNomeTabela() . '"';
+            }
+            $entities .= ' --generate-annotations=true --update-entities --extend="' . $this->getNomeModulo() . '\\Model\\BaseEntity"';
+            if (exec($entities)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public function gerarRotas() {
+        $diretorios = $this->getDiretorios();
+
+        if (self::existsFile($pathModule . '/config/module.config.php')) {
+            $config = str_replace('__DIR__', '"__DIR__"', $this->lerArquivo($diretorios[self::modulo] . '/config/module.config.php'));
+            self::wFile($pathModule . '/config/module.config.php', $config);
+            $config = include $pathModule . '/config/module.config.php';
+        } else {
+            $config = include dirname(__DIR__) . '/generator/templates/module.config.php';
+        }
+        $modulo = end(explode('/', $diretorios[self::modulo]));
+        $config['router']['routes'][$this->getNomeVariavel()] = array(
+            'type' => 'Segment',
+            'options' => array(
+                'route' => '/' . $this->getNomeVariavel() . '[/][:action][/:id]',
+                'constraints' => array(
+                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    'id' => '[0-9]+',
+                ),
+                'defaults' => array(
+                    'controller' => $this->getNomeModulo() . '\Controller\\' . $this->getNomeModulo(),
+                    'action' => 'index',
+                ),
+            ),
+        );
+
+        $config['controllers']['factories'][$diretorios[self::modulo] . '\Controller\\' . $this->getNomeVariavel() . ''] = $this->getNomeModulo() . '\Controller\Factory\\' . $this->getNomeVariavel() . 'ControllerFactory';
+        $config = var_export($config, true);
+        file_put_contents($pathModule . '/config/module.config.php', '<?php return ' . $config . ';');
+        $config = str_replace(array("\\\\", "'__DIR__", "0 =>", "1 =>"), array("\\", "__DIR__ . '", "", ""), file_get_contents($diretorios[self::modulo] . '/config/module.config.php'));
+        file_put_contents($pathModule . '/config/module.config.php', $config);
+    }
+
     private function setDiretorios($diretorios) {
         $this->diretorios = $diretorios;
     }

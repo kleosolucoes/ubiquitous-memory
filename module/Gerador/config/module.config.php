@@ -41,5 +41,27 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
-    )
+    ),
+    # definir e gerenciar serviços
+    'service_manager' => array(
+        'abstract_factories' => array(
+            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
+            'Zend\Log\LoggerAbstractServiceFactory',
+        ),
+    ),
+    # definir driver e classes anotadas para o doctrine
+    'doctrine' => array(
+        'driver' => array(
+            'application_entities' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../../Application/src/Application/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Application\Entity' => 'application_entities'
+                )
+            )
+        ),
+    ),
 );
