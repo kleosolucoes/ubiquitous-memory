@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit1b9cb71caa1a160493bf26fe4c6fd0ca
 {
     public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '34901568a1e26d13dd475cb2c85e0284' => __DIR__ . '/..' . '/zendframework/zend-form/autoload/formElementManagerPolyfill.php',
     );
 
@@ -76,7 +77,10 @@ class ComposerStaticInit1b9cb71caa1a160493bf26fe4c6fd0ca
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Debug\\' => 24,
+            'Symfony\\Component\\Console\\' => 26,
         ),
         'P' => 
         array (
@@ -90,6 +94,7 @@ class ComposerStaticInit1b9cb71caa1a160493bf26fe4c6fd0ca
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Cache\\' => 22,
         ),
     );
 
@@ -312,9 +317,21 @@ class ComposerStaticInit1b9cb71caa1a160493bf26fe4c6fd0ca
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\Debug\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/debug',
+        ),
+        'Symfony\\Component\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/console',
         ),
         'Psr\\Log\\' => 
         array (
@@ -332,6 +349,10 @@ class ComposerStaticInit1b9cb71caa1a160493bf26fe4c6fd0ca
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
+        'Doctrine\\Common\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -347,6 +368,45 @@ class ComposerStaticInit1b9cb71caa1a160493bf26fe4c6fd0ca
             'Prophecy\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
+            ),
+        ),
+        'D' => 
+        array (
+            'Doctrine\\ORM\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/orm/lib',
+            ),
+            'Doctrine\\DBAL\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
+            ),
+            'Doctrine\\Common\\Lexer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
+            ),
+            'Doctrine\\Common\\Inflector\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+            'Doctrine\\Common\\Collections\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/collections/lib',
+            ),
+            'Doctrine\\Common\\Annotations\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
+            ),
+            'Doctrine\\Common\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/common/lib',
+            ),
+            'DoctrineORMModule\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/doctrine-orm-module/src',
+            ),
+            'DoctrineModule\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/doctrine-module/src',
             ),
         ),
     );
