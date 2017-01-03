@@ -15,17 +15,17 @@
 	        </a>
 	    </li>
 	    <li>
-	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'delete', 'id' => $this->${id}));?>">  
+	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'delete', 'id' => $this->${nomeVariavel}}->getId()));?>">  
 	            <?php echo $this->translate('Remover registro') ?>
 	        </a>
 	    </li>
 	    <li>
-	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'recover', 'id' => $this->${id}));?>"> 
+	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'recover', 'id' => $this->${nomeVariavel}}->getId()));?>"> 
 	            <?php echo $this->translate('Visualizar registro') ?>
 	        </a>
 	    </li>
 	    <li>
-	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'list', 'id' => $this->${id}));?>"> 
+	        <a href="<?php echo $this->url('${nomeVariavel}', array('action'=>'list', 'id' => $this->${nomeVariavel}->getId()));?>"> 
 	            <?php echo $this->translate('Listar registros') ?>
 	        </a>
 	    </li>
@@ -39,7 +39,7 @@
 		'${nomeVariavel}',
 		array(
 			'action' => 'edit',
-			'id'     => $this->${id}
+			'id'     => $this->${nomeVariavel}->getId()
 			)
 		));
 	$form->prepare();

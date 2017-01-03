@@ -37,8 +37,8 @@ class ${nomeTabela}Controller extends AbstractActionController
 	public function listAction()
 	{
 		return new ViewModel(array(
-//			'${nomeNoPlural}' => $this->getDoctrineORMEntityManager()->getRepository('${nomeModulo}\Entity\${nomeTabela}')->findAll()
-                        '${nomeNoPlural}' => null
+			'${nomeNoPlural}' => $this->getDoctrineORMEntityManager()->getRepository('${nomeModulo}\Entity\${nomeTabela}')->findAll()
+                        
 			)
 		);
 	}

@@ -17,7 +17,7 @@ $this->headTitle($title);
 </div>
 <br />
 <?php
-if ($${nomeNoPlural}) {
+if ($this->${nomeNoPlural}) {
     ?>
     <table class="table">
         <tr>
@@ -25,20 +25,20 @@ if ($${nomeNoPlural}) {
             <th>Ações</th>
         </tr>
         <?php
-        if ($${nomeNoPlural}) {
-            foreach ($${nomeNoPlural} as $${nomeVariavel}) {
+       
+            foreach ($this->${nomeNoPlural} as $${nomeVariavel}) {
                 ?>
                 <tr>
                     ${tbLinhas}
                     <td>
-                        <a href="<?php echo $this->url('${nomeTabela}', array('action' => 'recover', 'id' => $${ctrlName}->${id})); ?>">Ver</a>
-                        <a href="<?php echo $this->url('${nomeTabela}', array('action' => 'update', 'id' => $${ctrlName}->${id})); ?>">Editar</a>
-                        <a href="<?php echo $this->url('${nomeTabela}', array('action' => 'delete', 'id' => $${ctrlName}->${id})); ?>">Apagar</a>
+                        <a href="<?php echo $this->url('${nomeTabela}', array('action' => 'recover', 'id' => $${ctrlName}->getId())); ?>">Ver</a>
+                        <a href="<?php echo $this->url('${nomeTabela}', array('action' => 'update', 'id' => $${ctrlName}->getId())); ?>">Editar</a>
+                        <a href="<?php echo $this->url('${nomeTabela}', array('action' => 'delete', 'id' => $${ctrlName}->getId())); ?>">Apagar</a>
                     </td>
                 </tr>
                 <?php
             }
-        }
+      
         ?>
     </table>
     <?php

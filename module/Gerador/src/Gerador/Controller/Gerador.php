@@ -2,6 +2,8 @@
 
 namespace Gerador\Controller;
 
+use Exception;
+
 /**
  * Class para gerar arquivos de um CRUD self::baseado no Doctrine no zend framework 2
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
@@ -23,10 +25,11 @@ class Gerador {
     const src = 'src';
     const view = 'view';
     const model = 'model';
+    const entity = 'entity';
+    const base_entity = 'base_entity';
     const form = 'form';
     const controller = 'controller';
     const controller_factory = 'controller_factory';
-    const test = 'test';
 
     /* Templates */
     const view_create = 'view_create';
@@ -68,6 +71,7 @@ class Gerador {
         $this->criarDiretorios();
         $this->carregarTemplates();
         $this->escreverNovosArquivos();
+
         if (!empty($_SESSION[self::success])) {
             array_unshift($_SESSION[self::success], '<strong>Arquivos gerados para ' . $name . ':</strong>');
         }
@@ -82,16 +86,16 @@ class Gerador {
     private function carregarDiretorios() {
         $diretorios = [];
 //        $diretorios[self::base] = 'diretorio do projeto';
-        $diretorios[self::base] = '/home/tonos907/public_html';
+        $diretorios[self::base] = '/var/www/html/ubiquitous-memory';
         $diretorios[self::template] = $diretorios[self::base] . '/module/Gerador/src/Gerador/Templates';
         $diretorios[self::modulo] = $diretorios[self::base] . '/module/' . $this->getNomeModulo();
         $diretorios[self::src] = $diretorios[self::modulo] . '/src/' . $this->getNomeModulo();
         $diretorios[self::view] = $diretorios[self::modulo] . '/view/' . strtolower($this->getNomeModulo()) . '/' . $this->getNomeVariavel();
         $diretorios[self::model] = $diretorios[self::src] . '/Model';
+        $diretorios[self::entity] = $diretorios[self::model] . '/Entity';
         $diretorios[self::form] = $diretorios[self::src] . '/Form';
         $diretorios[self::controller] = $diretorios[self::src] . '/Controller';
         $diretorios[self::controller_factory] = $diretorios[self::src] . '/Controller/Factory';
-        $diretorios[self::test] = $diretorios[self::src] . '/test';
         $this->setDiretorios($diretorios);
     }
 
@@ -106,8 +110,8 @@ class Gerador {
         if (!file_exists($diretorios[self::view])) {
             mkdir($diretorios[self::view]);
         }
-        if (!file_exists($diretorios[self::model])) {
-            mkdir($diretorios[self::model]);
+        if (!file_exists($diretorios[self::entity])) {
+            mkdir($diretorios[self::entity]);
         }
         if (!file_exists($diretorios[self::form])) {
             mkdir($diretorios[self::form]);
@@ -117,9 +121,6 @@ class Gerador {
         }
         if (!file_exists($diretorios[self::controller_factory])) {
             mkdir($diretorios[self::controller_factory]);
-        }
-        if (!file_exists($diretorios[self::test])) {
-            mkdir($diretorios[self::test]);
         }
     }
 
@@ -133,14 +134,13 @@ class Gerador {
         $templates[self::controller_factory] = $this->lerArquivo($diretorios[self::template] . '/ControllerFactory.php');
         $templates[self::form] = $this->lerArquivo($diretorios[self::template] . '/Form.php');
         $templates[self::model] = $this->lerArquivo($diretorios[self::template] . '/Model.php');
+        $templates[self::entity] = $this->lerArquivo($diretorios[self::template] . '/Entity.php');
+        $templates[self::base_entity] = $this->lerArquivo($diretorios[self::template] . '/BaseEntity.php');
         $templates[self::view_create] = $this->lerArquivo($diretorios[self::template] . '/view_create.phtml');
         $templates[self::view_recover] = $this->lerArquivo($diretorios[self::template] . '/view_recover.phtml');
         $templates[self::view_update] = $this->lerArquivo($diretorios[self::template] . '/view_update.phtml');
         $templates[self::view_delete] = $this->lerArquivo($diretorios[self::template] . '/view_delete.phtml');
         $templates[self::view_list] = $this->lerArquivo($diretorios[self::template] . '/view_list.phtml');
-        $templates[self::test_bootstrap] = $this->lerArquivo($diretorios[self::template] . '/test_Bootstrap.php');
-        $templates[self::test_phpunit] = $this->lerArquivo($diretorios[self::template] . '/test_phpunit.xml');
-        $templates[self::test_controller] = $this->lerArquivo($diretorios[self::template] . '/test_Controller.php');
         $this->setTemplates($templates);
     }
 
@@ -177,6 +177,14 @@ class Gerador {
         /* CRIA O ARQUIVO DO FORM */
         $caminhoNovoForm = $diretorios[self::form] . '/' . $this->getNomeTabela() . 'Form.php';
         $this->gravarArquivo($caminhoNovoForm, $this->subistituirVariaveisDosTemplates($templates[self::form]));
+
+        /* CRIA O ARQUIVO DO BASE ENTITY */
+        $caminhoNovoBaseEntity = $diretorios[self::entity] . '/BaseEntity.php';
+        $this->gravarArquivo($caminhoNovoBaseEntity, $this->subistituirVariaveisDosTemplates($templates[self::base_entity]));
+
+        /* CRIA O ARQUIVO DO ENTITY */
+        $caminhoNovoEntity = $diretorios[self::entity] . '/' . $this->getNomeTabela() . '.php';
+        $this->gravarArquivo($caminhoNovoEntity, $this->subistituirVariaveisDosTemplates($templates[self::entity]));
 
         /* CRIA O ARQUIVO DO VIEW LIST */
         $caminhoNovoViewList = $diretorios[self::view] . '/list.phtml';
@@ -229,39 +237,6 @@ class Gerador {
             $this->carregarDiretorios();
         }
         return $this->diretorios;
-    } 
-
-    public function gerarRotas() {
-        $diretorios = $this->getDiretorios();
-
-        if (self::existsFile($pathModule . '/config/module.config.php')) {
-            $config = str_replace('__DIR__', '"__DIR__"', $this->lerArquivo($diretorios[self::modulo] . '/config/module.config.php'));
-            self::wFile($pathModule . '/config/module.config.php', $config);
-            $config = include $pathModule . '/config/module.config.php';
-        } else {
-            $config = include dirname(__DIR__) . '/generator/templates/module.config.php';
-        }
-        $modulo = end(explode('/', $diretorios[self::modulo]));
-        $config['router']['routes'][$this->getNomeVariavel()] = array(
-            'type' => 'Segment',
-            'options' => array(
-                'route' => '/' . $this->getNomeVariavel() . '[/][:action][/:id]',
-                'constraints' => array(
-                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    'id' => '[0-9]+',
-                ),
-                'defaults' => array(
-                    'controller' => $this->getNomeModulo() . '\Controller\\' . $this->getNomeModulo(),
-                    'action' => 'index',
-                ),
-            ),
-        );
-
-        $config['controllers']['factories'][$diretorios[self::modulo] . '\Controller\\' . $this->getNomeVariavel() . ''] = $this->getNomeModulo() . '\Controller\Factory\\' . $this->getNomeVariavel() . 'ControllerFactory';
-        $config = var_export($config, true);
-        file_put_contents($pathModule . '/config/module.config.php', '<?php return ' . $config . ';');
-        $config = str_replace(array("\\\\", "'__DIR__", "0 =>", "1 =>"), array("\\", "__DIR__ . '", "", ""), file_get_contents($diretorios[self::modulo] . '/config/module.config.php'));
-        file_put_contents($pathModule . '/config/module.config.php', $config);
     }
 
     private function setDiretorios($diretorios) {
@@ -300,7 +275,7 @@ class Gerador {
         $this->templates = $templates;
     }
 
-       private function getNomeVariavel() {
+    private function getNomeVariavel() {
         return $this->nomeVariavel;
     }
 

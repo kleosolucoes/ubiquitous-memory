@@ -18,7 +18,7 @@ class ${nomeTabela}Form extends Form
 			'type' => 'Hidden',
 			));
 
-		${cpsForm}
+		/* Todo adicionar campos do formulario*/
 
 		$this->add(array(
            'name' => 'submit',

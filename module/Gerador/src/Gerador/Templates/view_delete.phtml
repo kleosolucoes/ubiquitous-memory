@@ -13,12 +13,12 @@ $this->headTitle($title);
 <?php
 $url = $this->url('${nomeVariavel}', array(
 	'action' => 'delete',
-	'id'     => $this->${id},
+	'id'     => $this->${nomeVariavel}->getId(),
 	));
 	?>
 	<form action="<?php echo $url; ?>" method="post">
 		<div>
-			<input type="hidden" name="id" value="<?php echo (int) $${nomeVariavel}->${id}; ?>" />
+			<input type="hidden" name="id" value="<?php echo (int) $${nomeVariavel}->getId(); ?>" />
 			<input type="submit" name="del" value="Sim" />
 			<input type="submit" name="del" value="Não" />
 		</div>

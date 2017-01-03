@@ -17,14 +17,14 @@ class ${nomeTabela}ControllerFactory implements FactoryInterface {
     public function createService(ServiceLocatorInterface $serviceLocator) {
         $sm = $serviceLocator->getServiceLocator();
 
-//        // Serviço de Manipulação de entidade Doctrine    
-//        try {
-//            $doctrineORMEntityManager = $sm->get('Doctrine\ORM\EntityManager');
-//        } catch (ServiceNotCreatedException $e) {
-//            $doctrineORMEntityManager = null;
-//        } catch (ExtensionNotLoadedException $e) {
+        // Serviço de Manipulação de entidade Doctrine    
+        try {
+            $doctrineORMEntityManager = $sm->get('Doctrine\ORM\EntityManager');
+        } catch (ServiceNotCreatedException $e) {
             $doctrineORMEntityManager = null;
-//        }
+        } catch (ExtensionNotLoadedException $e) {
+            $doctrineORMEntityManager = null;
+        }
 
         return new ${nomeTabela}Controller($doctrineORMEntityManager);
     }
