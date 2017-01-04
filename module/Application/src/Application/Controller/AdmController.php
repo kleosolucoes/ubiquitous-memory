@@ -20,15 +20,24 @@ class AdmController extends AbstractActionController {
     }
 
     public function empresaCadastroAction() {
-        $this->setLayoutAdm();
         return new ViewModel();
     }
 
-    public function empresaAction() {
+    public function empresaCadastradoAction() {
         return new ViewModel();
     }
 
     public function empresasAction() {
+        $this->setLayoutAdm();
+        return new ViewModel();
+    }
+
+    public function shoppingCadastroAction() {
+        $this->setLayoutAdm();
+        return new ViewModel();
+    }
+
+    public function shoppingsAction() {
         $this->setLayoutAdm();
         return new ViewModel();
     }
