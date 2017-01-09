@@ -6,6 +6,16 @@ use Application\Controller\AdmController;
 use Application\Controller\IndexController;
 
 return array(
+    # definir e gerenciar controllers
+    'controllers' => array(
+        'invokables' => array(
+            'Application\Controller\Index' => IndexController::class,
+            'Application\Controller\Adm' => AdmController::class
+        ),
+        'factories' => array(
+            'Application\Controller\Cadastro' => 'Application\Controller\Factory\CadastroControllerFactory',
+        ),
+    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -44,6 +54,19 @@ return array(
                     ),
                 ),
             ),
+            'cadastro' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/cadastro[:pagina]',
+                    'constraints' => array(
+                        'pagina' => '[a-zA-Z]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Cadastro',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -65,12 +88,6 @@ return array(
             ),
         ),
     ),
-    'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' => IndexController::class,
-            'Application\Controller\Adm' => AdmController::class
-        ),
-    ),
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions' => true,
@@ -84,11 +101,35 @@ return array(
             'application/adm/empresa' => __DIR__ . '/../view/application/adm/empresa.phtml',
             'application/adm/empresa-cadastro' => __DIR__ . '/../view/application/adm/empresa-cadastro.phtml',
             'application/adm/empresas' => __DIR__ . '/../view/application/adm/empresas.phtml',
+            'application/cadsatro/index' => __DIR__ . '/../view/application/cadastro/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+    ),
+    # definir driver, classes anotadas para o doctrine e quem faz autenticação
+    'doctrine' => array(
+        'driver' => array(
+            'application_entities' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/Model/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Application\Model\Entity' => 'application_entities'
+                )
+            )
+        ),
+//        'authentication' => array(
+//            'orm_default' => array(
+//                'object_manager' => 'Doctrine\ORM\EntityManager',
+//                'identity_class' => 'Application\Model\Entity\Pessoa',
+//                'identity_property' => 'email',
+//                'credential_property' => 'senha',
+//            ),
+//        ),
     ),
 );

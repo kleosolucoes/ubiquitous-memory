@@ -9,10 +9,10 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
         //      $nomeTabela = 'nome da entidade';
-        $nomeModulo = 'Application';
-        $nomeTabela = 'shopping';
-        $geradoDeCodigo = new Gerador($nomeTabela, $nomeModulo);
-        $geradoDeCodigo->gerarCRUD();
+//        $nomeModulo = 'Application';
+//        $nomeTabela = 'shopping';
+//        $geradoDeCodigo = new Gerador($nomeTabela, $nomeModulo);
+//        $geradoDeCodigo->gerarCRUD();
         return new ViewModel();
     }
 

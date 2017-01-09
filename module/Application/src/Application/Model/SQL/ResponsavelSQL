@@ -1,0 +1,14 @@
+CREATE TABLE `responsavel` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `telefone` bigint(11) unsigned NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `empresa` varchar(50) NOT NULL,
+  `cnpj` bigint(14) NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
