@@ -4,6 +4,8 @@ namespace Application\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Zend\View\Model\ViewModel;
+use Application\Model\Entity\Responsavel;
+use Application\Model\ORM\RepositorioORM;
 
 /**
  * Nome: CadastroController.php
@@ -28,23 +30,20 @@ class CadastroController extends KleoController {
      */
     public function indexAction() {
 
-        $objectManager = $this
-                ->getServiceLocator()
-                ->get('Doctrine\ORM\EntityManager');
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
 
+        $responsavel = new Responsavel();
+//         $responsavel->setNome('leonardo pereira');
+//         $responsavel->setTelefone(61998510703);
+//         $responsavel->setEmail('falecomleonardopereira@gmail.com');
+//         $responsavel->setEmpresa('Kleo soluções');
+//         $responsavel->setCnpj(41698113000190);
+//         $responsavel->setDataEHoraDeCriacao();
 
-        $responsavel = new \Application\Model\Entity\Responsavel();
-        $responsavel->setNome('leonardo pereira');
-        $responsavel->setTelefone(61998510703);
-        $responsavel->setEmail('falecomleonardopereira@gmail.com');
-        $responsavel->setEmpresa('Kleo soluções');
-        $responsavel->setCnpj(41698113000190);
-        $responsavel->setDataEHoraDeCriacao();
+//         $objectManager->persist($responsavel);
+//         $objectManager->flush();
 
-        $objectManager->persist($responsavel);
-        $objectManager->flush();
-
-        die(var_dump($responsavel->getId())); // yes, I'm lazy
+//         die(var_dump($responsavel->getId())); // yes, I'm lazy
         return new ViewModel();
     }
 
