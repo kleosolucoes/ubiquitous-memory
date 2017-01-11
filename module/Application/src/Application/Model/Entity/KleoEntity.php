@@ -17,19 +17,19 @@ class KleoEntity {
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    private $id;
 
     /** @ORM\Column(type="string") */
-    protected $data_criacao;
+    private $data_criacao;
 
     /** @ORM\Column(type="string") */
-    protected $hora_criacao;
+    private $hora_criacao;
 
     /** @ORM\Column(type="string") */
-    protected $data_inativacao;
+    private $data_inativacao;
 
     /** @ORM\Column(type="string") */
-    protected $hora_inativacao;
+    private $hora_inativacao;
 
     /**
      * Seta data e hora de criação

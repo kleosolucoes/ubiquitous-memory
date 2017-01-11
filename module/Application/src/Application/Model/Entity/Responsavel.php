@@ -2,69 +2,74 @@
 
 namespace Application\Model\Entity;
 
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Nome: Responsavel.php
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
  * Descricao: Entidade anotada base para o responsavel
  */
+
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity 
+ * @ORM\Table(name="responsavel")
+ */
 class Responsavel extends KleoEntity {
 
     /** @ORM\Column(type="string") */
-    protected $nome;
+    private $nome;
 
-    /** @ORM\Column(type="int") */
-    protected $telefone;
-
-    /** @ORM\Column(type="string") */
-    protected $email;
+    /** @ORM\Column(type="integer") */
+    private $telefone;
 
     /** @ORM\Column(type="string") */
-    protected $empresa;
+    private $email;
 
-    /** @ORM\Column(type="int") */
-    protected $cnpj;
+    /** @ORM\Column(type="string") */
+    private $empresa;
 
-    function setNome($id) {
-        $this->id = $id;
+    /** @ORM\Column(type="integer") */
+    private $cnpj;
+
+    function setNome($nome) {
+        $this->nome = $nome;
     }
 
     function getNome() {
-        return $this->id;
+        return $this->nome;
     }
 
-    function setTelefone($id) {
-        $this->id = $id;
+    function setTelefone($telefone) {
+        $this->telefone = $telefone;
     }
 
     function getTelefone() {
-        return $this->id;
+        return $this->telefone;
     }
 
-    function setEmail($id) {
-        $this->id = $id;
+    function setEmail($email) {
+        $this->email = $email;
     }
 
     function getEmail() {
-        return $this->id;
+        return $this->email;
     }
 
-    function setEmpresa($id) {
-        $this->id = $id;
+    function setEmpresa($empresa) {
+        $this->empresa = $empresa;
     }
 
     function getEmpresa() {
-        return $this->id;
+        return $this->empresa;
     }
 
-    function setCnpj($id) {
-        $this->id = $id;
+    function setCnpj($cnpj) {
+        $this->cnpj = $cnpj;
     }
 
     function getCnpj() {
-        return $this->id;
+        return $this->cnpj;
     }
 
 }

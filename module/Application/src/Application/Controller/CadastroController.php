@@ -29,21 +29,22 @@ class CadastroController extends KleoController {
      * GET /cadastro
      */
     public function indexAction() {
+        return new ViewModel();
+    }
+  /**
+     * Função padrão, traz a tela principal
+     * GET /cadastroResponsavel
+     */
+    public function responsavelAction() {
+        return new ViewModel();
+    }
 
-        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-
-        $responsavel = new Responsavel();
-//         $responsavel->setNome('leonardo pereira');
-//         $responsavel->setTelefone(61998510703);
-//         $responsavel->setEmail('falecomleonardopereira@gmail.com');
-//         $responsavel->setEmpresa('Kleo soluções');
-//         $responsavel->setCnpj(41698113000190);
-//         $responsavel->setDataEHoraDeCriacao();
-
-//         $objectManager->persist($responsavel);
-//         $objectManager->flush();
-
-//         die(var_dump($responsavel->getId())); // yes, I'm lazy
+  
+  /**
+     * Função padrão, traz a tela principal
+     * GET /cadastroResponsavelFinalizado
+     */
+    public function responsavelFinalizadoAction() {
         return new ViewModel();
     }
 
