@@ -25,21 +25,29 @@
                             </thead>
                             <tbody>
                                 <?php
-                                for ($i = 1; $i <= 100; $i ++) {
-                                    ?>
-                                    <tr>
-                                        <td>21/01/2017</td>
-                                        <td>Outback</td>
-                                        <td>Edinburgh</td>
-                                        <td>61998510703</td>
-                                        <td>
-                                            <select class="form-control">
-                                                <option>Pendente</option>
-                                            </select>                                            
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
+                              foreach($this->responsaveis as $responsavel){
+                                
+                              echo '<tr>';
+                                        echo '<td>'.$responsavel->getData_criacao(). '</td>';
+                                        echo '<td>'.$responsavel->getEmpresa().'</td>';
+                                        echo '<td>'.$responsavel->getNome().'</td>';
+                                        echo '<td>'.$responsavel->getTelefone().'</td>';
+                                        echo '<td>';
+                                            echo '<select class="form-control">';
+                                     
+                                    foreach($this->situacoes as $situacao){
+                                      $selected = '';
+                                      if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $situacao->GetId()){
+                                        $selected = 'selected'; 
+                                      }
+                                             echo   '<option '.$selected.'>'.$situacao->getNome().'</option>';
+                                    }
+                                      
+                                            echo '</select>';                                            
+                                        echo '</td>';
+                                    echo '</tr>';
+                            }
+                                
                                 ?>                                
                             </tbody>
                         </table>
@@ -166,11 +174,9 @@
 </div>
 
 <script type="text/javascript">
-    window.onload = acionaTabela;
+    window.onload = initPage;
 
-    function acionaTabela() {
+    function initPage() {
         $('#tabelaEmpresasParaAnalise').dataTable();
     }
-
-
 </script>

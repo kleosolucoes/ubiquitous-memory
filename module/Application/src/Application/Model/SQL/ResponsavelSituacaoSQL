@@ -1,11 +1,11 @@
 CREATE TABLE `responsavel_situacao` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
-  `responsavel_id` int(6) unsigned DEFAULT NULL,
-  `situacao_id` int(1) unsigned DEFAULT NULL,
-  `data_criacao` date DEFAULT NULL,
-  `hora_criacao` time DEFAULT NULL,
-  `data_inativacao` date NOT NULL,
-  `hora_inativacao` time NOT NULL,
+  `responsavel_id` int(6) unsigned NOT NULL,
+  `situacao_id` int(1) unsigned NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `situacao_id` (`situacao_id`),
   KEY `responsavel_id` (`responsavel_id`)

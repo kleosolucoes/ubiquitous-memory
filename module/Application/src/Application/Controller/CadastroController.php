@@ -38,7 +38,6 @@ class CadastroController extends KleoController {
     public function responsavelAction() {
         return new ViewModel();
     }
-
   
   /**
      * Função padrão, traz a tela principal
@@ -46,6 +45,30 @@ class CadastroController extends KleoController {
      */
     public function responsavelFinalizadoAction() {
         return new ViewModel();
+    }
+  
+  /**
+     * Função padrão, traz a tela principal
+     * GET /cadastroResponsaveis
+     */
+    public function responsaveisAction() {
+      $this->setLayoutAdm();
+      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+      $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodos();
+      $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodas();
+        return new ViewModel(
+        array(
+         'responsaveis' => $responsaveis,
+         'situacoes' => $situacoes,
+        )
+        );
+    }
+  
+   /**
+     * Seta o layout da administracao
+     */
+    private function setLayoutAdm() {
+        $this->layout('layout/adm');
     }
 
 }

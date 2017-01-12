@@ -8,7 +8,6 @@ namespace Application\Model\Entity;
  * Descricao: Entidade anotada base para o responsavel
  */
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,20 +16,44 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Responsavel extends KleoEntity {
 
+    /**
+     * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavel") 
+     */
+    protected $responsavelSituacao;
+  
+    public function __construct() {
+        $this->responsavelSituacao = new ArrayCollection();
+    }
+
     /** @ORM\Column(type="string") */
-    private $nome;
+    protected $nome;
 
     /** @ORM\Column(type="integer") */
-    private $telefone;
+    protected $telefone;
 
     /** @ORM\Column(type="string") */
-    private $email;
+    protected $email;
 
     /** @ORM\Column(type="string") */
-    private $empresa;
+    protected $empresa;
 
     /** @ORM\Column(type="integer") */
-    private $cnpj;
+    protected $cnpj;
+  
+  /**
+     * Retorna o responsavel situacao ativo
+     * @return ResponsavelSituacao
+     */
+    function getResponsavelSituacaoAtivo() {
+        $responsavelSituacao = null;
+        foreach ($this->getResponsavelSituacao() as $rs) {
+            if ($rs->verificarSeEstaAtivo()) {
+                $responsavelSituacao = $rs;
+                break;
+            }
+        }
+        return $responsavelSituacao;
+    }
 
     function setNome($nome) {
         $this->nome = $nome;
@@ -72,4 +95,10 @@ class Responsavel extends KleoEntity {
         return $this->cnpj;
     }
 
+    function getResponsavelSituacao() {
+        return $this->responsavelSituacao;
+    }
+    function setResponsavelSituacao($responsavelSituacao) {
+        $this->responsavelSituacao = $responsavelSituacao;
+    }
 }

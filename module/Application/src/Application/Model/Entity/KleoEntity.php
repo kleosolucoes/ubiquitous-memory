@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
  * Descricao: Entidade anotada base
  */
+
 class KleoEntity {
 
     /**
@@ -17,20 +18,15 @@ class KleoEntity {
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private $id;
-
+    protected $id;
     /** @ORM\Column(type="string") */
-    private $data_criacao;
-
+    protected $data_criacao;
     /** @ORM\Column(type="string") */
-    private $hora_criacao;
-
+    protected $hora_criacao;
     /** @ORM\Column(type="string") */
-    private $data_inativacao;
-
+    protected $data_inativacao;
     /** @ORM\Column(type="string") */
-    private $hora_inativacao;
-
+    protected $hora_inativacao;
     /**
      * Seta data e hora de criação
      */
@@ -39,7 +35,6 @@ class KleoEntity {
         $this->setData_criacao($timeNow->format('Y-m-d'));
         $this->setHora_criacao($timeNow->format('H:s:i'));
     }
-
     /**
      * Verificar se a data de inativação está nula
      * @return boolean
@@ -51,45 +46,34 @@ class KleoEntity {
         }
         return $resposta;
     }
-
     function getId() {
         return $this->id;
     }
-
     function getData_criacao() {
         return $this->data_criacao;
     }
-
     function getHora_criacao() {
         return $this->hora_criacao;
     }
-
     function getData_inativacao() {
         return $this->data_inativacao;
     }
-
     function getHora_inativacao() {
         return $this->hora_inativacao;
     }
-
     function setId($id) {
         $this->id = $id;
     }
-
     function setData_criacao($data_criacao) {
         $this->data_criacao = $data_criacao;
     }
-
     function setHora_criacao($hora_criacao) {
         $this->hora_criacao = $hora_criacao;
     }
-
     function setData_inativacao($data_inativacao) {
         $this->data_inativacao = $data_inativacao;
     }
-
     function setHora_inativacao($hora_inativacao) {
         $this->hora_inativacao = $hora_inativacao;
     }
-
 }

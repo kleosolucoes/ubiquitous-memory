@@ -13,6 +13,7 @@ class RepositorioORM {
 
     private $_doctrineORMEntityManager;
     private $_responsavelORM;
+    private $_situacaoORM;
 
     /**
      * Contrutor
@@ -29,9 +30,19 @@ class RepositorioORM {
      */
     public function getResponsavelORM() {
         if (is_null($this->_responsavelORM)) {
-            $this->_responsavelORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Responsavel');
+            $this->_responsavelORM = new ResponsavelORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Responsavel');
         }
         return $this->_responsavelORM;
+    }
+    /**
+     * Metodo public para obter a instancia do SituacaoORM
+     * @return SituacaoORM
+     */
+    public function getSituacaoORM() {
+        if (is_null($this->_situacaoORM)) {
+            $this->_situacaoORM = new SituacaoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Situacao');
+        }
+        return $this->_situacaoORM;
     }
 
     /**
