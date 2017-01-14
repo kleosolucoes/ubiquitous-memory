@@ -1,3 +1,16 @@
+<?php
+
+use Application\Form\KleoForm;
+
+$formulario = $this->formulario;
+$formulario->prepare();
+
+$formulario->setAttribute(KleoForm::stringAction, 'cadastroResponsavelFinalizar');
+echo $this->form()->openTag($formulario);
+echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+echo $this->formHidden($formulario->get(KleoForm::inputId));
+?>
+
 <!-- MAIN CONTENT SECTION -->
 <section class="mainContent clearfix signUp">
     <div class="container">
@@ -6,15 +19,15 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>seja um parceiro</h3></div>
                     <div class="panel-body">
-                        <form action="/cadastroResponsavelFinalizado" method="POST" role="form">
+                        <form action="/cadastroResponsavelFinalizar" method="POST" role="form">
                             <?php
-                            echo $this->inputFormulario('Nome');
-                            echo $this->inputFormulario('DDD', 3);
-                            echo $this->inputFormulario('Telefone', 9);
-                            echo $this->inputFormulario('Email');
-                            echo $this->inputFormulario('Repetir Email');
-                            echo $this->inputFormulario('Empresa');
-                            echo $this->inputFormulario('CNPJ');
+                            echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
+                            echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
+                            echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
+                            echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
+                            echo $this->inputFormulario(KleoForm::traducaoRepetirEmail, $formulario->get(KleoForm::inputRepetirEmail));
+                            echo $this->inputFormulario(KleoForm::traducaoEmpresa, $formulario->get(KleoForm::inputEmpresa));
+                            echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
                             ?>
                             <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
                         </form>
@@ -24,3 +37,6 @@
         </div>
     </div>
 </section>
+
+<?php
+echo $this->form()->closeTag();

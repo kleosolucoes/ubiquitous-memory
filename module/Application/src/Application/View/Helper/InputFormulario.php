@@ -13,14 +13,16 @@ class InputFormulario extends AbstractHelper {
 
     private $label;
     private $tamanhoGrid;
+    private $input;
 
     public function __construct() {
         
     }
 
-    public function __invoke($label, $tamanhoGrid = null) {
+    public function __invoke($label, $input, $tamanhoGrid = null) {
         $this->setLabel($label);
         $this->setTamanhoGrid($tamanhoGrid);
+        $this->setInput($input);
         return $this->renderHtml();
     }
 
@@ -32,7 +34,7 @@ class InputFormulario extends AbstractHelper {
         }
         $html .= '<div class="form-group col-lg-' . $tamanhoGrid . '">';
         $html .= '<label for="">' . $this->getLabel() . '</label>';
-        $html .= '<input type="text" class="form-control" id="">';
+        $html .= $this->view->formInput($this->getInput());
         $html .= '</div>';
         return $html;
     }
@@ -43,6 +45,14 @@ class InputFormulario extends AbstractHelper {
 
     function setLabel($label) {
         $this->label = $label;
+    }
+
+    function getInput() {
+        return $this->input;
+    }
+
+    function setInput($input) {
+        $this->input = $input;
     }
 
     function getTamanhoGrid() {
