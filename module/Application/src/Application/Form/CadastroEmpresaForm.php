@@ -4,16 +4,15 @@ namespace Application\Form;
 
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Number;
-use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
 
 /**
- * Nome: CadastroResponsavelForm.php
+ * Nome: CadastroEmpresaForm.php
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
- * Descricao: Formulario de cadastro de responsaveis  
+ * Descricao: Formulario de cadastro de empresas  
  *              
  */
-class CadastroResponsavelForm extends KleoForm {
+class CadastroEmpresaForm extends KleoForm {
 
     public function __construct($name = null) {
         parent::__construct($name);
@@ -44,26 +43,6 @@ class CadastroResponsavelForm extends KleoForm {
                         ->setAttributes([
                             self::stringClass => self::stringClassFormControl,
                             self::stringId => self::inputTelefone,
-                            self::stringRequired => self::stringRequired,
-                        ])
-        );
-
-        $this->add(
-                (new Email())
-                        ->setName(self::inputEmail)
-                        ->setAttributes([
-                            self::stringClass => self::stringClassFormControl,
-                            self::stringId => self::inputEmail,
-                            self::stringRequired => self::stringRequired,
-                        ])
-        );
-
-        $this->add(
-                (new Text())
-                        ->setName(self::inputEmpresa)
-                        ->setAttributes([
-                            self::stringClass => self::stringClassFormControl,
-                            self::stringId => self::inputEmpresa,
                             self::stringRequired => self::stringRequired,
                         ])
         );

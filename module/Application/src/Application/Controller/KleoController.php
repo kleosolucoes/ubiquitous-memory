@@ -13,7 +13,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 class KleoController extends AbstractActionController {
 
     private $_doctrineORMEntityManager;
-    const formulario = 'formulario';
+    const stringFormulario = 'formulario';
+    const stringAction = 'action';
+    const controllerCadastro = 'Application\Controller\Cadastro';
   
     /**
      * Contrutor sobrecarregado com os serviços de ORM

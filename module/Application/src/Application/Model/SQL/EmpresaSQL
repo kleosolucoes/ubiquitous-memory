@@ -1,0 +1,11 @@
+CREATE TABLE `empresa` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `cnpj` bigint(14) DEFAULT NULL,
+  `nome` varchar(50) DEFAULT NULL,
+  `telefone` bigint(11) DEFAULT NULL,
+  `data_criacao` date DEFAULT NULL,
+  `hora_criacao` time DEFAULT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -16,12 +16,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Situacao extends KleoEntity {
   
-  /**
+    /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavelSituacao") 
      */
     protected $responsavelSituacao;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EmpresaSituacao", mappedBy="empresaSituacao") 
+     */
+    protected $empresaSituacao;
+  
+  
     public function __construct() {
         $this->responsavelSituacao = new ArrayCollection();
+        $this->empresaSituacao = new ArrayCollection();
     }
 
     /** @ORM\Column(type="string") */

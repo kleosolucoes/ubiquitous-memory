@@ -13,8 +13,10 @@ class RepositorioORM {
 
     private $_doctrineORMEntityManager;
     private $_responsavelORM;
+    private $_empresaORM;
     private $_situacaoORM;
     private $_responsavelSituacaoORM;
+    private $_empresaSituacaoORM;
 
     /**
      * Contrutor
@@ -56,6 +58,29 @@ class RepositorioORM {
             $this->_responsavelSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\ResponsavelSituacao');
         }
         return $this->_responsavelSituacaoORM;
+    }
+  
+    /**
+     * Metodo public para obter a instancia do EmpresaSituacaoORM
+     * @return KleoORM
+     */
+    public function getEmpresaSituacaoORM() {
+        if (is_null($this->_empresaSituacaoORM)) {
+            $this->_empresaSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\EmpresaSituacao');
+        }
+        return $this->_empresaSituacaoORM;
+    }
+
+  
+    /**
+     * Metodo public para obter a instancia do EmpresaORM
+     * @return EmpresaORM
+     */
+    public function getEmpresaORM() {
+        if (is_null($this->_empresaORM)) {
+            $this->_empresaORM = new EmpresaORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Empresa');
+        }
+        return $this->_empresaORM;
     }
 
     /**
