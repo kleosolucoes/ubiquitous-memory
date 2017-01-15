@@ -17,6 +17,7 @@ class RepositorioORM {
     private $_situacaoORM;
     private $_responsavelSituacaoORM;
     private $_empresaSituacaoORM;
+    private $_shoppingORM;
 
     /**
      * Contrutor
@@ -81,6 +82,17 @@ class RepositorioORM {
             $this->_empresaORM = new EmpresaORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Empresa');
         }
         return $this->_empresaORM;
+    }
+
+    /**
+     * Metodo public para obter a instancia do ShoppingORM
+     * @return ShoppingORM
+     */
+    public function getShoppingORM() {
+        if (is_null($this->_shoppingORM)) {
+            $this->_shoppingORM = new ShoppingORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Shopping');
+        }
+        return $this->_shoppingORM;
     }
 
     /**

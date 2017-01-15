@@ -16,6 +16,7 @@ class KleoController extends AbstractActionController {
     const stringFormulario = 'formulario';
     const stringAction = 'action';
     const controllerCadastro = 'Application\Controller\Cadastro';
+    const rotaCadastro = 'cadastro';
   
     /**
      * Contrutor sobrecarregado com os serviços de ORM

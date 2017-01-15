@@ -8,9 +8,11 @@ use Application\Model\Entity\Responsavel;
 use Application\Model\Entity\ResponsavelSituacao;
 use Application\Model\Entity\Empresa;
 use Application\Model\Entity\EmpresaSituacao;
+use Application\Model\Entity\Shopping;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\CadastroEmpresaForm;
+use Application\Form\CadastroShoppingForm;
 use Application\Form\KleoForm;
 
 /**
@@ -191,7 +193,7 @@ class CadastroController extends KleoController {
 
           $repositorioORM->getEmpresaSituacaoORM()->persistir($empresaSituacao);
 
-          return $this->redirect()->toRoute('cadastro', array(
+          return $this->redirect()->toRoute(self::rotaCadastro, array(
             self::stringAction => 'empresas',
           ));
         } else {
@@ -221,6 +223,81 @@ class CadastroController extends KleoController {
       array(
       'empresas' => $empresas,
       'situacoes' => $situacoes,
+    )
+    );
+  }
+
+  
+  /**
+     * Função de cadastro de shopping
+     * GET /cadastroShopping
+     */
+  public function shoppingAction() {
+    $this->setLayoutAdm();
+
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+   
+    if($formulario){
+      $cadastroShoppingForm = $formulario;
+    }else{
+      $cadastroShoppingForm = new CadastroShoppingForm('cadastroShopping');
+    }
+
+    return new ViewModel(
+      array(
+      self::stringFormulario => $cadastroShoppingForm,
+    )
+    );
+  }
+
+  /**
+     * Função para validar e finalizar cadastro
+     * GET /cadastroShoppingFinalizar
+     */
+  public function shoppingFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      try {
+        $post_data = $request->getPost();
+        $shopping = new Shopping();
+        $cadastrarShoppingForm = new CadastroShoppingForm();
+        $cadastrarShoppingForm->setInputFilter($shopping->getInputFilterCadastrarShopping());
+        $cadastrarShoppingForm->setData($post_data);
+
+        /* validação */
+        if ($cadastrarShoppingForm->isValid()) {
+          $validatedData = $cadastrarShoppingForm->getData();
+          $shopping->exchangeArray($cadastrarShoppingForm->getData());
+          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
+          $repositorioORM->getShoppingORM()->persistir($shopping);
+          
+          return $this->redirect()->toRoute(self::rotaCadastro, array(
+            self::stringAction => 'shoppings',
+          ));
+        } else {
+          return $this->forward()->dispatch(self::controllerCadastro, array(
+            self::stringAction => 'shopping',
+            self::stringFormulario => $cadastrarShoppingForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
+  }
+
+  /**
+     * Tela com listagem de shoppings
+     * GET /cadastroShoppings
+     */
+  public function shoppingsAction() {
+    $this->setLayoutAdm();
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $shoppings = $repositorioORM->getShoppingORM()->encontrarTodos();
+    return new ViewModel(
+      array(
+      'shoppings' => $shoppings,
     )
     );
   }
