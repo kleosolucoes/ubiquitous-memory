@@ -11,10 +11,10 @@ namespace Application\Model\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\Form\KleoForm;
-use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\Input;
 use Zend\Validator;
 
 /**
@@ -183,18 +183,63 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 8, # xx xxxx-xxxx
-                            'max' => 9, # xx xxxx-xxxxx
+                            'min' => 8, 
+                            'max' => 9, 
                         ),
                     ),
                 ),
             ));
             
-            $email = new Input('email');
+            $email = new Input(KleoForm::inputEmail);
             $email->getValidatorChain()
                   ->attach(new Validator\EmailAddress());
             $inputFilter->add($email);
-            
+          
+            $inputFilter->add(array(
+                'name' => KleoForm::inputEmpresa,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'StringToUpper'), // transforma em maiusculo
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 3,
+                            'max' => 80,
+                        ),
+                    ),
+                ),
+            ));
+          $inputFilter->add(array(
+                'name' => KleoForm::inputCNPJ,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'Int'), // transforma string para inteiro
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 14,
+                            'max' => 14,
+                        ),
+                    ),
+                ),
+            ));
+           
             $this->inputFilterCadastrarResponsavel = $inputFilter;
         }
         return $this->inputFilterCadastrarResponsavel;

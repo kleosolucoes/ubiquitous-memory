@@ -35,6 +35,11 @@ class InputFormulario extends AbstractHelper {
         $html .= '<div class="form-group col-lg-' . $tamanhoGrid . '">';
         $html .= '<label for="">' . $this->getLabel() . '</label>';
         $html .= $this->view->formInput($this->getInput());
+       $html .=  $this->view->formElementErrors()
+                ->setMessageOpenFormat('<div><p class="text-danger"><small>')
+                ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')
+                ->setMessageCloseString('<small></p></div>')
+                ->render($this->getInput());
         $html .= '</div>';
         return $html;
     }

@@ -5,8 +5,10 @@ namespace Application\Controller;
 use Doctrine\ORM\EntityManager;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Responsavel;
+use Application\Model\Entity\ResponsavelSituacao;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
+use Application\Form\KleoForm;
 
 /**
  * Nome: CadastroController.php
@@ -38,8 +40,19 @@ class CadastroController extends KleoController {
      */
     public function responsavelAction() {
       
-        $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResposavel');
-        return new ViewModel(array(self::formulario => $cadastroResponsavelForm));
+      $formulario = $this->params()->fromRoute(self::formulario);
+       $mensagens = '';
+      if($formulario){
+       $cadastroResponsavelForm = $formulario;
+      }else{
+         $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResposavel');
+      }
+        
+        return new ViewModel(
+          array(
+          self::formulario => $cadastroResponsavelForm,
+                )
+        );
     }
   
   
@@ -57,22 +70,31 @@ class CadastroController extends KleoController {
                 $cadastrarResponsavelForm = new CadastroResponsavelForm();
                 $cadastrarResponsavelForm->setInputFilter($responsavel->getInputFilterCadastrarResponsavel());
                 $cadastrarResponsavelForm->setData($post_data);
+              
                 /* validação */
                 if ($cadastrarResponsavelForm->isValid()) {
                     $validatedData = $cadastrarResponsavelForm->getData();
                     $responsavel->exchangeArray($cadastrarResponsavelForm->getData());
                     $responsavel->setTelefone($validatedData[KleoForm::inputDDD]
                                               . $validatedData[KleoForm::inputTelefone]);
-                    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-                    $repositorioORM->getPessoaORM()->persistir($responsavel);
+                    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
+                    $repositorioORM->getResponsavelORM()->persistir($responsavel);
+                  
+                  $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(1);
+                  $responsavelSituacao = new ResponsavelSituacao();
+                  $responsavelSituacao->setResponsavel($responsavel);
+                  $responsavelSituacao->setSituacao($situacao);
+                  
+                  $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
                     
                    return $this->forward()->dispatch('Application\Controller\Cadastro', array(
                                 'action' => 'responsavelFinalizado',
                     ));
                 } else {
-                    return $this->forward()->dispatch('Application\Controller\Cadastro', array(
+                  
+                   return $this->forward()->dispatch('Application\Controller\Cadastro', array(
                                 'action' => 'responsavel',
-                      self::formulario => $cadastrarResponsavelForm
+                      self::formulario => $cadastrarResponsavelForm,
                     ));
                 }
             } catch (Exception $exc) {
