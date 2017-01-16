@@ -70,7 +70,7 @@ class CadastroController extends KleoController {
     if ($request->isPost()) {
       try {
         $post_data = $request->getPost();
-        $cadastrarEmpresaForm = new Responsavel();
+        $responsavel = new Responsavel();
         $cadastrarResponsavelForm = new CadastroResponsavelForm();
         $cadastrarResponsavelForm->setInputFilter($responsavel->getInputFilterCadastrarResponsavel());
         $cadastrarResponsavelForm->setData($post_data);
