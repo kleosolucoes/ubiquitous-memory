@@ -36,8 +36,8 @@ class InputFormulario extends AbstractHelper {
         $html .= '<label for="">' . $this->getLabel() . '</label>';
         $html .= $this->view->formInput($this->getInput());
        $html .=  $this->view->formElementErrors()
-                ->setMessageOpenFormat('<div class="text-danger"><p><small>')
-                ->setMessageSeparatorString('</small></p><p><small>')
+                ->setMessageOpenFormat('<div><p class="text-danger"><small>')
+                ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')
                 ->setMessageCloseString('<small></p></div>')
                 ->render($this->getInput());
         $html .= '</div>';

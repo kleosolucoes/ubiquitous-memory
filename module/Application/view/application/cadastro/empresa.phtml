@@ -10,28 +10,28 @@ echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
 ?>
-
-<!-- MAIN CONTENT SECTION -->
-<section class="mainContent clearfix signUp">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h3>Cadastrar Matriz ou Filial</h3></div>
-          <div class="panel-body">
-            <?php
-            echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
-            echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
-            echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
-            echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
-            ?>
-            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+<div class="register-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center m-b-md">
+        <h3>Cadastrar Matriz ou Filial</h3>
+      </div>
+      <div class="hpanel">
+        <div class="panel-body">
+          <?php
+          echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
+          echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
+          echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
+          echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
+          ?>
+          <div class="text-center">
+            <button class="btn btn-success">Cadastrar</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <?php
 echo $this->form()->closeTag();
