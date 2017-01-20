@@ -46,6 +46,16 @@ class KleoEntity {
         }
         return $resposta;
     }
+  
+   /**
+     * Seta data e hora de inativação
+     */
+    function setDataEHoraDeInativacao() {
+        $timeNow = new DateTime();
+        $this->setData_inativacao($timeNow->format('Y-m-d'));
+        $this->setHora_inativacao($timeNow->format('H:s:i'));
+    }
+  
     function getId() {
         return $this->id;
     }

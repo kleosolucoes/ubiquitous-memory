@@ -30,7 +30,7 @@ class ResponsavelSituacao extends KleoEntity {
     protected $situacao_id;
     /** @ORM\Column(type="integer") */
     protected $responsavel_id;
-  
+      
     function getResponsavel() {
         return $this->responsavel;
     }

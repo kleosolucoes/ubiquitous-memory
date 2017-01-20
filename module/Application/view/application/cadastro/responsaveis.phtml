@@ -21,6 +21,7 @@
                   <th>Responsavel</th>
                   <th>Contato</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -32,19 +33,8 @@
                   echo '<td>'.$responsavel->getEmpresa().'</td>';
                   echo '<td>'.$responsavel->getNome().'</td>';
                   echo '<td>'.$responsavel->getTelefone().'</td>';
-                  echo '<td>';
-                  echo '<select class="form-control" onchange="mudarSituacao";>';
-
-                  foreach($this->situacoes as $situacao){
-                    $selected = '';
-                    if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $situacao->GetId()){
-                      $selected = 'selected'; 
-                    }
-                    echo   '<option '.$selected.'>'.$situacao->getNome().'</option>';
-                  }
-
-                  echo '</select>';                                            
-                  echo '</td>';
+                  echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome().'</td>';
+                  echo '<td>'. $this->botao('Alterar Situacao', $this->funcaoOnClick('kleo("cadastroResponsavelSituacao", '.$responsavel->getId().');')) .'</td>';
                   echo '</tr>';
                 }
                 ?>                                

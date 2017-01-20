@@ -11,10 +11,15 @@
 namespace Application;
 
 use Application\View\Helper\InputFormulario;
+use Application\View\Helper\Botao;
+use Application\View\Helper\FuncaoOnClick;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Validator\AbstractValidator;
 use Zend\Mvc\I18n\Translator;
+use Zend\Session\Config\SessionConfig;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
 
 class Module {
 
@@ -57,8 +62,22 @@ class Module {
                 'inputFormulario' => function($sm) {
                     return new InputFormulario();
                 },
+                'botao' => function($sm) {
+                    return new Botao();
+                },
+                'funcaoOnClick' => function($sm) {
+                    return new FuncaoOnClick();
+                },
             )
         );
+    }
+	
+	public function initSession($config) {
+        $sessionConfig = new SessionConfig();
+        $sessionConfig->setOptions($config);
+        $sessionManager = new SessionManager($sessionConfig);
+        $sessionManager->start();
+        Container::setDefaultManager($sessionManager);
     }
 
 }

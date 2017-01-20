@@ -3,6 +3,11 @@
 namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use Zend\Form\Element\Select;
+use Zend\Form\Element\Text;
+use Zend\Form\Element\Number;
+use Zend\Form\Element\Email;
+use Zend\Form\Element\Tel;
 
 /**
  * Nome: InputFormulario.php
@@ -34,7 +39,16 @@ class InputFormulario extends AbstractHelper {
         }
         $html .= '<div class="form-group col-lg-' . $tamanhoGrid . '">';
         $html .= '<label for="">' . $this->getLabel() . '</label>';
-        $html .= $this->view->formInput($this->getInput());
+       if ($this->getInput() instanceOf Text
+          || $this->getInput() instanceOf Tel
+          || $this->getInput() instanceOf Number
+          || $this->getInput() instanceOf Email) {
+            $html .= $this->view->formInput($this->getInput());
+        }
+       if ($this->getInput() instanceOf Select) {
+            $html .= $this->view->formSelect($this->getInput());
+        }
+      
        $html .=  $this->view->formElementErrors()
                 ->setMessageOpenFormat('<div><p class="text-danger"><small>')
                 ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')

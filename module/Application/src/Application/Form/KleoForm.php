@@ -23,6 +23,7 @@ class KleoForm extends Form {
     const inputCNPJ = 'inputCNPJ';
     const inputId = 'inputId';
     const inputCSRF = 'inputCSRF';
+    const inputSituacao = 'inputSituacao';
 
     const stringClass = 'class';
     const stringClassFormControl = 'form-control';
@@ -30,6 +31,7 @@ class KleoForm extends Form {
     const stringPlaceholder = 'placeholder';
     const stringAction = 'action';
     const stringRequired = 'required';
+    const stringValue = 'value';
 
     const traducaoNome = 'Nome';
     const traducaoDDD = 'DDD';
@@ -38,6 +40,7 @@ class KleoForm extends Form {
     const traducaoRepetirEmail = 'Repetir Email';
     const traducaoEmpresa = 'Empresa';
     const traducaoCNPJ = 'CNPJ';
+    const traducaoSituacao = 'Situação';
     
     public function __construct($name = null) {
     

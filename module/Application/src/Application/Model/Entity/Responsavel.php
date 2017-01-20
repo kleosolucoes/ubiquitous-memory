@@ -54,7 +54,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
      * Retorna o responsavel situacao ativo
      * @return ResponsavelSituacao
      */
-    function getResponsavelSituacaoAtivo() {
+  public function getResponsavelSituacaoAtivo() {
         $responsavelSituacao = null;
         foreach ($this->getResponsavelSituacao() as $rs) {
             if ($rs->verificarSeEstaAtivo()) {

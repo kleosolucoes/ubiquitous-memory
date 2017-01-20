@@ -13,6 +13,7 @@ use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\CadastroEmpresaForm;
 use Application\Form\CadastroShoppingForm;
+use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\KleoForm;
 
 /**
@@ -36,7 +37,7 @@ class CadastroController extends KleoController {
      * Função padrão, traz a tela principal
      * GET /cadastro
      */
-  public function indexAction() {
+  public function indexAction() {    
     return new ViewModel();
   }
 
@@ -51,7 +52,7 @@ class CadastroController extends KleoController {
     if($formulario){
       $cadastroResponsavelForm = $formulario;
     }else{
-      $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResposavel');
+      $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResponsavel');
     }
 
     return new ViewModel(
@@ -91,11 +92,17 @@ class CadastroController extends KleoController {
 
           $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
 
-          return $this->forward()->dispatch(self::controllerCadastro, array(
+          $email = $validatedData[KleoForm::inputEmail];
+          $titulo = 'ToNoShop';
+          $mensagem = '<p>Seu cadastro inicial foi concluido</p>
+          <p>Em breve um dos nosso executivos entrará em contato.</p>';
+
+          self::enviarEmail($email, $titulo, $mensagem);
+
+          return $this->redirect()->toRoute(self::rotaCadastro, array(
             self::stringAction => 'responsavelFinalizado',
           ));
         } else {
-
           return $this->forward()->dispatch(self::controllerCadastro, array(
             self::stringAction => 'responsavel',
             self::stringFormulario => $cadastrarResponsavelForm,
@@ -124,13 +131,77 @@ class CadastroController extends KleoController {
     $this->setLayoutAdm();
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
     $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodos();
-    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodas();
+    $repositorioORM->getSituacaoORM()->encontrarTodas();
     return new ViewModel(
       array(
       'responsaveis' => $responsaveis,
-      'situacoes' => $situacoes,
     )
     );
+  }
+
+  /**
+     * Formulario para alterar situacao
+     * GET /cadastroResponsavelSituacao
+     */
+  public function responsavelSituacaoAction() {
+    $this->setLayoutAdm();    
+    $this->getSessao();
+    
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $sessao = self::getSessao();
+    $idResponsavel = $sessao->idSessao;
+    unset($sessao->idSessao);
+    
+    $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResponsavel); 
+    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodas();
+
+    $responsavelSituacaoForm = new ResponsavelSituacaoForm('ResponsavelSituacao', $idResponsavel, $situacoes, 
+                                                          $responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId());
+    return new ViewModel(
+      array(
+      self::stringFormulario => $responsavelSituacaoForm,
+    ));
+  }
+
+
+  /**
+  * Ação para alterar situacao
+  * GET /cadastroResponsavelSituacaoFinalizar
+  */
+  public function responsavelSituacaoFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      try {
+        $post_data = $request->getPost();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
+        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($post_data[KleoForm::inputId]);
+
+        $responsavelSituacaoAtivo = $responsavel->getResponsavelSituacaoAtivo();
+        $responsavelSituacaoAtivo->setDataEHoraDeInativacao();
+        $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacaoAtivo, false);
+
+        $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId($post_data[KleoForm::inputSituacao]);
+        $responsavelSituacao = new ResponsavelSituacao();
+        $responsavelSituacao->setResponsavel($responsavel);
+        $responsavelSituacao->setSituacao($situacao);
+
+        $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
+
+        $email = $validatedData[KleoForm::inputEmail];
+        $titulo = 'ToNoShop';
+        $mensagem = '<p>Precisamos que você atualize seus dados</p>
+          <p>Clique no link abaixo para atualizar</p>';
+
+        self::enviarEmail($email, $titulo, $mensagem);
+
+        return $this->redirect()->toRoute(self::rotaCadastro, array(
+          self::stringAction => 'responsaveis',
+        ));
+
+      } catch (Exception $exc) {
+        echo $exc->getMessage();
+      }
+    }
   }
 
   /**
@@ -140,7 +211,7 @@ class CadastroController extends KleoController {
     $this->layout('layout/adm');
   }
 
-  
+
   /**
      * Função de cadastro de empresa
      * GET /cadastroEmpresa
@@ -149,7 +220,7 @@ class CadastroController extends KleoController {
     $this->setLayoutAdm();
 
     $formulario = $this->params()->fromRoute(self::stringFormulario);
-   
+
     if($formulario){
       $cadastroEmpresaForm = $formulario;
     }else{
@@ -182,7 +253,7 @@ class CadastroController extends KleoController {
           $validatedData = $cadastrarEmpresaForm->getData();
           $empresa->exchangeArray($cadastrarEmpresaForm->getData());
           $empresa->setTelefone($validatedData[KleoForm::inputDDD]
-                                    . $validatedData[KleoForm::inputTelefone]);
+                                . $validatedData[KleoForm::inputTelefone]);
           $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
           $repositorioORM->getEmpresaORM()->persistir($empresa);
 
@@ -227,7 +298,7 @@ class CadastroController extends KleoController {
     );
   }
 
-  
+
   /**
      * Função de cadastro de shopping
      * GET /cadastroShopping
@@ -236,7 +307,7 @@ class CadastroController extends KleoController {
     $this->setLayoutAdm();
 
     $formulario = $this->params()->fromRoute(self::stringFormulario);
-   
+
     if($formulario){
       $cadastroShoppingForm = $formulario;
     }else{
@@ -270,7 +341,7 @@ class CadastroController extends KleoController {
           $shopping->exchangeArray($cadastrarShoppingForm->getData());
           $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
           $repositorioORM->getShoppingORM()->persistir($shopping);
-          
+
           return $this->redirect()->toRoute(self::rotaCadastro, array(
             self::stringAction => 'shoppings',
           ));
@@ -302,5 +373,7 @@ class CadastroController extends KleoController {
     );
   }
 
-  
+
+
+
 }

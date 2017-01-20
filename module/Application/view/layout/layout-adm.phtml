@@ -126,6 +126,7 @@
                     <li>
                         <a href="#"><span class="nav-label">Cadastro</span><span class="fa arrow"></span> </a>
                         <ul class="nav nav-second-level">
+                            <li><a href="/cadastroResponsaveis">Responsaveis</a></li>
                             <li><a href="/cadastroShoppings">Shoppings</a></li>
                             <li><a href="/cadastroEmpresas">Empresas</a></li>
                         </ul>
@@ -136,7 +137,9 @@
         <?php echo $this->content; ?>       
         <!-- Scripts -->
         <?php
+        $versao = 0.2;
         echo $this->headScript()
+                ->prependFile($this->basePath('js/kleo/funcoes.js?v='.$versao))
                 ->prependFile($this->basePath('js/homer.js'))
                 ->prependFile($this->basePath('plugins/datatables.net-buttons-bs/js/buttons.bootstrap.min.js'))
                 ->prependFile($this->basePath('plugins/datatables.net-buttons/js/dataTables.buttons.min.js'))
