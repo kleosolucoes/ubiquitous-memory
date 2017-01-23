@@ -18,9 +18,19 @@ class KleoForm extends Form {
     const inputDDD = 'inputDDD';
     const inputTelefone = 'inputTelefone';
     const inputEmail = 'inputEmail';
-    const inputRepetirEmail = 'inputRepetirEmail';
-    const inputEmpresa = 'inputEmpresa';
+    const inputCPF = 'inputCPF';
+    const inputDia = 'inputDia';
+    const inputMes = 'inputMes';
+    const inputAno = 'inputAno';
+    
+    const inputNomeFantasia = 'inputNomeFantasia';
+    const inputRazaoSocial = 'inputRazaoSocial';
     const inputCNPJ = 'inputCNPJ';
+    const inputDDDEmpresa = 'inputDDDEmpresa';
+    const inputTelefoneEmpresa = 'inputTelefoneEmpresa';
+    const inputEmailEmpresa = 'inputEmailEmpresa';
+    const inputNumeroLojas = 'inputNumeroLojas';
+  
     const inputId = 'inputId';
     const inputCSRF = 'inputCSRF';
     const inputSituacao = 'inputSituacao';
@@ -37,9 +47,20 @@ class KleoForm extends Form {
     const traducaoDDD = 'DDD';
     const traducaoTelefone = 'Telefone';
     const traducaoEmail = 'Email';
-    const traducaoRepetirEmail = 'Repetir Email';
-    const traducaoEmpresa = 'Empresa';
+    const traducaoDia = 'Dia';
+    const traducaoMes = 'Mês';
+    const traducaoAno = 'Ano';
+    const traducaoCPF = 'CPF';
+  
+    const traducaoNomeFantasia = 'Nome Fantasia';
+    const traducaoRazaoSocial = 'Razão Social';
     const traducaoCNPJ = 'CNPJ';
+    const traducaoDDDEmpresa = 'DDD';
+    const traducaoTelefoneEmpresa = 'Telefone Empresa';
+    const traducaoEmailEmpresa = 'Email Empresa';
+    const traducaoNumeroLojas = 'Número de Lojas';
+    
+  
     const traducaoSituacao = 'Situação';
     
     public function __construct($name = null) {

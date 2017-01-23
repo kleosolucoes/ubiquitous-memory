@@ -9,8 +9,7 @@ return array(
     # definir e gerenciar controllers
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => IndexController::class,
-            'Application\Controller\Adm' => AdmController::class
+            'Application\Controller\Index' => IndexController::class
         ),
         'factories' => array(
             'Application\Controller\Cadastro' => 'Application\Controller\Factory\CadastroControllerFactory',
@@ -31,9 +30,10 @@ return array(
             'cadastro' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/cadastro[:action]',
+                    'route' => '/cadastro[:action][/:token]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
+                        'token' => '[a-zA-Z0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Cadastro',

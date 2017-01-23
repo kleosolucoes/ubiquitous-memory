@@ -22,8 +22,15 @@ class KleoController extends AbstractActionController {
   const stringFormulario = 'formulario';
   const stringAction = 'action';
   const stringId = 'id';
+  const stringToken = 'token';
   const controllerCadastro = 'Application\Controller\Cadastro';
   const rotaCadastro = 'cadastro';
+  const url = 'http://ubiquitous-memory-falecomleonardopereira890682.codeanyapp.com/';
+  const stringMensagem = 'mensagem';
+  
+  const emailTitulo = 'ToNoShop';
+  const emailLeo = 'falecomleonardopereira@gmail.com';
+  const emailKort = 'diegokort@gmail.com';
 
 
   /**
@@ -42,7 +49,7 @@ class KleoController extends AbstractActionController {
      * @param String $titulo
      * @param String $mensagem
      */
-  public static function enviarEmail($email, $titulo, $mensagem) {
+  public static function enviarEmail($emails, $titulo, $mensagem) {
     $mail = new PHPMailer;
     try {
       //            $mail->SMTPDebug = 1;
@@ -54,7 +61,11 @@ class KleoController extends AbstractActionController {
       //      $mail->SMTPSecure = 'tls';                            
       $mail->Port = 587;
       $mail->setFrom('leonardo@circuitodavisao.com.br', 'ToNoShop');
-      $mail->addAddress($email);
+      
+      foreach($emails as $email){
+          $mail->addAddress($email);  
+      }
+      
       $mail->isHTML(true);
       $mail->Subject = $titulo;
       $mail->Body = $mensagem;

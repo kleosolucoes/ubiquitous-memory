@@ -56,6 +56,18 @@ class KleoEntity {
         $this->setHora_inativacao($timeNow->format('H:s:i'));
     }
   
+   /**
+     * Gera um token com data e hora atual em md5
+     * @return String
+     */
+    function gerarToken() {
+        $timeNow = new DateTime();
+        $data = $timeNow->format('Ymd');
+        $hora = $timeNow->format('His');
+        $token = md5($dataEnvio . $hora);
+        return $token;
+    }
+  
     function getId() {
         return $this->id;
     }

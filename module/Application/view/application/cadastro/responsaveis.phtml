@@ -16,12 +16,11 @@
             <table id="tabelaEmpresasParaAnalise" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>Data</th>
+                  <th class="hidden-xs">Data</th>
                   <th>Nome Fantasia</th>
-                  <th>Responsavel</th>
-                  <th>Contato</th>
-                  <th>Status</th>
-                  <th></th>
+                  <th class="hidden-xs">Responsavel</th>
+                  <th class="hidden-xs">Contato</th>
+                  <th>Situação</th>
                 </tr>
               </thead>
               <tbody>
@@ -29,12 +28,16 @@
                 foreach($this->responsaveis as $responsavel){
 
                   echo '<tr>';
-                  echo '<td>'.$responsavel->getData_criacao(). '</td>';
-                  echo '<td>'.$responsavel->getEmpresa().'</td>';
-                  echo '<td>'.$responsavel->getNome().'</td>';
-                  echo '<td>'.$responsavel->getTelefone().'</td>';
-                  echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome().'</td>';
-                  echo '<td>'. $this->botao('Alterar Situacao', $this->funcaoOnClick('kleo("cadastroResponsavelSituacao", '.$responsavel->getId().');')) .'</td>';
+                  echo '<td class="hidden-xs">'.$responsavel->getData_criacao(). '</td>';
+                  echo '<td>'.$responsavel->getNomeFantasia().'</td>';
+                  echo '<td class="hidden-xs">'.$responsavel->getNome().'</td>';
+                  echo '<td class="hidden-xs">'.$responsavel->getTelefone().'</td>';
+                  echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome();
+                  if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === 1
+                    || $responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === 3){
+                    echo $this->botao('Alterar', $this->funcaoOnClick('kleo("cadastroResponsavelSituacao", '.$responsavel->getId().');'));
+                  }
+                  echo '</td>';
                   echo '</tr>';
                 }
                 ?>                                

@@ -25,10 +25,10 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
                             echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
                             echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
                             echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
-                            echo $this->inputFormulario(KleoForm::traducaoEmpresa, $formulario->get(KleoForm::inputEmpresa));
+                            echo $this->inputFormulario(KleoForm::traducaoNomeFantasia, $formulario->get(KleoForm::inputNomeFantasia));
                             echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
+                            echo $this->botao('Cadastrar', $this->funcaoOnClick('this.form.submit()'));
                             ?>
-                            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
                         </form>
                     </div>
                 </div>

@@ -60,10 +60,10 @@ class CadastroResponsavelForm extends KleoForm {
 
         $this->add(
                 (new Text())
-                        ->setName(self::inputEmpresa)
+                        ->setName(self::inputNomeFantasia)
                         ->setAttributes([
                             self::stringClass => self::stringClassFormControl,
-                            self::stringId => self::inputEmpresa,
+                            self::stringId => self::inputNomeFantasia,
                             self::stringRequired => self::stringRequired,
                         ])
         );

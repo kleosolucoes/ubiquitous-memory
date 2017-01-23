@@ -253,6 +253,17 @@ class Situacao extends \Application\Model\Entity\Situacao implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
+    public function gerarToken()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'gerarToken', array());
+
+        return parent::gerarToken();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getId()
     {
         if ($this->__isInitialized__ === false) {

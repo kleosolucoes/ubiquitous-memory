@@ -20,7 +20,16 @@ class ResponsavelSituacaoForm extends KleoForm {
       
       $arraySituacoes = [];
       foreach($todasSituacoes as $situacao){
-        $arraySituacoes[$situacao->getId()] = $situacao->getNome();
+        $adicionar = false;
+        if($situacao->getId() === $idSituacao){
+            $adicionar = true;
+        }
+        if($situacao->getId() === ($idSituacao + 1)){
+            $adicionar = true;
+        }
+        if($adicionar){
+          $arraySituacoes[$situacao->getId()] = $situacao->getNome();  
+        }
       }
         $inputSelectSituacoes = new Select();
         $inputSelectSituacoes->setName(self::inputSituacao);

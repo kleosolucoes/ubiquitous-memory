@@ -25,7 +25,7 @@ class Botao extends AbstractHelper {
         if($this->getTipoBotao() === 2){
             $classCor = 'default';
         }
-        $html .= '<button type="button" ' . $this->getExtra() . ' class="btn btn-' . $classCor . ' pull-right ml10">';
+        $html .= '<button style="margin-left:10px; padding: 10px;" type="button" ' . $this->getExtra() . ' class="btn btn-' . $classCor . ' pull-right ml10">';
         $html .= $this->view->translate($this->getLabel());
         $html .= '</button>';
         return $html;

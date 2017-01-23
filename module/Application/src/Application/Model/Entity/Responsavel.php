@@ -26,6 +26,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   
     protected $inputFilter;
     protected $inputFilterCadastrarResponsavel;
+    protected $inputFilterAtualizarResponsavel;
     /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavel") 
      */
@@ -43,13 +44,34 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
 
     /** @ORM\Column(type="string") */
     protected $email;
+    
+    /** @ORM\Column(type="integer") */
+    protected $cpf;
+  
+    /** @ORM\Column(type="string") */
+    protected $data_nascimento;
 
     /** @ORM\Column(type="string") */
-    protected $empresa;
+    protected $nome_fantasia;
+
+    /** @ORM\Column(type="string") */
+    protected $razao_social;
 
     /** @ORM\Column(type="integer") */
     protected $cnpj;
+
+    /** @ORM\Column(type="integer") */
+    protected $telefone_empresa;
   
+    /** @ORM\Column(type="string") */
+    protected $email_empresa;
+
+    /** @ORM\Column(type="integer") */
+    protected $numero_lojas;
+  
+  /** @ORM\Column(type="string") */
+    protected $token;
+
   /**
      * Retorna o responsavel situacao ativo
      * @return ResponsavelSituacao
@@ -64,6 +86,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         }
         return $responsavelSituacao;
     }
+  
 
     function setNome($nome) {
         $this->nome = $nome;
@@ -89,12 +112,36 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         return $this->email;
     }
 
-    function setEmpresa($empresa) {
-        $this->empresa = $empresa;
+    function setCPF($cpf) {
+        $this->cpf = $cpf;
     }
 
-    function getEmpresa() {
-        return $this->empresa;
+    function getCPF() {
+        return $this->cpf;
+    }
+
+    function setDataNascimento($dataNascimento) {
+        $this->data_nascimento = $dataNascimento;
+    }
+
+    function getDataNascimento() {
+        return $this->data_nascimento;
+    }
+
+    function setNomeFantasia($nomeFantasia) {
+        $this->nome_fantasia = $nomeFantasia;
+    }
+  
+    function getNomeFantasia() {
+        return $this->nome_fantasia;
+    }
+
+    function getRazaoSocial() {
+        return $this->razao_social;
+    }
+
+    function setRazaoSocial($razaoSocial) {
+        $this->razao_social = $razaoSocial;
     }
 
     function setCnpj($cnpj) {
@@ -105,21 +152,63 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         return $this->cnpj;
     }
 
+    function setTelefoneEmpresa($telefoneEmpresa) {
+        $this->telefone_empresa = $telefoneEmpresa;
+    }
+
+    function getTelefoneEmpresa() {
+        return $this->telefone_empresa;
+    }
+
+    function setEmailEmpresa($emailEmpresa) {
+        $this->email_empresa = $emailEmpresa;
+    }
+
+    function getEmailEmpresa() {
+        return $this->email_empresa;
+    }
+
+    function setNumeroLojas($numeroLojas) {
+        $this->numero_lojas = $numeroLojas;
+    }
+
+    function getNumeroLojas() {
+        return $this->numero_lojas;
+    }
+
     function getResponsavelSituacao() {
         return $this->responsavelSituacao;
     }
     function setResponsavelSituacao($responsavelSituacao) {
         $this->responsavelSituacao = $responsavelSituacao;
     }
+  
+    function getToken() {
+        return $this->token;
+    }
+    function setToken($token) {
+        $this->token = $token;
+    }
+  
     public function exchangeArray($data) {
         $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
-        $this->ddd = (!empty($data[KleoForm::inputDDD]) ? strtoupper($data[KleoForm::inputDDD]) : null);
-        $this->telefone = (!empty($data[KleoForm::inputTelefone]) ? strtoupper($data[KleoForm::inputTelefone]) : null);
-        $this->email = (!empty($data[KleoForm::inputEmail]) ? strtoupper($data[KleoForm::inputEmail]) : null);
-        $this->repetirEmail = (!empty($data[KleoForm::inputRepetirEmail]) ? strtoupper($data[KleoForm::inputRepetirEmail]) : null);
-        $this->empresa = (!empty($data[KleoForm::inputEmpresa]) ? strtoupper($data[KleoForm::inputEmpresa]) : null);
-        $this->cnpj = (!empty($data[KleoForm::inputCNPJ]) ? strtoupper($data[KleoForm::inputCNPJ]) : null);
+        $this->telefone = ((!empty($data[KleoForm::inputTelefone]) && !empty($data[KleoForm::inputDDD])) 
+                           ? $data[KleoForm::inputDDD] . $data[KleoForm::inputTelefone] : null);
+        $this->email = (!empty($data[KleoForm::inputEmail]) ? strtolower($data[KleoForm::inputEmail]) : null);
+        $this->cpf = (!empty($data[KleoForm::inputCPF]) ? $data[KleoForm::inputCPF] : null);
+        $this->data_nascimento = ((!empty($data[KleoForm::inputDia]) && !empty($data[KleoForm::inputMes]) && !empty($data[KleoForm::inputAno])) 
+                                  ? $data[KleoForm::inputAno].'-'.$data[KleoForm::inputMes].'-'.$data[KleoForm::inputDia] : null);
+        
+        $this->nome_fantasia = (!empty($data[KleoForm::inputNomeFantasia]) ? strtoupper($data[KleoForm::inputNomeFantasia]) : null);
+        $this->razao_social = (!empty($data[KleoForm::inputRazaoSocial]) ? strtoupper($data[KleoForm::inputRazaoSocial]) : null);
+        $this->cnpj = (!empty($data[KleoForm::inputCNPJ]) ? $data[KleoForm::inputCNPJ] : null);
+        $this->telefone_empresa = ((!empty($data[KleoForm::inputTelefoneEmpresa]) && !empty($data[KleoForm::inputDDDEmpresa])) 
+                                           ? $data[KleoForm::inputDDDEmpresa] . $data[KleoForm::inputTelefoneEmpresa] : null);
+        $this->email_empresa = (!empty($data[KleoForm::inputEmailEmpresa]) ? strtolower($data[KleoForm::inputEmailEmpresa]) : null);
+        $this->numero_lojas = (!empty($data[KleoForm::inputNumeroLojas]) ? $data[KleoForm::inputNumeroLojas] : null);
+        
     }
+  
   public function getInputFilterCadastrarResponsavel() {
         if (!$this->inputFilterCadastrarResponsavel) {
             $inputFilter = new InputFilter();
@@ -196,7 +285,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
             $inputFilter->add($email);
           
             $inputFilter->add(array(
-                'name' => KleoForm::inputEmpresa,
+                'name' => KleoForm::inputNomeFantasia,
                 'required' => true,
                 'filter' => array(
                     array('name' => 'StripTags'), // removel xml e html string
@@ -244,6 +333,161 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         }
         return $this->inputFilterCadastrarResponsavel;
     }
+  
+  public function getInputFilterAtualizarResponsavel() {
+      if (!$this->inputFilterAtualizarResponsavel) {
+            $inputFilter = self::getInputFilterCadastrarResponsavel();
+            $inputFilter->add(array(
+                'name' => KleoForm::inputCPF,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'Int'), // transforma string para inteiro
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 11,
+                            'max' => 11,
+                        ),
+                    ),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name' => KleoForm::inputDia,
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name' => KleoForm::inputMes,
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                ),
+            ));
+        
+            $inputFilter->add(array(
+                'name' => KleoForm::inputAno,
+                'required' => true,
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                ),
+            ));
+            
+            $email = new Input(KleoForm::inputEmailEmpresa);
+            $email->getValidatorChain()
+                  ->attach(new Validator\EmailAddress());
+            $inputFilter->add($email);
+          
+            $inputFilter->add(array(
+                'name' => KleoForm::inputRazaoSocial,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'StringToUpper'), // transforma em maiusculo
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 3,
+                            'max' => 80,
+                        ),
+                    ),
+                ),
+            ));
+        
+            $inputFilter->add(array(
+                'name' => KleoForm::inputDDDEmpresa,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'Int'), // transforma string para inteiro
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 2,
+                        ),
+                    ),
+                ),
+            ));
+            $inputFilter->add(array(
+                'name' => KleoForm::inputTelefoneEmpresa,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'Int'), // transforma string para inteiro
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 8, 
+                            'max' => 9, 
+                        ),
+                    ),
+                ),
+            ));
+        
+            $inputFilter->add(array(
+                'name' => KleoForm::inputNumeroLojas,
+                'required' => true,
+                'filter' => array(
+                    array('name' => 'StripTags'), // removel xml e html string
+                    array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+                    array('name' => 'Int'), // transforma string para inteiro
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                    ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1, 
+                        ),
+                    ),
+                ),
+            ));
+        
+        
+            $this->inputFilterAtualizarResponsavel = $inputFilter;
+        }
+        return $this->inputFilterAtualizarResponsavel;
+  }
   
     public function setInputFilter(InputFilterInterface $inputFilter) {
         throw new Exception("Nao utilizado");

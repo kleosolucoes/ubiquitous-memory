@@ -3,6 +3,7 @@
 namespace Application\Model\ORM;
 
 use Application\Model\Entity\Responsavel;
+use Application\Controller\KleoController;
 use Doctrine\ORM\EntityManager;
 use Exception;
 
@@ -19,9 +20,24 @@ class ResponsavelORM extends KleoORM {
      */
     public function encontrarTodos() {
         $entidades = $this->getEntityManager()->getRepository($this->getEntity())->findAll();
-        if (!$entidades) {
-            throw new Exception("Não foi encontrado nenhum registro");
-        }
         return $entidades;
+    }
+  
+  /**
+     * Localizar responsavel por token
+     * @param String $token
+     * @return Responsavel
+     * @throws Exception
+     */
+    public function encontrarPorToken($token) {
+      $entidade = null;
+        try {
+            $entidade = $this->getEntityManager()
+                    ->getRepository($this->getEntity())
+                    ->findOneBy(array(KleoController::stringToken => $token));
+            return $entidade;
+        } catch (Exception $exc) {
+            echo $exc->getMessages();
+        }
     }
 }
