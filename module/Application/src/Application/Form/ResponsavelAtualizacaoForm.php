@@ -7,6 +7,7 @@ use Zend\Form\Element\Number;
 use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
 use Zend\Form\Element\Select;
+use Zend\Form\Element\File;
 use Application\Model\Entity\Responsavel;
 
 /**
@@ -22,7 +23,7 @@ class ResponsavelAtualizacaoForm extends KleoForm {
 
     $inputId = $this->get(self::inputId);
     $inputId->setValue($responsavel->getId());
-      
+
     $this->add(
       (new Text())
       ->setName(self::inputNome)
@@ -66,8 +67,8 @@ class ResponsavelAtualizacaoForm extends KleoForm {
       self::stringValue => $responsavel->getEmail()
     ])
     );
-    
-    
+
+
     $this->add(
       (new Number())
       ->setName(self::inputCPF)
@@ -127,7 +128,7 @@ class ResponsavelAtualizacaoForm extends KleoForm {
     $inputSelectAnoDataNascimento->setValueOptions($arrayAnoDataNascimento);
     $inputSelectAnoDataNascimento->setEmptyOption(self::traducaoAno);
     $this->add($inputSelectAnoDataNascimento);
-    
+
     $this->add(
       (new Text())
       ->setName(self::inputNomeFantasia)
@@ -138,7 +139,7 @@ class ResponsavelAtualizacaoForm extends KleoForm {
       self::stringValue => $responsavel->getNomeFantasia()
     ])
     );
-    
+
     $this->add(
       (new Text())
       ->setName(self::inputRazaoSocial)
@@ -148,7 +149,7 @@ class ResponsavelAtualizacaoForm extends KleoForm {
       self::stringRequired => self::stringRequired,
     ])
     );
-    
+
     $this->add(
       (new Number())
       ->setName(self::inputCNPJ)
@@ -159,7 +160,7 @@ class ResponsavelAtualizacaoForm extends KleoForm {
       self::stringValue => $responsavel->getCNPJ()
     ])
     );
-    
+
     $this->add(
       (new Number())
       ->setName(self::inputDDDEmpresa)
@@ -190,12 +191,32 @@ class ResponsavelAtualizacaoForm extends KleoForm {
     ])
     );
 
-     $this->add(
+    $this->add(
       (new Number())
       ->setName(self::inputNumeroLojas)
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputNumeroLojas,
+      self::stringRequired => self::stringRequired,
+    ])
+    );
+
+    $this->add(
+      (new File())
+      ->setName(self::inputUploadCPF)
+      ->setAttributes([
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputUploadCPF,
+      self::stringRequired => self::stringRequired,
+    ])
+    );
+
+    $this->add(
+      (new File())
+      ->setName(self::inputUploadContratoSocial)
+      ->setAttributes([
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputUploadContratoSocial,
       self::stringRequired => self::stringRequired,
     ])
     );

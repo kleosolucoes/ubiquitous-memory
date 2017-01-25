@@ -15,6 +15,9 @@ CREATE TABLE `responsavel` (
   `hora_criacao` time NOT NULL,
   `data_inativacao` date DEFAULT NULL,
   `hora_inativacao` time DEFAULT NULL,
+  `token` varchar(80) DEFAULT NULL,
+  `upload_cpf` varchar(80) DEFAULT NULL,
+  `upload_contrato_social` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

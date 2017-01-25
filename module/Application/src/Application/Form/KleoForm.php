@@ -22,9 +22,11 @@ class KleoForm extends Form {
     const inputDia = 'inputDia';
     const inputMes = 'inputMes';
     const inputAno = 'inputAno';
+    const inputUploadCPF = 'inputUploadCPF';
     
     const inputNomeFantasia = 'inputNomeFantasia';
     const inputRazaoSocial = 'inputRazaoSocial';
+    const inputUploadContratoSocial = 'inputUploadContratoSocial';
     const inputCNPJ = 'inputCNPJ';
     const inputDDDEmpresa = 'inputDDDEmpresa';
     const inputTelefoneEmpresa = 'inputTelefoneEmpresa';
@@ -51,6 +53,7 @@ class KleoForm extends Form {
     const traducaoMes = 'Mês';
     const traducaoAno = 'Ano';
     const traducaoCPF = 'CPF';
+    const traducaoUploadCPF = 'Suba um arquivo com o CPF';
   
     const traducaoNomeFantasia = 'Nome Fantasia';
     const traducaoRazaoSocial = 'Razão Social';
@@ -59,6 +62,7 @@ class KleoForm extends Form {
     const traducaoTelefoneEmpresa = 'Telefone Empresa';
     const traducaoEmailEmpresa = 'Email Empresa';
     const traducaoNumeroLojas = 'Número de Lojas';
+    const traducaoUploadContratoSocial = 'Suba um arquivo com o contrato social';
     
   
     const traducaoSituacao = 'Situação';

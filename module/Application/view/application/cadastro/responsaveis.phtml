@@ -25,6 +25,8 @@
               </thead>
               <tbody>
                 <?php
+                $tipoPrimeiroContato = 1;
+                $tipoDocumentosEntregues = 3;
                 foreach($this->responsaveis as $responsavel){
 
                   echo '<tr>';
@@ -33,8 +35,15 @@
                   echo '<td class="hidden-xs">'.$responsavel->getNome().'</td>';
                   echo '<td class="hidden-xs">'.$responsavel->getTelefone().'</td>';
                   echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome();
-                  if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === 1
-                    || $responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === 3){
+                  if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $tipoPrimeiroContato
+                    || $responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $tipoDocumentosEntregues){
+                    
+                     if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $tipoDocumentosEntregues){
+                       $urlCPF = '/assets/'.$responsavel->getUploadCPF();
+                       $urlContratoSocial = '/assets/'.$responsavel->getUploadContratoSocial();
+                        echo $this->botao('CPF', $this->funcaoOnClick('window.open("'.$urlCPF.'", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");'));
+                        echo $this->botao('ContratoSocial', $this->funcaoOnClick('window.open("'.$urlContratoSocial.'", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");'));
+                     }
                     echo $this->botao('Alterar', $this->funcaoOnClick('kleo("cadastroResponsavelSituacao", '.$responsavel->getId().');'));
                   }
                   echo '</td>';

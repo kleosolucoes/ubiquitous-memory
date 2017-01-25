@@ -205,7 +205,7 @@ class CadastroController extends KleoController {
           $token = '';
           $situacaoAguardandoDocumentacao = 2;
           $situacaoAtivo = 4;
-          
+
           if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAguardandoDocumentacao){
             $token = $responsavel->gerarToken();
             $responsavel->setToken($token);
@@ -289,12 +289,20 @@ class CadastroController extends KleoController {
 
         $responsavelAtualizacaoForm = new ResponsavelAtualizacaoForm(null, $responsavel);
         $responsavelAtualizacaoForm->setInputFilter($responsavel->getInputFilterAtualizarResponsavel());
-        $responsavelAtualizacaoForm->setData($post_data);
+
+        $post = array_merge_recursive(
+          $request->getPost()->toArray(),
+          $request->getFiles()->toArray()
+        );
+
+        $responsavelAtualizacaoForm->setData($post);
 
         if ($responsavelAtualizacaoForm->isValid()) {
 
           $responsavel->exchangeArray($responsavelAtualizacaoForm->getData());
           $responsavel->setToken(null);
+
+          $responsavel = self::escreveDocumentos($responsavel);
 
           $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
           $repositorioORM->getResponsavelORM()->persistir($responsavel);
@@ -311,12 +319,11 @@ class CadastroController extends KleoController {
 
           $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
 
-
           $emails[] = $validatedData[KleoForm::inputEmail];
 
           $titulo = self::emailTitulo;
           $mensagem = '<p>Dados atualizados.</p>
-          <p>Em breve um dos nosso executivos entrará em contato.</p>';
+                    <p>Em breve um dos nosso executivos entrará em contato.</p>';
 
           self::enviarEmail($emails, $titulo, $mensagem);
           unset($emails);
@@ -347,9 +354,6 @@ class CadastroController extends KleoController {
     }
     return new ViewModel();
   }
-
-
-
 
   /**
      * Seta o layout da administracao
@@ -445,7 +449,6 @@ class CadastroController extends KleoController {
     );
   }
 
-
   /**
      * Função de cadastro de shopping
      * GET /cadastroShopping
@@ -519,8 +522,5 @@ class CadastroController extends KleoController {
     )
     );
   }
-
-
-
 
 }
