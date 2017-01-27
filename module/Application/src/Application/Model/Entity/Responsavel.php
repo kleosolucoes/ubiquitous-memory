@@ -307,6 +307,26 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
       $inputFilter->add($email);
 
       $inputFilter->add(array(
+        'name' => KleoForm::inputRepetirEmail,
+        'required' => true,
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',        
+      ),
+        array(
+        'name'    => 'Identical',        
+        'options' => array(
+        'token' => KleoForm::inputEmail,
+        'messages' => array(
+        \Zend\Validator\Identical::NOT_SAME => 'Emails são diferentes',
+        \Zend\Validator\Identical::MISSING_TOKEN => 'Repita o Email'      
+      ),
+      ),
+      ),
+      ),
+      ));
+
+      $inputFilter->add(array(
         'name' => KleoForm::inputNomeFantasia,
         'required' => true,
         'filter' => array(
@@ -359,7 +379,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   public function getInputFilterAtualizarResponsavel() {
     if (!$this->inputFilterAtualizarResponsavel) {
       $inputFilter = self::getInputFilterCadastrarResponsavel();
-      
+
       $inputFilter->add(array(
         'name' => KleoForm::inputCPF,
         'required' => true,
@@ -382,7 +402,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
       ),
       ),
       ));
-      
+
       $inputFilter->add(array(
         'name' => KleoForm::inputUploadCPF,
         'required' => true,
@@ -392,7 +412,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
       ),
       ),
       ));
-      
+
       $inputFilter->add(array(
         'name' => KleoForm::inputDia,
         'required' => true,
@@ -421,7 +441,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
       ),
       ),
       ));
-      
+
       $inputFilter->add(array(
         'name' => KleoForm::inputUploadContratoSocial,
         'required' => true,
@@ -536,7 +556,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   public function setInputFilter(InputFilterInterface $inputFilter) {
     throw new Exception("Nao utilizado");
   }
-  
+
   public function getInputFilter() {
 
   }

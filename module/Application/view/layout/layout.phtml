@@ -1,4 +1,7 @@
-<?php echo $this->doctype(); ?>
+<?php 
+echo $this->doctype();
+$versao = 0.2;
+?>
 
 <html lang="pt-br">
     <head>
@@ -14,6 +17,8 @@
         <!-- Le styles -->
         <?php
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath('css/kleo/style.css?v='.$versao))
+                ->prependStylesheet($this->basePath('plugins/animate.css/animate.min.css'))
                 ->prependStylesheet($this->basePath('css/colors/default.css'))
                 ->prependStylesheet($this->basePath('css/style.css'))
                 ->prependStylesheet($this->basePath('plugins/rs-plugin/css/settings.css'))
@@ -28,6 +33,7 @@
         ?>
     </head>
     <body>
+        
         <!-- HEADER -->
         <div class="header clearfix">
 
@@ -60,7 +66,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="index-v1.html"><img src="img/logo.png" alt="logo"></a>
+                        <a class="navbar-brand" href="index-v1.html"><img src="/img/logo_azul.png" alt="logo"></a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,6 +84,7 @@
 
        
         <div class="container">
+          <?php echo $this->splash(); ?>
             <?php echo $this->content; ?>
         </div> <!-- /container -->
 
@@ -160,20 +167,13 @@
                     <div class="col-sm-7 col-xs-12">
                         <p>&copy; 2016 Copyright Bigbag Store Bootstrap Template by <a target="_blank" href="http://www.iamabdus.com/">Abdus</a>.</p>
                     </div>
-                    <div class="col-sm-5 col-xs-12">
-                        <ul class="list-inline">
-                            <li><img src="img/home/footer/card1.png"></li>
-                            <li><img src="img/home/footer/card2.png"></li>
-                            <li><img src="img/home/footer/card3.png"></li>
-                            <li><img src="img/home/footer/card4.png"></li>
-                        </ul> 
-                    </div>
                 </div>
             </div>
         </div>
         <!-- Scripts -->
         <?php
         echo $this->headScript()
+                ->prependFile($this->basePath('js/kleo/funcoes.js?v='.$versao))
                 ->prependFile($this->basePath('js/custom.js'))
                 ->prependFile($this->basePath('plugins/countdown/jquery.syotimer.js'))
                 ->prependFile($this->basePath('plugins/selectbox/jquery.selectbox-0.1.3.min.js'))

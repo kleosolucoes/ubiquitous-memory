@@ -15,6 +15,7 @@ class RepositorioORM {
     private $_responsavelORM;
     private $_empresaORM;
     private $_situacaoORM;
+    private $_estadoORM;
     private $_responsavelSituacaoORM;
     private $_empresaSituacaoORM;
     private $_shoppingORM;
@@ -38,6 +39,7 @@ class RepositorioORM {
         }
         return $this->_responsavelORM;
     }
+  
     /**
      * Metodo public para obter a instancia do SituacaoORM
      * @return SituacaoORM
@@ -47,8 +49,18 @@ class RepositorioORM {
             $this->_situacaoORM = new SituacaoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Situacao');
         }
         return $this->_situacaoORM;
-    }
+    }  
   
+    /**
+     * Metodo public para obter a instancia do EstadoORM
+     * @return EstadoORM
+     */
+    public function getEstadoORM() {
+        if (is_null($this->_estadoORM)) {
+            $this->_estadoORM = new EstadoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Estado');
+        }
+        return $this->_estadoORM;
+    }  
   
     /**
      * Metodo public para obter a instancia do ResponsavelSituacaoORM

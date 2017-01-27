@@ -23,10 +23,8 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
           echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
           echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
+          echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
           ?>
-          <div class="text-center">
-            <button class="btn btn-success">Cadastrar</button>
-          </div>
         </div>
       </div>
     </div>

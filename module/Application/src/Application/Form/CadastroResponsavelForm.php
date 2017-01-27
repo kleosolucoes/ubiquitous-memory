@@ -60,6 +60,16 @@ class CadastroResponsavelForm extends KleoForm {
 
         $this->add(
                 (new Text())
+                        ->setName(self::inputRepetirEmail)
+                        ->setAttributes([
+                            self::stringClass => self::stringClassFormControl,
+                            self::stringId => self::inputRepetirEmail,
+                            self::stringRequired => self::stringRequired,
+                        ])
+        );
+
+        $this->add(
+                (new Text())
                         ->setName(self::inputNomeFantasia)
                         ->setAttributes([
                             self::stringClass => self::stringClassFormControl,

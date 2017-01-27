@@ -11,7 +11,6 @@ CREATE TABLE `responsavel_situacao` (
   KEY `responsavel_id` (`responsavel_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 ALTER TABLE `responsavel_situacao`
   ADD CONSTRAINT `fk_responsavel_situacao_situacao_id` FOREIGN KEY (`situacao_id`) REFERENCES `situacao` (`id`),
   ADD CONSTRAINT `fk_responsavel_situacao_resposavel_id` FOREIGN KEY (`responsavel_id`) REFERENCES `responsavel` (`id`);

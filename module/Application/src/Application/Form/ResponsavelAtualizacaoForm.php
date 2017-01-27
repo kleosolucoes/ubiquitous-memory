@@ -8,6 +8,7 @@ use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\File;
+use Zend\Form\Element\Checkbox;
 use Application\Model\Entity\Responsavel;
 
 /**
@@ -220,6 +221,5 @@ class ResponsavelAtualizacaoForm extends KleoForm {
       self::stringRequired => self::stringRequired,
     ])
     );
-
   }
 }

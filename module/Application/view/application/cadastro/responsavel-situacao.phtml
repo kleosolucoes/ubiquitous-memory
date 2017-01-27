@@ -28,8 +28,8 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           echo $this->inputFormulario(KleoForm::traducaoSituacao, $formulario->get(KleoForm::inputSituacao));
           ?>
           <div class="text-center">
-            <?php echo $this->botao('Atualizar', $this->funcaoOnClick('this.form.submit()')); ?>
-            <?php echo $this->botao('Voltar', $this->funcaoOnClick('location.href="/cadastroResponsaveis"'), 2); ?>
+            <?php echo $this->botao('Atualizar', $this->funcaoOnClickSubmeterFormulario()); ?>
+            <?php echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroResponsaveis")'), 2); ?>
           </div>
         </div>
       </div>

@@ -19,28 +19,36 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
         <div class="panel panel-default">
           <div class="panel-heading"><h3>Atualização</h3></div>
           <div class="panel-body">              
-              <?php
-              echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
-              echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
-              echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
-              echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
-              echo $this->inputFormulario(KleoForm::traducaoCPF, $formulario->get(KleoForm::inputCPF));
-              echo $this->inputFormulario(KleoForm::traducaoUploadCPF, $formulario->get(KleoForm::inputUploadCPF));
-              echo $this->inputFormulario(KleoForm::traducaoDia, $formulario->get(KleoForm::inputDia), 4);
-              echo $this->inputFormulario(KleoForm::traducaoMes, $formulario->get(KleoForm::inputMes), 4);
-              echo $this->inputFormulario(KleoForm::traducaoAno, $formulario->get(KleoForm::inputAno), 4);
+            <?php
+            echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
+            echo '<div class="form-group col-lg-12">';
+            echo '<label>Telefone Pessoal</label>';
+            echo '</div>';
+            echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
+            echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
+            echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
+            echo $this->inputFormulario(KleoForm::traducaoCPF, $formulario->get(KleoForm::inputCPF));
+            echo $this->inputFormulario(KleoForm::traducaoUploadCPF, $formulario->get(KleoForm::inputUploadCPF));
+            echo '<div class="form-group col-lg-12">';
+            echo '<label>Data de Nascimento</label>';
+            echo '</div>';
+            echo $this->inputFormulario(KleoForm::traducaoDia, $formulario->get(KleoForm::inputDia), 4);
+            echo $this->inputFormulario(KleoForm::traducaoMes, $formulario->get(KleoForm::inputMes), 4);
+            echo $this->inputFormulario(KleoForm::traducaoAno, $formulario->get(KleoForm::inputAno), 4);
 
-              echo $this->inputFormulario(KleoForm::traducaoNomeFantasia, $formulario->get(KleoForm::inputNomeFantasia));
-              echo $this->inputFormulario(KleoForm::traducaoRazaoSocial, $formulario->get(KleoForm::inputRazaoSocial));
-              echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
-              echo $this->inputFormulario(KleoForm::traducaoUploadContratoSocial, $formulario->get(KleoForm::inputUploadContratoSocial));
-              echo $this->inputFormulario(KleoForm::traducaoDDDEmpresa, $formulario->get(KleoForm::inputDDDEmpresa), 3);
-              echo $this->inputFormulario(KleoForm::traducaoTelefoneEmpresa, $formulario->get(KleoForm::inputTelefoneEmpresa), 9);
-              echo $this->inputFormulario(KleoForm::traducaoEmailEmpresa, $formulario->get(KleoForm::inputEmailEmpresa));
-              echo $this->inputFormulario(KleoForm::traducaoNumeroLojas, $formulario->get(KleoForm::inputNumeroLojas));
-              
-              echo $this->botao('Atualizar', $this->funcaoOnClick('this.form.submit()'));
-              ?>
+            echo $this->inputFormulario(KleoForm::traducaoNomeFantasia, $formulario->get(KleoForm::inputNomeFantasia));
+            echo $this->inputFormulario(KleoForm::traducaoRazaoSocial, $formulario->get(KleoForm::inputRazaoSocial));
+            echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
+            echo $this->inputFormulario(KleoForm::traducaoUploadContratoSocial, $formulario->get(KleoForm::inputUploadContratoSocial));
+            echo $this->inputFormulario(KleoForm::traducaoDDDEmpresa, $formulario->get(KleoForm::inputDDDEmpresa), 3);
+            echo $this->inputFormulario(KleoForm::traducaoTelefoneEmpresa, $formulario->get(KleoForm::inputTelefoneEmpresa), 9);
+            echo $this->inputFormulario(KleoForm::traducaoEmailEmpresa, $formulario->get(KleoForm::inputEmailEmpresa));
+            echo $this->inputFormulario(KleoForm::traducaoNumeroLojas, $formulario->get(KleoForm::inputNumeroLojas));
+            
+            echo ' <div class="checkbox col-lg-12"><label> <input type="checkbox" value=""> Termos de aceitação </label></div>';
+
+            echo $this->botao('Atualizar', $this->funcaoOnClick('submeterFormulario(this.form)'));
+            ?>
           </div>
         </div>
       </div>

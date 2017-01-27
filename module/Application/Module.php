@@ -13,6 +13,8 @@ namespace Application;
 use Application\View\Helper\InputFormulario;
 use Application\View\Helper\Botao;
 use Application\View\Helper\FuncaoOnClick;
+use Application\View\Helper\FuncaoOnClickSubmeterFormulario;
+use Application\View\Helper\Splash;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Validator\AbstractValidator;
@@ -67,6 +69,12 @@ class Module {
                 },
                 'funcaoOnClick' => function($sm) {
                     return new FuncaoOnClick();
+                },
+                'funcaoOnClickSubmeterFormulario' => function($sm) {
+                    return new FuncaoOnClickSubmeterFormulario();
+                },
+                'splash' => function($sm) {
+                    return new Splash();
                 },
             )
         );

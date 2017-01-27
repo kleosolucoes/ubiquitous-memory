@@ -130,16 +130,16 @@ class KleoController extends AbstractActionController {
       if ($adaptadorHttp->isUploaded($file) && $adaptadorHttp->isValid($file)) {
         $extension = substr($info['name'], strrpos($info['name'], '.') + 1);
         $filename = '';          
-       
-          if($file === KleoForm::inputUploadCPF){
-            $filename = $entidade->getId() . '_cpf.' . $extension;
-            $entidade->setUploadCPF($filename);
-          }
-          if($file === KleoForm::inputUploadContratoSocial){
-            $filename = $entidade->getId() . '_contrato_social.' . $extension;
-            $entidade->setUploadContratoSocial($filename);
-          }
-        
+
+        if($file === KleoForm::inputUploadCPF){
+          $filename = $entidade->getId() . '_cpf.' . $extension;
+          $entidade->setUploadCPF($filename);
+        }
+        if($file === KleoForm::inputUploadContratoSocial){
+          $filename = $entidade->getId() . '_contrato_social.' . $extension;
+          $entidade->setUploadContratoSocial($filename);
+        }
+
         $adaptadorHttp->addFilter('Rename',
                                   array(
           'target' => $destino . '/' . $filename, 

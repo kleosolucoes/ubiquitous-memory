@@ -19,11 +19,11 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
       <div class="hpanel">
         <div class="panel-body">                           
           <?php
-          echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
+          echo $this->inputFormulario(KleoForm::traducaoShopping, $formulario->get(KleoForm::inputNome));
+          echo $this->inputFormulario(KleoForm::traducaoEstado, $formulario->get(KleoForm::inputEstadoId));
+          echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
+          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroShoppings")'), 2);
           ?>
-          <div class="text-center">
-            <button class="btn btn-success">Cadastrar</button>
-          </div>
         </div>
       </div>
     </div>

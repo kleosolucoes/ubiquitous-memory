@@ -18,6 +18,7 @@ class KleoForm extends Form {
     const inputDDD = 'inputDDD';
     const inputTelefone = 'inputTelefone';
     const inputEmail = 'inputEmail';
+    const inputRepetirEmail = 'inputRepetirEmail';
     const inputCPF = 'inputCPF';
     const inputDia = 'inputDia';
     const inputMes = 'inputMes';
@@ -33,6 +34,8 @@ class KleoForm extends Form {
     const inputEmailEmpresa = 'inputEmailEmpresa';
     const inputNumeroLojas = 'inputNumeroLojas';
   
+    const inputEstadoId = 'inputEstadoId';
+  
     const inputId = 'inputId';
     const inputCSRF = 'inputCSRF';
     const inputSituacao = 'inputSituacao';
@@ -45,10 +48,11 @@ class KleoForm extends Form {
     const stringRequired = 'required';
     const stringValue = 'value';
 
-    const traducaoNome = 'Nome';
+    const traducaoNome = 'Nome do Responsável';
     const traducaoDDD = 'DDD';
     const traducaoTelefone = 'Telefone';
     const traducaoEmail = 'Email';
+    const traducaoRepetirEmail = 'Repita o Email';
     const traducaoDia = 'Dia';
     const traducaoMes = 'Mês';
     const traducaoAno = 'Ano';
@@ -62,10 +66,11 @@ class KleoForm extends Form {
     const traducaoTelefoneEmpresa = 'Telefone Empresa';
     const traducaoEmailEmpresa = 'Email Empresa';
     const traducaoNumeroLojas = 'Número de Lojas';
-    const traducaoUploadContratoSocial = 'Suba um arquivo com o contrato social';
-    
+    const traducaoUploadContratoSocial = 'Suba um arquivo com o contrato social';    
   
     const traducaoSituacao = 'Situação';
+    const traducaoEstado = 'Estado';
+    const traducaoShopping = 'Shopping';
     
     public function __construct($name = null) {
     
