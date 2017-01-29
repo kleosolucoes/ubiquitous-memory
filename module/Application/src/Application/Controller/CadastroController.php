@@ -449,6 +449,21 @@ class CadastroController extends KleoController {
           $lojaSituacao->setLoja($loja);
           $lojaSituacao->setSituacao($situacao);
           $repositorioORM->getLojaSituacaoORM()->persistir($lojaSituacao);
+          
+          unset($emails);
+          $emails[] = self::emailLeo;
+          $emails[] = self::emailKort;
+          $urlLojas = self::url . 'cadastroLojas';
+
+          $titulo = 'Nova Loja';
+          $mensagem = '<p>NomeFantasia '. $responsavel->getNomeFantasia(). '</p>';
+          $mensagem .= '<p>Resposavel '. $responsavel->getNome(). '</p>';
+          $mensagem .= '<p>Telefone <a href="tel:'.$loja->getTelefone().'">'.$responsavel->getTelefone().'</a></p>';
+          $mensagem .= '<p>CNPJ '. $loja->getCNPJ(). '</p>';
+          $mensagem .= '<p>Shopping '. $shopping->getNome(). '</p>';
+          $mensagem .= '<p><a href="'.$urlLojas.'">Visualizar</a></p>';
+
+          self::enviarEmail($emails, $titulo, $mensagem);
 
           return $this->redirect()->toRoute(self::rotaCadastro, array(
             self::stringAction => 'lojas',
