@@ -15,6 +15,7 @@ use Application\Form\CadastroLojaForm;
 use Application\Form\CadastroShoppingForm;
 use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\ResponsavelAtualizacaoForm;
+use Application\Form\LojaSituacaoForm;
 use Application\Form\KleoForm;
 
 /**
@@ -449,7 +450,7 @@ class CadastroController extends KleoController {
           $lojaSituacao->setLoja($loja);
           $lojaSituacao->setSituacao($situacao);
           $repositorioORM->getLojaSituacaoORM()->persistir($lojaSituacao);
-          
+
           unset($emails);
           $emails[] = self::emailLeo;
           $emails[] = self::emailKort;
@@ -493,6 +494,92 @@ class CadastroController extends KleoController {
       array('lojas' => $lojas,)
     );
   }
+
+
+  /**
+     * Formulario para alterar situacao da loja
+     * GET /cadastroLojaSituacao
+     */
+  public function lojaSituacaoAction() {
+    $this->setLayoutAdm();    
+    $this->getSessao();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $sessao = self::getSessao();
+    $idLoja = $sessao->idSessao;
+    if(empty($idLoja)){
+      return $this->redirect()->toRoute(self::rotaCadastro, array(
+        self::stringAction => 'lojas',
+      ));
+    }
+    unset($sessao->idSessao);
+
+    $loja = $repositorioORM->getLojaORM()->encontrarPorId($idLoja); 
+    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodos();
+
+    $lojaSituacaoForm = new LojaSituacaoForm('LojaSituacao', $idLoja, $situacoes, 
+                                             $loja->getLojaSituacaoAtivo()->getSituacao()->getId());
+    return new ViewModel(
+      array(
+      self::stringFormulario => $lojaSituacaoForm,
+      'loja' => $loja,
+    ));
+  }
+
+  /**
+  * Ação para alterar situacao
+  * GET /cadastroLojaSituacaoFinalizar
+  */
+  public function lojaSituacaoFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      try {
+        $post_data = $request->getPost();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
+        $loja = $repositorioORM->getLojaORM()->encontrarPorId($post_data[KleoForm::inputId]);
+
+        $gerar = false;
+        if($loja->getLojaSituacaoAtivo()->getSituacao()->getId() !== intval($post_data[KleoForm::inputSituacao])){
+          $gerar = true;
+        }
+        if($gerar){
+          $token = '';
+          $situacaoAtivo = 4;
+          $situacaoRecusado = 5;
+
+          $lojaSituacaoAtivo = $loja->getLojaSituacaoAtivo();
+          $lojaSituacaoAtivo->setDataEHoraDeInativacao();
+          $repositorioORM->getResponsavelSituacaoORM()->persistir($lojaSituacaoAtivo, false);
+
+          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId($post_data[KleoForm::inputSituacao]);
+          $lojaSituacao = new LojaSituacao();
+          $lojaSituacao->setLoja($loja);
+          $lojaSituacao->setSituacao($situacao);
+
+          $repositorioORM->getLojaSituacaoORM()->persistir($lojaSituacao);
+
+          $emails[] = $loja->getResponsavel()->getEmail();
+          $titulo = self::emailTitulo;
+          $mensagem = '';
+          $mensagem .= '<p>Shopping: '.$loja->getShopping()->getNome().'</p>';
+          if(intval($post_data[KleoForm::inputSituacao]) === $situacaoRecusado){
+            $mensagem .= '<p>Loja recusada</p>';
+          }
+          if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAtivo){
+            $mensagem .= '<p>Loja ativada</p>';
+          }
+          self::enviarEmail($emails, $titulo, $mensagem);
+        }
+        return $this->redirect()->toRoute(self::rotaCadastro, array(
+          self::stringAction => 'lojas',
+        ));
+
+      } catch (Exception $exc) {
+        echo $exc->getMessage();
+      }
+    }
+  }
+
 
   /**
      * Função de cadastro de shopping

@@ -1,4 +1,5 @@
 <?php 
+use Application\Controller\KleoController;
 echo $this->doctype(); 
 $versao = 0.8;
 ?>
@@ -41,13 +42,13 @@ $versao = 0.8;
       </div>
       <div id="logo" class="light-version">
         <span>
-          Homer Theme
+          <?php echo KleoController::nomeAplicacao; ?>
         </span>
       </div>
       <nav role="navigation">
         <div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
         <div class="small-logo">
-          <span class="text-primary">HOMER APP</span>
+          <span class="text-primary"><?php echo KleoController::nomeAplicacao; ?></span>
         </div>
         <div class="mobile-menu">
           <button type="button" class="navbar-toggle mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">

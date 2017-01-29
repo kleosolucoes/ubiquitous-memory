@@ -30,14 +30,19 @@
               </thead>
               <tbody>
                 <?php
+                $tipoPrimeiroContato = 1;
                 foreach($this->lojas as $loja){
-
                   echo '<tr>';
                   echo '<td>'.$loja->getData_criacao(). '</td>';
                   echo '<td>'.$loja->getTelefone().'</td>';
                   echo '<td>'.$loja->getCNPJ().'</td>';
                   echo '<td>'.$loja->getShopping()->getNome().'</td>';
-                  echo '<td>'.$loja->getLojaSituacaoAtivo()->getSituacao()->getNome().'</td>';
+                  echo '<td>';
+                  echo $loja->getLojaSituacaoAtivo()->getSituacao()->getNome();
+                  if($loja->getLojaSituacaoAtivo()->getSituacao()->getId() === $tipoPrimeiroContato){                  
+                    echo $this->botao('Alterar', $this->funcaoOnClick('kleo("cadastroLojaSituacao", '.$loja->getId().');'));
+                  }
+                  echo '</td>';
                   echo '</tr>';
                 }
                 ?>                                

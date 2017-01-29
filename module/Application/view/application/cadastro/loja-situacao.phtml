@@ -1,0 +1,42 @@
+<?php
+
+use Application\Form\KleoForm;
+
+$formulario = $this->formulario;
+$formulario->prepare();
+
+$formulario->setAttribute(KleoForm::stringAction, 'cadastroLojaSituacaoFinalizar');
+echo $this->form()->openTag($formulario);
+echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+echo $this->formHidden($formulario->get(KleoForm::inputId));
+?>
+<div class="register-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="hpanel">
+        <div class="panel-body">
+          <div class='text-center'>
+            <h3>Alterar Situacao Loja</h3>
+          </div>
+           <div class='well'>
+            <p>Nome Fantasia: <?php echo $this->loja->getResponsavel()->getNomeFantasia(); ?></p>
+            <p>Shopping: <?php echo $this->loja->getShopping()->getNome(); ?></p>
+            <p>Responsavel: <?php echo $this->loja->getResponsavel()->getNome(); ?></p>
+            <p>Telefone: <?php echo $this->loja->getResponsavel()->getTelefone(); ?></p>
+            <p>Email: <?php echo $this->loja->getResponsavel()->getEmail(); ?></p>
+            <p>CNPJ: <?php echo $this->loja->getCNPJ(); ?></p>
+          </div>
+          <?php
+          echo $this->inputFormulario(KleoForm::traducaoSituacao, $formulario->get(KleoForm::inputSituacao));
+          ?>
+          <div class="text-center">
+            <?php echo $this->botao('Atualizar', $this->funcaoOnClickSubmeterFormulario()); ?>
+            <?php echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroLojas")'), 2); ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+echo $this->form()->closeTag();

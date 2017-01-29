@@ -21,7 +21,7 @@ class KleoController extends AbstractActionController {
   private $_doctrineORMEntityManager;
   private $sessao;
 
-  const nomeAplicacao = 'kleosolucoes';  
+  const nomeAplicacao = 'ToNoShop';  
   const stringFormulario = 'formulario';
   const stringAction = 'action';
   const stringId = 'id';
