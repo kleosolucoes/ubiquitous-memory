@@ -5,7 +5,7 @@ use Application\Form\KleoForm;
 $formulario = $this->formulario;
 $formulario->prepare();
 
-$formulario->setAttribute(KleoForm::stringAction, 'cadastroEmpresaFinalizar');
+$formulario->setAttribute(KleoForm::stringAction, 'cadastroLojaFinalizar');
 echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
@@ -19,10 +19,10 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
       <div class="hpanel">
         <div class="panel-body">
           <?php
-          echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
           echo $this->inputFormulario(KleoForm::traducaoDDD, $formulario->get(KleoForm::inputDDD), 3);
           echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 9);
           echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
+          echo $this->inputFormulario(KleoForm::traducaoShopping, $formulario->get(KleoForm::inputShoppingId));
           echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
           ?>
         </div>

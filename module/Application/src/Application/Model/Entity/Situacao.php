@@ -22,14 +22,14 @@ class Situacao extends KleoEntity {
     protected $responsavelSituacao;
     
     /**
-     * @ORM\OneToMany(targetEntity="EmpresaSituacao", mappedBy="empresaSituacao") 
+     * @ORM\OneToMany(targetEntity="LojaSituacao", mappedBy="empresaSituacao") 
      */
-    protected $empresaSituacao;
+    protected $lojaSituacao;
   
   
     public function __construct() {
         $this->responsavelSituacao = new ArrayCollection();
-        $this->empresaSituacao = new ArrayCollection();
+        $this->lojaSituacao = new ArrayCollection();
     }
 
     /** @ORM\Column(type="string") */

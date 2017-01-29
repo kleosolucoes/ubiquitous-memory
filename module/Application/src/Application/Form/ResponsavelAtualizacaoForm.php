@@ -8,7 +8,6 @@ use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\File;
-use Zend\Form\Element\Checkbox;
 use Application\Model\Entity\Responsavel;
 
 /**
@@ -17,59 +16,32 @@ use Application\Model\Entity\Responsavel;
  * Descricao: Formulario de atualizacao de responsaveis  
  *              
  */
-class ResponsavelAtualizacaoForm extends KleoForm {
+class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
 
   public function __construct($name = null, Responsavel $responsavel) {
     parent::__construct($name);
 
     $inputId = $this->get(self::inputId);
     $inputId->setValue($responsavel->getId());
-
-    $this->add(
-      (new Text())
-      ->setName(self::inputNome)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputNome,
-      self::stringRequired => self::stringRequired,
-      self::stringValue => $responsavel->getNome()
-    ])
-    );
-
-    $this->add(
-      (new Number())
-      ->setName(self::inputDDD)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputDDD,
-      self::stringRequired => self::stringRequired,
-      self::stringValue => substr($responsavel->getTelefone(), 0, 2)
-    ])
-    );
-
-    $this->add(
-      (new Tel())
-      ->setName(self::inputTelefone)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputTelefone,
-      self::stringRequired => self::stringRequired,
-      self::stringValue => substr($responsavel->getTelefone(), 2)
-    ])
-    );
-
-    $this->add(
-      (new Email())
-      ->setName(self::inputEmail)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputEmail,
-      self::stringRequired => self::stringRequired,
-      self::stringValue => $responsavel->getEmail()
-    ])
-    );
-
-
+    
+    $inputNome = $this->get(self::inputNome);
+    $inputNome->setValue($responsavel->getNome());
+    
+    $inputDDD = $this->get(self::inputDDD);
+    $inputDDD->setValue(substr($responsavel->getTelefone(), 0 , 2));
+    
+    $inputTelefone = $this->get(self::inputTelefone);
+    $inputTelefone->setValue(substr($responsavel->getTelefone(), 2));
+    
+    $inputEmail = $this->get(self::inputEmail);
+    $inputEmail->setValue($responsavel->getEmail());
+    
+    $inputNomeFantasia = $this->get(self::inputNomeFantasia);
+    $inputNomeFantasia->setValue($responsavel->getNomeFantasia());
+    
+    $inputCNPJ = $this->get(self::inputCNPJ);
+    $inputCNPJ->setValue($responsavel->getCNPJ());
+    
     $this->add(
       (new Number())
       ->setName(self::inputCPF)
@@ -132,33 +104,11 @@ class ResponsavelAtualizacaoForm extends KleoForm {
 
     $this->add(
       (new Text())
-      ->setName(self::inputNomeFantasia)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputNomeFantasia,
-      self::stringRequired => self::stringRequired,
-      self::stringValue => $responsavel->getNomeFantasia()
-    ])
-    );
-
-    $this->add(
-      (new Text())
       ->setName(self::inputRazaoSocial)
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputRazaoSocial,
       self::stringRequired => self::stringRequired,
-    ])
-    );
-
-    $this->add(
-      (new Number())
-      ->setName(self::inputCNPJ)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputCNPJ,
-      self::stringRequired => self::stringRequired,
-      self::stringValue => $responsavel->getCNPJ()
     ])
     );
 

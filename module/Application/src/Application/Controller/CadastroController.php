@@ -6,12 +6,12 @@ use Doctrine\ORM\EntityManager;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Responsavel;
 use Application\Model\Entity\ResponsavelSituacao;
-use Application\Model\Entity\Empresa;
-use Application\Model\Entity\EmpresaSituacao;
+use Application\Model\Entity\Loja;
+use Application\Model\Entity\LojaSituacao;
 use Application\Model\Entity\Shopping;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
-use Application\Form\CadastroEmpresaForm;
+use Application\Form\CadastroLojaForm;
 use Application\Form\CadastroShoppingForm;
 use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\ResponsavelAtualizacaoForm;
@@ -177,7 +177,7 @@ class CadastroController extends KleoController {
     unset($sessao->idSessao);
 
     $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResponsavel); 
-    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodas();
+    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodos();
 
     $responsavelSituacaoForm = new ResponsavelSituacaoForm('ResponsavelSituacao', $idResponsavel, $situacoes, 
                                                            $responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId());
@@ -187,7 +187,6 @@ class CadastroController extends KleoController {
       'responsavel' => $responsavel,
     ));
   }
-
 
   /**
   * Ação para alterar situacao
@@ -317,7 +316,7 @@ class CadastroController extends KleoController {
         $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
 
         $responsavelAtualizacaoForm = new ResponsavelAtualizacaoForm(null, $responsavel);
-        $responsavelAtualizacaoForm->setInputFilter($responsavel->getInputFilterAtualizarResponsavel());
+        $responsavelAtualizacaoForm->setInputFilter($responsavel->getInputFilterAtualizarResponsavel(false));
 
         $post = array_merge_recursive(
           $request->getPost()->toArray(),
@@ -393,64 +392,71 @@ class CadastroController extends KleoController {
 
   /**
      * Função de cadastro de empresa
-     * GET /cadastroEmpresa
+     * GET /cadastroLoja
      */
-  public function empresaAction() {
+  public function lojaAction() {
     $this->setLayoutAdm();
 
     $formulario = $this->params()->fromRoute(self::stringFormulario);
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $shoppings = $repositorioORM->getShoppingORM()->encontrarTodos();
 
     if($formulario){
-      $cadastroEmpresaForm = $formulario;
+      $cadastroLojaForm = $formulario;
+      $formulario->setarShoppings($shoppings);
     }else{
-      $cadastroEmpresaForm = new CadastroEmpresaForm('cadastroEmpresa');
+      $cadastroLojaForm = new CadastroLojaForm('cadastroLoja', $shoppings);
     }
-
     return new ViewModel(
-      array(
-      self::stringFormulario => $cadastroEmpresaForm,
-    )
+      array(self::stringFormulario => $cadastroLojaForm,)
     );
   }
 
   /**
      * Função para validar e finalizar cadastro
-     * GET /cadastroEmpresaFinalizar
+     * GET /cadastroLojaFinalizar
      */
-  public function empresaFinalizarAction() {
+  public function LojaFinalizarAction() {
     $request = $this->getRequest();
     if ($request->isPost()) {
       try {
         $post_data = $request->getPost();
-        $empresa = new Empresa();
-        $cadastrarEmpresaForm = new CadastroEmpresaForm();
-        $cadastrarEmpresaForm->setInputFilter($empresa->getInputFilterCadastrarEmpresa());
-        $cadastrarEmpresaForm->setData($post_data);
+        $loja = new Loja();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());  
+        $shoppings = $repositorioORM->getShoppingORM()->encontrarTodos();
+
+        $cadastrarLojaForm = new CadastroLojaForm(null, $shoppings);
+        $cadastrarLojaForm->setInputFilter($loja->getInputFilterCadastrarLoja());
+        $cadastrarLojaForm->setData($post_data);
 
         /* validação */
-        if ($cadastrarEmpresaForm->isValid()) {
-          $validatedData = $cadastrarEmpresaForm->getData();
-          $empresa->exchangeArray($cadastrarEmpresaForm->getData());
-          $empresa->setTelefone($validatedData[KleoForm::inputDDD]
-                                . $validatedData[KleoForm::inputTelefone]);
+        if ($cadastrarLojaForm->isValid()) {
+          $validatedData = $cadastrarLojaForm->getData();
+          $loja->exchangeArray($cadastrarLojaForm->getData());
+
           $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
-          $repositorioORM->getEmpresaORM()->persistir($empresa);
+          $idResposanvelLogado = 50;// temporario
 
-          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(1);
-          $empresaSituacao = new EmpresaSituacao();
-          $empresaSituacao->setEmpresa($empresa);
-          $empresaSituacao->setSituacao($situacao);
+          $shopping = $repositorioORM->getShoppingORM()->encontrarPorId($validatedData[KleoForm::inputShoppingId]);          $repositorioORM->getLojaORM()->persistir($loja);
+          $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResposanvelLogado);
+          $loja->setShopping($shopping);
+          $loja->setResponsavel($responsavel);
+          $repositorioORM->getLojaORM()->persistir($loja);
 
-          $repositorioORM->getEmpresaSituacaoORM()->persistir($empresaSituacao);
+          $situacaoPrimeiroContato = 1;
+          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId($situacaoPrimeiroContato);
+          $lojaSituacao = new LojaSituacao();
+          $lojaSituacao->setLoja($loja);
+          $lojaSituacao->setSituacao($situacao);
+          $repositorioORM->getLojaSituacaoORM()->persistir($lojaSituacao);
 
           return $this->redirect()->toRoute(self::rotaCadastro, array(
-            self::stringAction => 'empresas',
+            self::stringAction => 'lojas',
           ));
         } else {
-
           return $this->forward()->dispatch(self::controllerCadastro, array(
-            self::stringAction => 'empresa',
-            self::stringFormulario => $cadastrarEmpresaForm,
+            self::stringAction => 'loja',
+            self::stringFormulario => $cadastrarLojaForm,
           ));
         }
       } catch (Exception $exc) {
@@ -462,18 +468,14 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de empresas
-     * GET /cadastroEmpresas
+     * GET /cadastroLojas
      */
-  public function empresasAction() {
+  public function lojasAction() {
     $this->setLayoutAdm();
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    $empresas = $repositorioORM->getEmpresaORM()->encontrarTodas();
-    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodas();
+    $lojas = $repositorioORM->getLojaORM()->encontrarTodos();
     return new ViewModel(
-      array(
-      'empresas' => $empresas,
-      'situacoes' => $situacoes,
-    )
+      array('lojas' => $lojas,)
     );
   }
 

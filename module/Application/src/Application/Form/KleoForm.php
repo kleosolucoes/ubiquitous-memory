@@ -35,6 +35,7 @@ class KleoForm extends Form {
     const inputNumeroLojas = 'inputNumeroLojas';
   
     const inputEstadoId = 'inputEstadoId';
+    const inputShoppingId = 'inputShoppingId';
   
     const inputId = 'inputId';
     const inputCSRF = 'inputCSRF';
@@ -71,6 +72,7 @@ class KleoForm extends Form {
     const traducaoSituacao = 'Situação';
     const traducaoEstado = 'Estado';
     const traducaoShopping = 'Shopping';
+    const traducaoSelecione = 'Selecione';
     
     public function __construct($name = null) {
     
@@ -81,9 +83,9 @@ class KleoForm extends Form {
       
         $this->add(
                 (new Hidden())
-                        ->setName('inputId')
+                        ->setName(self::inputId)
                         ->setAttributes([
-                            'id' => 'inputId',
+                            self::stringId => self::inputId,
                         ])
         );
       
@@ -91,8 +93,5 @@ class KleoForm extends Form {
                 (new Csrf())
                         ->setName('inputCSRF')
         );
-
-
     }
-
 }

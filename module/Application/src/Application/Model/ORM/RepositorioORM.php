@@ -13,11 +13,11 @@ class RepositorioORM {
 
     private $_doctrineORMEntityManager;
     private $_responsavelORM;
-    private $_empresaORM;
+    private $_lojaORM;
     private $_situacaoORM;
     private $_estadoORM;
     private $_responsavelSituacaoORM;
-    private $_empresaSituacaoORM;
+    private $_lojaSituacaoORM;
     private $_shoppingORM;
 
     /**
@@ -41,23 +41,23 @@ class RepositorioORM {
     }
   
     /**
-     * Metodo public para obter a instancia do SituacaoORM
-     * @return SituacaoORM
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
      */
     public function getSituacaoORM() {
         if (is_null($this->_situacaoORM)) {
-            $this->_situacaoORM = new SituacaoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Situacao');
+            $this->_situacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Situacao');
         }
         return $this->_situacaoORM;
     }  
   
     /**
-     * Metodo public para obter a instancia do EstadoORM
-     * @return EstadoORM
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
      */
     public function getEstadoORM() {
         if (is_null($this->_estadoORM)) {
-            $this->_estadoORM = new EstadoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Estado');
+            $this->_estadoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Estado');
         }
         return $this->_estadoORM;
     }  
@@ -74,35 +74,35 @@ class RepositorioORM {
     }
   
     /**
-     * Metodo public para obter a instancia do EmpresaSituacaoORM
+     * Metodo public para obter a instancia do KleoORM
      * @return KleoORM
      */
-    public function getEmpresaSituacaoORM() {
-        if (is_null($this->_empresaSituacaoORM)) {
-            $this->_empresaSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\EmpresaSituacao');
+    public function getLojaSituacaoORM() {
+        if (is_null($this->_lojaSituacaoORM)) {
+            $this->_lojaSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\LojaSituacao');
         }
-        return $this->_empresaSituacaoORM;
+        return $this->_lojaSituacaoORM;
     }
 
   
     /**
-     * Metodo public para obter a instancia do EmpresaORM
-     * @return EmpresaORM
+     * Metodo public para obter a instancia do LojaORM
+     * @return LojaORM
      */
-    public function getEmpresaORM() {
-        if (is_null($this->_empresaORM)) {
-            $this->_empresaORM = new EmpresaORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Empresa');
+    public function getLojaORM() {
+        if (is_null($this->_lojaORM)) {
+            $this->_lojaORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Loja');
         }
-        return $this->_empresaORM;
+        return $this->_lojaORM;
     }
 
     /**
-     * Metodo public para obter a instancia do ShoppingORM
-     * @return ShoppingORM
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
      */
     public function getShoppingORM() {
         if (is_null($this->_shoppingORM)) {
-            $this->_shoppingORM = new ShoppingORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Shopping');
+            $this->_shoppingORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Shopping');
         }
         return $this->_shoppingORM;
     }

@@ -38,7 +38,7 @@ class InputFormulario extends AbstractHelper {
     if ($this->getTamanhoGrid()) {
       $tamanhoGrid = $this->getTamanhoGrid();
     }
-    $html .= '<div class="form-group col-lg-' . $tamanhoGrid . '">';
+    $html .= '<div class="form-group col-lg-' . $tamanhoGrid . ' col-md-' . $tamanhoGrid . '">';
     $html .= '<label for="">' . $this->getLabel() . '</label>';
     if ($this->getInput() instanceOf Text
         || $this->getInput() instanceOf Tel
@@ -56,7 +56,7 @@ class InputFormulario extends AbstractHelper {
     $html .=  $this->view->formElementErrors()
       ->setMessageOpenFormat('<div><p class="text-danger"><small>')
       ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')
-      ->setMessageCloseString('<small></p></div>')
+      ->setMessageCloseString('</small></p></div>')
       ->render($this->getInput());
     $html .= '</div>';
     return $html;

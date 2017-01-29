@@ -40,16 +40,18 @@ class CadastroShoppingForm extends KleoForm {
       self::stringRequired => self::stringRequired,
     ));
     $inputSelectEstados->setValueOptions($arrayEstados);
-    $inputSelectEstados->setEmptyOption(self::traducaoEstado);
+    $inputSelectEstados->setEmptyOption(self::traducaoSelecione);
     $this->add($inputSelectEstados);
   }
 
-  public function setarEstados($todosEstados){
+  public function setarEstados($estados){
     $arrayEstados = [];
-    foreach($todosEstados as $estado){
-      $arrayEstados[$estado->getId()] = $estado->getNome();  
+    if($estados){
+      foreach($estados as $estado){
+        $arrayEstados[$estado->getId()] = $estado->getNome();  
+      }
     }
-    $inputSelectEstados = $this->get(self::inputEstadoId);
-    $inputSelectEstados->setValueOptions($arrayEstados);
+    $inputEstados = $this->get(self::inputEstadoId);
+    $inputEstados->setValueOptions($arrayEstados);
   }
 }

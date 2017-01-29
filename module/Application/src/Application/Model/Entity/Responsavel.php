@@ -231,7 +231,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
 
   }
 
-  public function getInputFilterCadastrarResponsavel() {
+  public function getInputFilterCadastrarResponsavel($validarRepetirEmail = true) {
     if (!$this->inputFilterCadastrarResponsavel) {
       $inputFilter = new InputFilter();
       $inputFilter->add(array(
@@ -251,7 +251,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 3,
-        'max' => 80,
+        'max' => 50,
       ),
       ),
       ),
@@ -306,6 +306,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         ->attach(new Validator\EmailAddress());
       $inputFilter->add($email);
 
+      if($validarRepetirEmail){
       $inputFilter->add(array(
         'name' => KleoForm::inputRepetirEmail,
         'required' => true,
@@ -325,6 +326,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
       ),
       ),
       ));
+    }
 
       $inputFilter->add(array(
         'name' => KleoForm::inputNomeFantasia,
@@ -343,7 +345,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 3,
-        'max' => 80,
+        'max' => 50,
       ),
       ),
       ),
@@ -376,9 +378,9 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
     return $this->inputFilterCadastrarResponsavel;
   }
 
-  public function getInputFilterAtualizarResponsavel() {
+  public function getInputFilterAtualizarResponsavel($validarRepetirEmail = true) {
     if (!$this->inputFilterAtualizarResponsavel) {
-      $inputFilter = self::getInputFilterCadastrarResponsavel();
+      $inputFilter = self::getInputFilterCadastrarResponsavel($validarRepetirEmail);
 
       $inputFilter->add(array(
         'name' => KleoForm::inputCPF,
@@ -474,7 +476,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 3,
-        'max' => 80,
+        'max' => 30,
       ),
       ),
       ),
@@ -541,7 +543,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
-        'min' => 1, 
+        'min' => 1,  
       ),
       ),
       ),

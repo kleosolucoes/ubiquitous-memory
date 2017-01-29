@@ -3,24 +3,24 @@
 namespace Application\Model\Entity;
 
 /**
- * Nome: EmpresaSituacao.php
+ * Nome: LojaSituacao.php
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
- * Descricao: Entidade anotada base para o empresa_situacao
+ * Descricao: Entidade anotada base para o loja_situacao
  */
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity 
- * @ORM\Table(name="empresa_situacao")
+ * @ORM\Table(name="loja_situacao")
  */
-class EmpresaSituacao extends KleoEntity {
+class LojaSituacao extends KleoEntity {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresaSituacao")
-     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Loja", inversedBy="lojaSituacao")
+     * @ORM\JoinColumn(name="loja_id", referencedColumnName="id")
      */
-    private $empresa;
+    private $loja;
     /**
      * @ORM\ManyToOne(targetEntity="Situacao", inversedBy="empresaSituacao")
      * @ORM\JoinColumn(name="situacao_id", referencedColumnName="id")
@@ -29,10 +29,10 @@ class EmpresaSituacao extends KleoEntity {
     /** @ORM\Column(type="integer") */
     protected $situacao_id;
     /** @ORM\Column(type="integer") */
-    protected $empresa_id;
+    protected $loja_id;
   
-    function getEmpresa() {
-        return $this->empresa;
+    function getLoja() {
+        return $this->loja;
     }
     function getSituacao() {
         return $this->situacao;
@@ -40,11 +40,11 @@ class EmpresaSituacao extends KleoEntity {
     function getSituacao_id() {
         return $this->situacao_id;
     }
-    function getEmpresa_id() {
-        return $this->empresa_id;
+    function getLoja_id() {
+        return $this->loja_id;
     }
-    function setEmpresa($empresa) {
-        $this->empresa = $empresa;
+    function setLoja($loja) {
+        $this->loja = $loja;
     }
     function setSituacao($situacao) {
         $this->situacao = $situacao;
@@ -52,8 +52,8 @@ class EmpresaSituacao extends KleoEntity {
     function setSituacao_id($situacao_id) {
         $this->situacao_id = $situacao_id;
     }
-    function setEmpresa_id($empresa_id) {
-        $this->empresa_id = $empresa_id;
+    function setLoja_id($loja_id) {
+        $this->loja_id = $loja_id;
     }
 
 }
