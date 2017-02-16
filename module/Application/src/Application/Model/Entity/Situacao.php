@@ -25,11 +25,17 @@ class Situacao extends KleoEntity {
      * @ORM\OneToMany(targetEntity="LojaSituacao", mappedBy="empresaSituacao") 
      */
     protected $lojaSituacao;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AnuncioSituacao", mappedBy="anuncioSituacao") 
+     */
+    protected $anuncioSituacao;
   
   
     public function __construct() {
         $this->responsavelSituacao = new ArrayCollection();
         $this->lojaSituacao = new ArrayCollection();
+        $this->anuncioSituacao = new ArrayCollection();
     }
 
     /** @ORM\Column(type="string") */
@@ -42,11 +48,26 @@ class Situacao extends KleoEntity {
     function getNome() {
         return $this->nome;
     }
+  
     function getResponsavelSituacao() {
         return $this->responsavelSituacao;
     }
     function setResponsavelSituacao($responsavelSituacao) {
         $this->responsavelSituacao = $responsavelSituacao;
+    }
+  
+    function getLojaSituacao() {
+        return $this->lojaSituacao;
+    }
+    function setLojaSituacao($lojaSituacao) {
+        $this->lojaSituacao = $lojaSituacao;
+    }
+  
+    function getAnuncioSituacao() {
+        return $this->anuncioSituacao;
+    }
+    function setAnuncioSituacao($anuncioSituacao) {
+        $this->anuncioSituacao = $anuncioSituacao;
     }
 
 }

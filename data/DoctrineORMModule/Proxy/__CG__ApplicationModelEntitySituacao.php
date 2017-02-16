@@ -64,10 +64,10 @@ class Situacao extends \Application\Model\Entity\Situacao implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'responsavelSituacao', 'lojaSituacao', 'nome', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
+            return array('__isInitialized__', 'responsavelSituacao', 'lojaSituacao', 'anuncioSituacao', 'nome', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
         }
 
-        return array('__isInitialized__', 'responsavelSituacao', 'lojaSituacao', 'nome', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
+        return array('__isInitialized__', 'responsavelSituacao', 'lojaSituacao', 'anuncioSituacao', 'nome', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
     }
 
     /**
@@ -215,6 +215,50 @@ class Situacao extends \Application\Model\Entity\Situacao implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResponsavelSituacao', array($responsavelSituacao));
 
         return parent::setResponsavelSituacao($responsavelSituacao);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLojaSituacao()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLojaSituacao', array());
+
+        return parent::getLojaSituacao();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLojaSituacao($lojaSituacao)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLojaSituacao', array($lojaSituacao));
+
+        return parent::setLojaSituacao($lojaSituacao);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAnuncioSituacao()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAnuncioSituacao', array());
+
+        return parent::getAnuncioSituacao();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAnuncioSituacao($anuncioSituacao)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAnuncioSituacao', array($anuncioSituacao));
+
+        return parent::setAnuncioSituacao($anuncioSituacao);
     }
 
     /**

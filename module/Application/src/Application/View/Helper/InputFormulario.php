@@ -5,6 +5,7 @@ namespace Application\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\Text;
+use Zend\Form\Element\Textarea;
 use Zend\Form\Element\Number;
 use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
@@ -51,6 +52,9 @@ class InputFormulario extends AbstractHelper {
     }
     if ($this->getInput() instanceOf File) {
       $html .= $this->view->formFile($this->getInput());
+    }
+    if ($this->getInput() instanceOf Textarea) {
+      $html .= $this->view->formTextarea($this->getInput());
     }
 
     $html .=  $this->view->formElementErrors()

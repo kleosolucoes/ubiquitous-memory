@@ -1,0 +1,17 @@
+CREATE TABLE `anuncio_categoria` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `anuncio_id` bigint(10) unsigned DEFAULT NULL,
+  `categoria_id` int(6) unsigned DEFAULT NULL,
+  `data_criacao` date DEFAULT NULL,
+  `hora_criacao` time DEFAULT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `anuncio_id` (`anuncio_id`,`categoria_id`),
+  KEY `categoria_id` (`categoria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `anuncio_categoria`
+  ADD CONSTRAINT `fk_anuncio_categoria_categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`),
+  ADD CONSTRAINT `fk_anuncio_categoria_anuncio_id` FOREIGN KEY (`anuncio_id`) REFERENCES `anuncio` (`id`);

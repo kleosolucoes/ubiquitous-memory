@@ -64,10 +64,10 @@ class Responsavel extends \Application\Model\Entity\Responsavel implements \Doct
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'inputFilter', 'inputFilterCadastrarResponsavel', 'inputFilterAtualizarResponsavel', 'responsavelSituacao', 'nome', 'telefone', 'email', 'cpf', 'data_nascimento', 'nome_fantasia', 'razao_social', 'cnpj', 'telefone_empresa', 'email_empresa', 'numero_lojas', 'token', 'upload_cpf', 'upload_contrato_social', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
+            return array('__isInitialized__', 'inputFilter', 'inputFilterCadastrarResponsavel', 'inputFilterAtualizarResponsavel', 'responsavelSituacao', 'anuncio', 'nome', 'telefone', 'email', 'cpf', 'data_nascimento', 'nome_fantasia', 'razao_social', 'cnpj', 'telefone_empresa', 'email_empresa', 'numero_lojas', 'token', 'upload_cpf', 'upload_contrato_social', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
         }
 
-        return array('__isInitialized__', 'inputFilter', 'inputFilterCadastrarResponsavel', 'inputFilterAtualizarResponsavel', 'responsavelSituacao', 'nome', 'telefone', 'email', 'cpf', 'data_nascimento', 'nome_fantasia', 'razao_social', 'cnpj', 'telefone_empresa', 'email_empresa', 'numero_lojas', 'token', 'upload_cpf', 'upload_contrato_social', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
+        return array('__isInitialized__', 'inputFilter', 'inputFilterCadastrarResponsavel', 'inputFilterAtualizarResponsavel', 'responsavelSituacao', 'anuncio', 'nome', 'telefone', 'email', 'cpf', 'data_nascimento', 'nome_fantasia', 'razao_social', 'cnpj', 'telefone_empresa', 'email_empresa', 'numero_lojas', 'token', 'upload_cpf', 'upload_contrato_social', 'id', 'data_criacao', 'hora_criacao', 'data_inativacao', 'hora_inativacao');
     }
 
     /**
@@ -512,6 +512,28 @@ class Responsavel extends \Application\Model\Entity\Responsavel implements \Doct
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUploadContratoSocial', array($uploadContratoSocial));
 
         return parent::setUploadContratoSocial($uploadContratoSocial);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAnuncio()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAnuncio', array());
+
+        return parent::getAnuncio();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAnuncio($anuncio)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAnuncio', array($anuncio));
+
+        return parent::setAnuncio($anuncio);
     }
 
     /**

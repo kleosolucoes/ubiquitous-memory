@@ -15,6 +15,7 @@ use Application\View\Helper\Botao;
 use Application\View\Helper\FuncaoOnClick;
 use Application\View\Helper\FuncaoOnClickSubmeterFormulario;
 use Application\View\Helper\Splash;
+use Application\View\Helper\CabecalhoPagina;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Validator\AbstractValidator;
@@ -75,6 +76,9 @@ class Module {
                 },
                 'splash' => function($sm) {
                     return new Splash();
+                },
+                'cabecalhoPagina' => function($sm) {
+                    return new CabecalhoPagina();
                 },
             )
         );

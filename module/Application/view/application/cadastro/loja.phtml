@@ -10,12 +10,10 @@ echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
 ?>
-<div class="register-container">
+<?php echo $this->cabecalhoPagina('Cadastrar Matriz ou Filial'); ?> 
+<div class="content animate-panel">
   <div class="row">
     <div class="col-md-12">
-      <div class="text-center m-b-md">
-        <h3>Cadastrar Matriz ou Filial</h3>
-      </div>
       <div class="hpanel">
         <div class="panel-body">
           <?php
@@ -24,12 +22,12 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
           echo $this->inputFormulario(KleoForm::traducaoShopping, $formulario->get(KleoForm::inputShoppingId));
           echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
+          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroLojas")'), 2);
           ?>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <?php
 echo $this->form()->closeTag();

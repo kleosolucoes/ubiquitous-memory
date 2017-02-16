@@ -1,0 +1,17 @@
+CREATE TABLE `anuncio_situacao` (
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `anuncio_id` bigint(10) unsigned DEFAULT NULL,
+  `situacao_id` int(1) unsigned DEFAULT NULL,
+  `data_criacao` date DEFAULT NULL,
+  `hora_criacao` time DEFAULT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `anuncio_id` (`anuncio_id`,`situacao_id`),
+  KEY `situacao_id` (`situacao_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `anuncio_situacao`
+  ADD CONSTRAINT `fk_anuncio_situacao_situacai_id` FOREIGN KEY (`situacao_id`) REFERENCES `situacao` (`id`),
+  ADD CONSTRAINT `fk_anuncio_situacao_anuncio_id` FOREIGN KEY (`anuncio_id`) REFERENCES `anuncio` (`id`);

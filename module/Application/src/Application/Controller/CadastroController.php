@@ -9,6 +9,8 @@ use Application\Model\Entity\ResponsavelSituacao;
 use Application\Model\Entity\Loja;
 use Application\Model\Entity\LojaSituacao;
 use Application\Model\Entity\Shopping;
+use Application\Model\Entity\Anuncio;
+use Application\Model\Entity\AnuncioSituacao;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\CadastroLojaForm;
@@ -16,6 +18,7 @@ use Application\Form\CadastroShoppingForm;
 use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\ResponsavelAtualizacaoForm;
 use Application\Form\LojaSituacaoForm;
+use Application\Form\CadastroAnuncioForm;
 use Application\Form\KleoForm;
 
 /**
@@ -660,6 +663,95 @@ class CadastroController extends KleoController {
       'shoppings' => $shoppings,
     )
     );
+  }  
+
+  /**
+     * Tela com listagem de anuncios
+     * GET /cadastroAnuncios
+     */
+  public function anunciosAction() {
+    $this->setLayoutAdm();
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $anuncios = $repositorioORM->getAnuncioORM()->encontrarTodos();
+    return new ViewModel(
+      array(
+      'anuncios' => $anuncios,
+    )
+    );
+  }
+  /**
+     * Tela com listagem de anuncio
+     * GET /cadastroAnuncio
+     */
+  public function anuncioAction() {
+    $this->setLayoutAdm();
+
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+
+    //$repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    //$estados = $repositorioORM->getEstadoORM()->encontrarTodos();
+
+    if($formulario){
+      $cadastroAnuncioForm = $formulario;
+      //$cadastroShoppingForm->setarEstados($estados);
+    }else{
+      $cadastroAnuncioForm = new CadastroAnuncioForm('cadastroAnuncio');
+    }
+
+    return new ViewModel(
+      array(self::stringFormulario => $cadastroAnuncioForm,)
+    );
+  }
+
+  /**
+     * Função para validar e finalizar cadastro
+     * GET /cadastroAnuncioFinalizar
+     */
+  public function anuncioFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      try {
+        $post_data = $request->getPost();
+        $anuncio = new Anuncio();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());  
+        //$estados = $repositorioORM->getEstadoORM()->encontrarTodos();
+
+        $cadastrarAnuncioForm = new CadastroAnuncioForm(null);
+        $cadastrarAnuncioForm->setInputFilter($anuncio->getInputFilterCadastrarAnuncio());
+        $cadastrarAnuncioForm->setData($post_data);
+
+        /* validação */
+        if ($cadastrarAnuncioForm->isValid()) {
+          $validatedData = $cadastrarAnuncioForm->getData();
+          $anuncio->exchangeArray($cadastrarAnuncioForm->getData());
+
+          //$estado = $repositorioORM->getEstadoORM()->encontrarPorId($validatedData[KleoForm::inputEstadoId]);
+          //$shopping->setEstado($estado);
+          $idResposanvelLogado = 50; // temporario
+          $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResposanvelLogado);
+          $anuncio->setResponsavel($responsavel);
+          $repositorioORM->getAnuncioORM()->persistir($anuncio);
+
+          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(1);
+          $anuncioSituacao = new AnuncioSituacao();
+          $anuncioSituacao->setAnuncio($anuncio);
+          $anuncioSituacao->setSituacao($situacao);
+          $repositorioORM->getAnuncioSituacaoORM()->persistir($anuncioSituacao);
+
+          return $this->redirect()->toRoute(self::rotaCadastro, array(
+            self::stringAction => 'anuncios',
+          ));
+        } else {
+          return $this->forward()->dispatch(self::controllerCadastro, array(
+            self::stringAction => 'anuncio',
+            self::stringFormulario => $cadastrarAnuncioForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
   }
 
 }

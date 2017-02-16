@@ -19,6 +19,8 @@ class RepositorioORM {
     private $_responsavelSituacaoORM;
     private $_lojaSituacaoORM;
     private $_shoppingORM;
+    private $_anuncioORM;
+    private $_anuncioSituacaoORM;
 
     /**
      * Contrutor
@@ -105,6 +107,28 @@ class RepositorioORM {
             $this->_shoppingORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Shopping');
         }
         return $this->_shoppingORM;
+    }
+
+    /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+    public function getAnuncioORM() {
+        if (is_null($this->_anuncioORM)) {
+            $this->_anuncioORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Anuncio');
+        }
+        return $this->_anuncioORM;
+    }
+
+    /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+    public function getAnuncioSituacaoORM() {
+        if (is_null($this->_anuncioSituacaoORM)) {
+            $this->_anuncioSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\AnuncioSituacao');
+        }
+        return $this->_anuncioSituacaoORM;
     }
 
     /**

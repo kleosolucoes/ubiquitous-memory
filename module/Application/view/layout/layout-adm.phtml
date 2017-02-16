@@ -1,10 +1,9 @@
 <?php 
 use Application\Controller\KleoController;
 echo $this->doctype(); 
-$versao = 0.8;
+$versao = 1.3;
 ?>
-
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8">
     <?php echo $this->headTitle('Administração')->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -103,8 +102,6 @@ $versao = 0.8;
                 <li><a href="login.html">Logout</a></li>
               </ul>
             </div>
-
-
             <div id="sparkline1" class="small-chart m-t-sm"></div>
             <div>
               <h4 class="font-extra-bold m-b-xs">
@@ -121,15 +118,18 @@ $versao = 0.8;
               <li><a href="/cadastroResponsaveis">Responsaveis</a></li>
               <li><a href="/cadastroShoppings">Shoppings</a></li>
               <li><a href="/cadastroLojas">Lojas</a></li>
+              <li><a href="/cadastroAnuncios">Anuncios</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </aside>
-    <?php echo $this->content; ?>       
+    <!-- Main Wrapper -->
+    <div id="wrapper">
+      <?php echo $this->content; ?>      
+    </div>
     <!-- Scripts -->
     <?php
-
     echo $this->headScript()
       ->prependFile($this->basePath('js/kleo/funcoes.js?v='.$versao))
       ->prependFile($this->basePath('js/homer.js'))
@@ -145,9 +145,24 @@ $versao = 0.8;
       ->prependFile($this->basePath('plugins/bootstrap/dist/js/bootstrap.min.js'))
       ->prependFile($this->basePath('plugins/slimScroll/jquery.slimscroll.min.js'))
       ->prependFile($this->basePath('plugins/jquery-ui/jquery-ui.js'))
-      ->prependFile($this->basePath('js/jquery.min.js'))
-      ;
+      ->prependFile($this->basePath('js/jquery.min.js'));
     echo $this->inlineScript();
-    ?>
+    ?> 
+    <script  type="text/javascript">
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').removeClass('btn-info');
+        $('a[data-toggle="tab"]').addClass('btn-default');
+        $(this).removeClass('btn-default');
+        $(this).addClass('btn-info');
+      })
+      $('.next').click(function(){
+        var nextId = $(this).parents('.tab-pane').next().attr("id");
+        $('[href=#'+nextId+']').tab('show');
+      })
+      $('.prev').click(function(){
+        var prevId = $(this).parents('.tab-pane').prev().attr("id");
+        $('[href=#'+prevId+']').tab('show');
+      })
+    </script>
   </body>
 </html>

@@ -30,10 +30,14 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavel") 
      */
-  protected $responsavelSituacao;
+  protected $responsavelSituacao;/**
+     * @ORM\OneToMany(targetEntity="Anuncio", mappedBy="responsavel") 
+     */
+  protected $anuncio;
 
   public function __construct() {
     $this->responsavelSituacao = new ArrayCollection();
+    $this->anuncio = new ArrayCollection();
   }
 
   /** @ORM\Column(type="string") */
@@ -208,6 +212,12 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   }
   function setUploadContratoSocial($uploadContratoSocial) {
     $this->upload_contrato_social = $uploadContratoSocial;
+  }
+  function getAnuncio() {
+    return $this->anuncio;
+  }
+  function setAnuncio($anuncio) {
+    $this->anuncio = $anuncio;
   }
 
   public function exchangeArray($data) {
