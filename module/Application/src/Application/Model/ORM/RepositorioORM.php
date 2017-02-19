@@ -21,6 +21,7 @@ class RepositorioORM {
     private $_shoppingORM;
     private $_anuncioORM;
     private $_anuncioSituacaoORM;
+    private $_categoriaORM;
 
     /**
      * Contrutor
@@ -129,6 +130,17 @@ class RepositorioORM {
             $this->_anuncioSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\AnuncioSituacao');
         }
         return $this->_anuncioSituacaoORM;
+    }
+  
+    /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+    public function getCategoriaORM() {
+        if (is_null($this->_categoriaORM)) {
+            $this->_categoriaORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Categoria');
+        }
+        return $this->_categoriaORM;
     }
 
     /**

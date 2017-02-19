@@ -81,6 +81,7 @@ class KleoForm extends Form {
   const traducaoSituacao = 'Situação';
   const traducaoEstado = 'Estado';
   const traducaoShopping = 'Shopping';
+  const traducaoCategoria = 'Categoria';
   const traducaoSelecione = 'Selecione';
 
   const traducaoTitulo = 'T&iacute;tulo';

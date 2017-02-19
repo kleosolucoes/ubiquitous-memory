@@ -1,0 +1,30 @@
+<?php
+
+use Application\Form\KleoForm;
+
+$formulario = $this->formulario;
+$formulario->prepare();
+
+$formulario->setAttribute(KleoForm::stringAction, 'cadastroCategoriaFinalizar');
+echo $this->form()->openTag($formulario);
+echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+echo $this->formHidden($formulario->get(KleoForm::inputId));
+?>
+<?php echo $this->cabecalhoPagina('Cadastrar Categoria'); ?> 
+<div class="content animate-panel">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="hpanel">
+        <div class="panel-body">                           
+          <?php
+          echo $this->inputFormulario(KleoForm::traducaoCategoria, $formulario->get(KleoForm::inputNome));
+          echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
+          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroCategorias")'), 2);
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+echo $this->form()->closeTag();

@@ -11,6 +11,7 @@ use Application\Model\Entity\LojaSituacao;
 use Application\Model\Entity\Shopping;
 use Application\Model\Entity\Anuncio;
 use Application\Model\Entity\AnuncioSituacao;
+use Application\Model\Entity\Categoria;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\CadastroLojaForm;
@@ -19,6 +20,7 @@ use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\ResponsavelAtualizacaoForm;
 use Application\Form\LojaSituacaoForm;
 use Application\Form\CadastroAnuncioForm;
+use Application\Form\CadastroCategoriaForm;
 use Application\Form\KleoForm;
 
 /**
@@ -679,6 +681,7 @@ class CadastroController extends KleoController {
     )
     );
   }
+  
   /**
      * Tela com listagem de anuncio
      * GET /cadastroAnuncio
@@ -745,6 +748,79 @@ class CadastroController extends KleoController {
           return $this->forward()->dispatch(self::controllerCadastro, array(
             self::stringAction => 'anuncio',
             self::stringFormulario => $cadastrarAnuncioForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
+  }
+
+  /**
+     * Tela com listagem de categorias
+     * GET /cadastroCategorias
+     */
+  public function categoriasAction() {
+    $this->setLayoutAdm();
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $categorias = $repositorioORM->getCategoriaORM()->encontrarTodos();
+    return new ViewModel(
+      array(
+      'categorias' => $categorias,
+    )
+    );
+  }
+  
+  /**
+     * Tela com listagem de categoria
+     * GET /cadastroCategoria
+     */
+  public function categoriaAction() {
+    $this->setLayoutAdm();
+
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+
+    if($formulario){
+      $form = $formulario;
+    }else{
+      $form = new CadastroCategoriaForm('cadastroCategoria');
+    }
+
+    return new ViewModel(
+      array(self::stringFormulario => $form,)
+    );
+  }
+
+  /**
+     * Função para validar e finalizar cadastro
+     * GET /cadastroCategoriaFinalizar
+     */
+  public function categoriaFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      try {
+        $post_data = $request->getPost();
+        $categoria = new Categoria();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());  
+        
+        $cadastrarCategoriaForm = new CadastroCategoriaForm(null);
+        $cadastrarCategoriaForm->setInputFilter($categoria->getInputFilterCadastrarCategoria());
+        $cadastrarCategoriaForm->setData($post_data);
+
+        /* validação */
+        if ($cadastrarCategoriaForm->isValid()) {
+          $validatedData = $cadastrarCategoriaForm->getData();
+          $categoria->exchangeArray($cadastrarCategoriaForm->getData());
+          $repositorioORM->getCategoriaORM()->persistir($categoria);
+
+          return $this->redirect()->toRoute(self::rotaCadastro, array(
+            self::stringAction => 'categorias',
+          ));
+        } else {
+          return $this->forward()->dispatch(self::controllerCadastro, array(
+            self::stringAction => 'categoria',
+            self::stringFormulario => $cadastrarCategoriaForm,
           ));
         }
       } catch (Exception $exc) {
