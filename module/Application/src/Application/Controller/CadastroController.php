@@ -11,6 +11,7 @@ use Application\Model\Entity\LojaSituacao;
 use Application\Model\Entity\Shopping;
 use Application\Model\Entity\Anuncio;
 use Application\Model\Entity\AnuncioSituacao;
+use Application\Model\Entity\AnuncioCategoria;
 use Application\Model\Entity\Categoria;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
@@ -681,7 +682,7 @@ class CadastroController extends KleoController {
     )
     );
   }
-  
+
   /**
      * Tela com listagem de anuncio
      * GET /cadastroAnuncio
@@ -691,15 +692,15 @@ class CadastroController extends KleoController {
 
     $formulario = $this->params()->fromRoute(self::stringFormulario);
 
-    //$repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    //$estados = $repositorioORM->getEstadoORM()->encontrarTodos();
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $categorias = $repositorioORM->getCategoriaORM()->encontrarTodos();
 
     if($formulario){
       $cadastroAnuncioForm = $formulario;
-      //$cadastroShoppingForm->setarEstados($estados);
     }else{
       $cadastroAnuncioForm = new CadastroAnuncioForm('cadastroAnuncio');
     }
+    $cadastroAnuncioForm->setarCategorias($categorias);
 
     return new ViewModel(
       array(self::stringFormulario => $cadastroAnuncioForm,)
@@ -717,22 +718,32 @@ class CadastroController extends KleoController {
         $post_data = $request->getPost();
         $anuncio = new Anuncio();
         $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());  
-        //$estados = $repositorioORM->getEstadoORM()->encontrarTodos();
+        $categorias = $repositorioORM->getCategoriaORM()->encontrarTodos();
 
-        $cadastrarAnuncioForm = new CadastroAnuncioForm(null);
+        $cadastrarAnuncioForm = new CadastroAnuncioForm(null, $categorias);
         $cadastrarAnuncioForm->setInputFilter($anuncio->getInputFilterCadastrarAnuncio());
-        $cadastrarAnuncioForm->setData($post_data);
+
+        $post = array_merge_recursive(
+          $request->getPost()->toArray(),
+          $request->getFiles()->toArray()
+        );
+
+        $cadastrarAnuncioForm->setData($post);
 
         /* validação */
         if ($cadastrarAnuncioForm->isValid()) {
           $validatedData = $cadastrarAnuncioForm->getData();
           $anuncio->exchangeArray($cadastrarAnuncioForm->getData());
 
-          //$estado = $repositorioORM->getEstadoORM()->encontrarPorId($validatedData[KleoForm::inputEstadoId]);
-          //$shopping->setEstado($estado);
+          $apenasAjustarEntidade = false;
+          $anuncio = self::escreveDocumentos($anuncio, $apenasAjustarEntidade);
+
           $idResposanvelLogado = 50; // temporario
           $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResposanvelLogado);
           $anuncio->setResponsavel($responsavel);
+          $repositorioORM->getAnuncioORM()->persistir($anuncio);
+
+          $anuncio = self::escreveDocumentos($anuncio);
           $repositorioORM->getAnuncioORM()->persistir($anuncio);
 
           $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(1);
@@ -740,6 +751,12 @@ class CadastroController extends KleoController {
           $anuncioSituacao->setAnuncio($anuncio);
           $anuncioSituacao->setSituacao($situacao);
           $repositorioORM->getAnuncioSituacaoORM()->persistir($anuncioSituacao);
+
+          $categoria = $repositorioORM->getCategoriaORM()->encontrarPorId($validatedData[KleoForm::inputCategoriaId]);
+          $anuncioCategoria = new AnuncioCategoria();
+          $anuncioCategoria->setAnuncio($anuncio);
+          $anuncioCategoria->setCategoria($categoria);
+          $repositorioORM->getAnuncioCategoriaORM()->persistir($anuncioCategoria);
 
           return $this->redirect()->toRoute(self::rotaCadastro, array(
             self::stringAction => 'anuncios',
@@ -771,21 +788,22 @@ class CadastroController extends KleoController {
     )
     );
   }
-  
+
   /**
      * Tela com listagem de categoria
      * GET /cadastroCategoria
      */
   public function categoriaAction() {
     $this->setLayoutAdm();
-
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
     $formulario = $this->params()->fromRoute(self::stringFormulario);
-
+    $categorias = $repositorioORM->getCategoriaORM()->encontrarTodos();
     if($formulario){
       $form = $formulario;
     }else{
       $form = new CadastroCategoriaForm('cadastroCategoria');
     }
+    $form->setarCategorias($categorias);
 
     return new ViewModel(
       array(self::stringFormulario => $form,)
@@ -803,8 +821,9 @@ class CadastroController extends KleoController {
         $post_data = $request->getPost();
         $categoria = new Categoria();
         $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());  
-        
-        $cadastrarCategoriaForm = new CadastroCategoriaForm(null);
+        $categorias = $repositorioORM->getCategoriaORM()->encontrarTodos();
+
+        $cadastrarCategoriaForm = new CadastroCategoriaForm(null, $categorias);
         $cadastrarCategoriaForm->setInputFilter($categoria->getInputFilterCadastrarCategoria());
         $cadastrarCategoriaForm->setData($post_data);
 

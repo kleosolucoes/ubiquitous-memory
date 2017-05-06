@@ -19,11 +19,11 @@ class KleoEntity {
      * @ORM\Column(type="integer")
      */
     protected $id;
-    /** @ORM\Column(type="string") */
+    /** @ORM\Column(type="datetime", name="data_criacao") */
     protected $data_criacao;
     /** @ORM\Column(type="string") */
     protected $hora_criacao;
-    /** @ORM\Column(type="string") */
+    /** @ORM\Column(type="datetime", name="data_inativacao") */
     protected $data_inativacao;
     /** @ORM\Column(type="string") */
     protected $hora_inativacao;
@@ -32,7 +32,7 @@ class KleoEntity {
      */
     function setDataEHoraDeCriacao() {
         $timeNow = new DateTime();
-        $this->setData_criacao($timeNow->format('Y-m-d'));
+        $this->setData_criacao($timeNow);
         $this->setHora_criacao($timeNow->format('H:s:i'));
     }
     /**
@@ -52,7 +52,7 @@ class KleoEntity {
      */
     function setDataEHoraDeInativacao() {
         $timeNow = new DateTime();
-        $this->setData_inativacao($timeNow->format('Y-m-d'));
+        $this->setData_inativacao($timeNow);
         $this->setHora_inativacao($timeNow->format('H:s:i'));
     }
   
@@ -73,6 +73,9 @@ class KleoEntity {
     }
     function getData_criacao() {
         return $this->data_criacao;
+    }
+    function getData_criacaoFormatada() {
+        return $this->data_criacao->format('d/m/Y');
     }
     function getHora_criacao() {
         return $this->hora_criacao;

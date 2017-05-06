@@ -30,24 +30,22 @@ $(window).bind("load", function () {
   $('.splash').css('display', 'none')
 });
 
-function carregarFoto(inputFoto){
-  $("#message").empty(); // To remove the previous error message
-  var file = inputFoto.files[0];
+function carregarFoto(input, qualFoto) {
+  var file = input.files[0];
   var imagefile = file.type;
   var match= ["image/jpeg","image/png","image/jpg"];
   if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
-    $("#message").html("<p id='error'>Please Select A valid Image File</p>"+"<h4>Note</h4>"+"<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+    alert('tipo errado');
     return false;
   }else{
-    var reader = new FileReader();
-    reader.onload = imageIsLoaded;
-    reader.readAsDataURL(inputFoto.files[0]);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#image_upload_preview'+qualFoto).attr('src', e.target.result);
+        $('#image_upload_preview'+qualFoto).attr('width', '100px');
+        $('#image_upload_preview'+qualFoto).attr('height', '100px');
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 }
-
-function imageIsLoaded(e) {
-  $('#image_preview').css("display", "block");
-  $('#previewing').attr('src', e.target.result);
-  $('#previewing').attr('width', '256px');
-  $('#previewing').attr('height', '256px');
-};

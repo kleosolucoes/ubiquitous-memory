@@ -6,6 +6,7 @@ use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
 use Zend\Form\Element\Number;
 use Zend\Form\Element\File;
+use Zend\Form\Element\Select;
 
 /**
  * Nome: CadastroAnuncioForm.php
@@ -15,7 +16,7 @@ use Zend\Form\Element\File;
  */
 class CadastroAnuncioForm extends KleoForm {
 
-  public function __construct($name = null) {
+  public function __construct($name = null, $categorias = null) {
     parent::__construct($name);
 
     $this->add(
@@ -56,7 +57,7 @@ class CadastroAnuncioForm extends KleoForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputFoto1,
       self::stringRequired => self::stringRequired,
-      'onchange'=>'carregarFoto(this);',
+      'onchange'=>'carregarFoto(this, 1);',
     ])
     );
 
@@ -66,6 +67,7 @@ class CadastroAnuncioForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputFoto2,
+      'onchange'=>'carregarFoto(this, 2);',
     ])
     );
 
@@ -75,6 +77,7 @@ class CadastroAnuncioForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputFoto3,
+      'onchange'=>'carregarFoto(this, 3);',
     ])
     );
 
@@ -84,6 +87,7 @@ class CadastroAnuncioForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputFoto4,
+      'onchange'=>'carregarFoto(this, 4);',
     ])
     );
 
@@ -93,8 +97,30 @@ class CadastroAnuncioForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputFoto5,
+      'onchange'=>'carregarFoto(this, 5);',
     ])
     );
 
+    $inputSelectCategorias = new Select();
+    $inputSelectCategorias->setName(self::inputCategoriaId);
+    $inputSelectCategorias->setAttributes(array(
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputCategoriaId,
+      self::stringRequired => self::stringRequired,
+    ));
+    $inputSelectCategorias->setEmptyOption(self::traducaoSelecione);
+    $this->add($inputSelectCategorias);
+    $this->setarCategorias($categorias);
+  }
+
+  public function setarCategorias($categorias){
+    $arrayCategorias = [];
+    if($categorias){
+      foreach($categorias as $categoria){
+        $arrayCategorias[$categoria->getId()] = $categoria->getNome() ;  
+      }
+    }
+    $inputCategoria = $this->get(self::inputCategoriaId);
+    $inputCategoria->setValueOptions($arrayCategorias);
   }
 }

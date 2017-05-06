@@ -25,13 +25,7 @@ class CadastroShoppingForm extends KleoForm {
       self::stringRequired => self::stringRequired,
     ])
     );
-
-    $arrayEstados = [];
-    if($todosEstados){
-      foreach($todosEstados as $estado){
-        $arrayEstados[$estado->getId()] = $estado->getNome();  
-      }
-    }
+   
     $inputSelectEstados = new Select();
     $inputSelectEstados->setName(self::inputEstadoId);
     $inputSelectEstados->setAttributes(array(
@@ -39,9 +33,10 @@ class CadastroShoppingForm extends KleoForm {
       self::stringId => self::inputEstadoId,
       self::stringRequired => self::stringRequired,
     ));
-    $inputSelectEstados->setValueOptions($arrayEstados);
     $inputSelectEstados->setEmptyOption(self::traducaoSelecione);
     $this->add($inputSelectEstados);
+    
+    $this->setarEstados($todosEstados);
   }
 
   public function setarEstados($estados){

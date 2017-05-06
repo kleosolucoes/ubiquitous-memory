@@ -36,6 +36,9 @@ class Categoria extends KleoEntity implements InputFilterAwareInterface{
   /** @ORM\Column(type="string") */
   protected $nome;
 
+  /** @ORM\Column(type="integer") */
+  protected $categoria_id;
+  
   function setNome($nome) {
     $this->nome = $nome;
   }
@@ -50,8 +53,17 @@ class Categoria extends KleoEntity implements InputFilterAwareInterface{
     $this->anuncioCategoria = $anuncioCategoria;
   }
   
+  function setCategoria_id($categoria_id) {
+    $this->categoria_id = $categoria_id;
+  }
+
+  function getCategoria_id() {
+    return $this->categoria_id;
+  }
+  
   public function exchangeArray($data) {
     $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
+    $this->categoria_id = (!empty($data[KleoForm::inputCategoriaId]) ? strtoupper($data[KleoForm::inputCategoriaId]) : null);
   }
   
    public function getInputFilterCadastrarCategoria() {

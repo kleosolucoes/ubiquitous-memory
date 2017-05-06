@@ -36,6 +36,7 @@ class KleoForm extends Form {
 
   const inputEstadoId = 'inputEstadoId';
   const inputShoppingId = 'inputShoppingId';
+  const inputCategoriaId = 'inputCategoriaId';
 
   const inputId = 'inputId';
   const inputCSRF = 'inputCSRF';
@@ -82,6 +83,7 @@ class KleoForm extends Form {
   const traducaoEstado = 'Estado';
   const traducaoShopping = 'Shopping';
   const traducaoCategoria = 'Categoria';
+  const traducaoSubCategoria = 'Sub Categoria';
   const traducaoSelecione = 'Selecione';
 
   const traducaoTitulo = 'T&iacute;tulo';

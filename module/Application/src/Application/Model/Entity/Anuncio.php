@@ -195,13 +195,13 @@ class Anuncio extends KleoEntity implements InputFilterAwareInterface{
 
   public function exchangeArray($data) {
     $this->titulo = (!empty($data[KleoForm::inputTitulo]) ? strtoupper($data[KleoForm::inputTitulo]) : null);
-    $this->descricao = (!empty($data[KleoForm::inputDescricao]) ? strtoupper($data[KleoForm::inputDescricao]) : null);
-    $this->preco = (!empty($data[KleoForm::inputPreco]) ? strtoupper($data[KleoForm::inputPreco]) : null);
-    $this->foto1 = (!empty($data[KleoForm::inputFoto1]) ? strtoupper($data[KleoForm::inputFoto1]) : null);
-    $this->foto2 = (!empty($data[KleoForm::inputFoto2]) ? strtoupper($data[KleoForm::inputFoto2]) : null);
-    $this->foto3 = (!empty($data[KleoForm::inputFoto3]) ? strtoupper($data[KleoForm::inputFoto3]) : null);
-    $this->foto4 = (!empty($data[KleoForm::inputFoto4]) ? strtoupper($data[KleoForm::inputFoto4]) : null);
-    $this->foto5 = (!empty($data[KleoForm::inputFoto5]) ? strtoupper($data[KleoForm::inputFoto5]) : null);
+    $this->descricao = (!empty($data[KleoForm::inputDescricao]) ? $data[KleoForm::inputDescricao] : null);
+    $this->preco = (!empty($data[KleoForm::inputPreco]) ? $data[KleoForm::inputPreco] : null);
+    $this->foto1 = (!empty($data[KleoForm::inputFoto1]) ? $data[KleoForm::inputFoto1] : null);
+    $this->foto2 = (!empty($data[KleoForm::inputFoto2]) ? $data[KleoForm::inputFoto2] : null);
+    $this->foto3 = (!empty($data[KleoForm::inputFoto3]) ? $data[KleoForm::inputFoto3] : null);
+    $this->foto4 = (!empty($data[KleoForm::inputFoto4]) ? $data[KleoForm::inputFoto4] : null);
+    $this->foto5 = (!empty($data[KleoForm::inputFoto5]) ? $data[KleoForm::inputFoto5] : null);
   }
 
   public function setInputFilter(InputFilterInterface $inputFilter) {

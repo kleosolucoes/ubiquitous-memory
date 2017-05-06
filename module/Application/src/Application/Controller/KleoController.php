@@ -120,7 +120,7 @@ class KleoController extends AbstractActionController {
   /**
      * Funcao para escrever documentos com id da entidade
      */
-  public function escreveDocumentos(KleoEntity $entidade) {
+  public function escreveDocumentos(KleoEntity $entidade, $apenasAjustarEntidade = true) {
     $adaptadorHttp = new Http();  
     $destino = dirname(__DIR__) . self::diretorioDocumentos;
     $adaptadorHttp->setDestination($destino);
@@ -139,13 +139,35 @@ class KleoController extends AbstractActionController {
           $filename = $entidade->getId() . '_contrato_social.' . $extension;
           $entidade->setUploadContratoSocial($filename);
         }
+        if($file === KleoForm::inputFoto1){
+          $filename = $entidade->getId() . '_foto1.' . $extension;
+          $entidade->setFoto1($filename);
+        }
+        if($file === KleoForm::inputFoto2){
+          $filename = $entidade->getId() . '_foto2.' . $extension;
+          $entidade->setFoto2($filename);
+        }
+        if($file === KleoForm::inputFoto3){
+          $filename = $entidade->getId() . '_foto3.' . $extension;
+          $entidade->setFoto3($filename);
+        }
+        if($file === KleoForm::inputFoto4){
+          $filename = $entidade->getId() . '_foto4.' . $extension;
+          $entidade->setFoto4($filename);
+        }
+        if($file === KleoForm::inputFoto5){
+          $filename = $entidade->getId() . '_foto5.' . $extension;
+          $entidade->setFoto5($filename);
+        }
 
-        $adaptadorHttp->addFilter('Rename',
-                                  array(
-          'target' => $destino . '/' . $filename, 
-          'overwrite'=>true
-        )                                       );
-        $adaptadorHttp->receive($info['name']);
+        if($apenasAjustarEntidade){
+          $adaptadorHttp->addFilter('Rename',
+                                    array(
+            'target' => $destino . '/' . $filename, 
+            'overwrite'=>true
+          )                                       );
+          $adaptadorHttp->receive($info['name']);
+        }
       }else{
         //var_dump($adaptadorHttp->getMessages());
       }

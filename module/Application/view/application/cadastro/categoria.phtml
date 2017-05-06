@@ -17,6 +17,7 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
       <div class="hpanel">
         <div class="panel-body">                           
           <?php
+          echo $this->inputFormulario(KleoForm::traducaoSubCategoria, $formulario->get(KleoForm::inputCategoriaId));
           echo $this->inputFormulario(KleoForm::traducaoCategoria, $formulario->get(KleoForm::inputNome));
           echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
           echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroCategorias")'), 2);

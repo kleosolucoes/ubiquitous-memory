@@ -13,7 +13,7 @@ use Zend\Form\Element\Select;
  */
 class CadastroCategoriaForm extends KleoForm {
 
-  public function __construct($name = null) {
+  public function __construct($name = null, $todasCategorias = null) {
     parent::__construct($name);
 
     $this->add(
@@ -25,5 +25,28 @@ class CadastroCategoriaForm extends KleoForm {
       self::stringRequired => self::stringRequired,
     ])
     );
+
+    $inputSelectCategorias = new Select();
+    $inputSelectCategorias->setName(self::inputCategoriaId);
+    $inputSelectCategorias->setAttributes(array(
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputCategoriaId,
+    ));
+    $inputSelectCategorias->setEmptyOption(self::traducaoSelecione);
+    $this->add($inputSelectCategorias);
+
+    $this->setarCategorias($todasCategorias);
+
+  }
+
+  public function setarCategorias($categorias){
+    $arrayCategoria = [];
+    if($categorias){
+      foreach($categorias as $categoria){
+        $arrayCategoria[$categoria->getId()] = $categoria->getNome();  
+      }
+    }
+    $inputCategorias = $this->get(self::inputCategoriaId);
+    $inputCategorias->setValueOptions($arrayCategoria);
   }
 }

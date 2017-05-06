@@ -15,7 +15,7 @@
               <?php
               foreach($this->categorias as $categoria){
                 echo '<tr>';
-                echo '<td>'.$categoria->getData_criacao(). '</td>';
+                echo '<td>'.$categoria->getData_criacaoFormatada(). '</td>';
                 echo '<td>'.$categoria->getNome().'</td>';
                 echo '</tr>';
               }
