@@ -37,6 +37,7 @@ class KleoForm extends Form {
   const inputEstadoId = 'inputEstadoId';
   const inputShoppingId = 'inputShoppingId';
   const inputCategoriaId = 'inputCategoriaId';
+  const inputSubCategoriaId = 'inputSubCategoriaId';
 
   const inputId = 'inputId';
   const inputCSRF = 'inputCSRF';
@@ -50,6 +51,8 @@ class KleoForm extends Form {
   const inputFoto3 = 'inputFoto3';
   const inputFoto4 = 'inputFoto4';
   const inputFoto5 = 'inputFoto5';
+  const inputDiaValidade = 'inputDiaValidade';
+  const inputMesValidade = 'inputMesValidade';
 
   const stringClass = 'class';
   const stringClassFormControl = 'form-control';
@@ -90,6 +93,8 @@ class KleoForm extends Form {
   const traducaoDescricao = 'Desci&ccedil;&atilde;o';
   const traducaoPreco = 'Pre&ccedil;o';
   const traducaoFotoPrincipal = 'Foto Principal';
+  const traducaoMesValidade = 'Validade do anúncio - Mês';
+  const traducaoDiaValidade = 'Dia';
 
   public function __construct($name = null) {
 

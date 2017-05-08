@@ -701,6 +701,7 @@ class CadastroController extends KleoController {
       $cadastroAnuncioForm = new CadastroAnuncioForm('cadastroAnuncio');
     }
     $cadastroAnuncioForm->setarCategorias($categorias);
+    $cadastroAnuncioForm->setarCategorias($categorias, 2);
 
     return new ViewModel(
       array(self::stringFormulario => $cadastroAnuncioForm,)
@@ -757,6 +758,12 @@ class CadastroController extends KleoController {
           $anuncioCategoria->setAnuncio($anuncio);
           $anuncioCategoria->setCategoria($categoria);
           $repositorioORM->getAnuncioCategoriaORM()->persistir($anuncioCategoria);
+
+          $subCategoria = $repositorioORM->getCategoriaORM()->encontrarPorId($validatedData[KleoForm::inputSubCategoriaId]);
+          $anuncioSubCategoria = new AnuncioCategoria();
+          $anuncioSubCategoria->setAnuncio($anuncio);
+          $anuncioSubCategoria->setCategoria($subCategoria);
+          $repositorioORM->getAnuncioCategoriaORM()->persistir($anuncioSubCategoria);
 
           return $this->redirect()->toRoute(self::rotaCadastro, array(
             self::stringAction => 'anuncios',

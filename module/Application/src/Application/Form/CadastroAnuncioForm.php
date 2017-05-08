@@ -101,6 +101,28 @@ class CadastroAnuncioForm extends KleoForm {
     ])
     );
 
+    $inputSelectDiaValidade = new Select();
+    $inputSelectDiaValidade->setName(self::inputDiaValidade);
+    $inputSelectDiaValidade->setAttributes(array(
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputDiaValidade,
+      self::stringRequired => self::stringRequired,
+    ));
+    $inputSelectDiaValidade->setEmptyOption(self::traducaoSelecione);
+    $this->add($inputSelectDiaValidade);
+    $this->setarOpcoes(1); 
+
+    $inputSelectMesValidade = new Select();
+    $inputSelectMesValidade->setName(self::inputMesValidade);
+    $inputSelectMesValidade->setAttributes(array(
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputMesValidade,
+      self::stringRequired => self::stringRequired,
+    ));
+    $inputSelectMesValidade->setEmptyOption(self::traducaoSelecione);
+    $this->add($inputSelectMesValidade);
+    $this->setarOpcoes(2);    
+
     $inputSelectCategorias = new Select();
     $inputSelectCategorias->setName(self::inputCategoriaId);
     $inputSelectCategorias->setAttributes(array(
@@ -111,16 +133,72 @@ class CadastroAnuncioForm extends KleoForm {
     $inputSelectCategorias->setEmptyOption(self::traducaoSelecione);
     $this->add($inputSelectCategorias);
     $this->setarCategorias($categorias);
+
+    $inputSelectSubCategoria = new Select();
+    $inputSelectSubCategoria->setName(self::inputSubCategoriaId);
+    $inputSelectSubCategoria->setAttributes(array(
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputSubCategoriaId,
+    ));
+    $inputSelectSubCategoria->setEmptyOption(self::traducaoSelecione);
+    $this->add($inputSelectSubCategoria);
+    $this->setarCategorias($categorias, 2);
   }
 
-  public function setarCategorias($categorias){
+  public function setarCategorias($categorias, $tipo = 1){
     $arrayCategorias = [];
+    $nomeDoCampo = self::inputCategoriaId;
+    if($tipo === 2){
+      $nomeDoCampo = self::inputSubCategoriaId;
+    }
     if($categorias){
       foreach($categorias as $categoria){
-        $arrayCategorias[$categoria->getId()] = $categoria->getNome() ;  
+        $adicionar = false;
+        if($tipo === 1){
+          if($categoria->getCategoria_id() == null){
+            $adicionar = true;
+          }
+        }
+        if($tipo === 2){
+          if($categoria->getCategoria_id()){
+            $adicionar = true;
+          }
+        }
+        if($adicionar){
+          $arrayCategorias[$categoria->getId()] = $categoria->getNome();
+        }
       }
     }
-    $inputCategoria = $this->get(self::inputCategoriaId);
+    $inputCategoria = $this->get($nomeDoCampo);
     $inputCategoria->setValueOptions($arrayCategorias);
+  }
+
+
+  public function setarOpcoes($tipo){
+    $arrayOptions = [];
+    $nomeDoCampo = self::inputDiaValidade;
+    if($tipo === 2){
+      $nomeDoCampo = self::inputMesValidade;
+    }
+    $inicioIndex = 1;
+    $fimIndex = 0;
+    if($tipo === 1){
+      $fimIndex =31;
+    }
+    if($tipo === 2){
+      $fimIndex =12;
+    }
+
+    for($index = $inicioIndex; $index <= $fimIndex; $index++){
+      $indexAjustada = str_pad($index, 2, 0,STR_PAD_LEFT);
+      if($tipo === 1){
+        $arrayOptions[$indexAjustada] = $indexAjustada . ' Dia';
+      }
+      if($tipo === 2){
+        $arrayOptions[$indexAjustada] = $indexAjustada;
+      }
+    }
+    $input = $this->get($nomeDoCampo);
+    $input->setValueOptions($arrayOptions);
   }
 }

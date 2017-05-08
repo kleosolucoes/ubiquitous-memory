@@ -16,7 +16,7 @@
               <?php
               foreach($this->shoppings as $shopping){
                 echo '<tr>';
-                echo '<td>'.$shopping->getData_criacao(). '</td>';
+                echo '<td>'.$shopping->getData_criacaoFormatada(). '</td>';
                 echo '<td>'.$shopping->getNome().'</td>';
                 echo '<td>'.$shopping->getEstado()->getNome().'</td>';
                 echo '</tr>';

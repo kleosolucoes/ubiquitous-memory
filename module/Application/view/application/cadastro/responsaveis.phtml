@@ -20,7 +20,7 @@
               $tipoDocumentosEntregues = 3;
               foreach($this->responsaveis as $responsavel){
                 echo '<tr>';
-                echo '<td class="hidden-xs">'.$responsavel->getData_criacao(). '</td>';
+                echo '<td class="hidden-xs">'.$responsavel->getData_criacaoFormatada(). '</td>';
                 echo '<td>'.$responsavel->getNomeFantasia().'</td>';
                 echo '<td class="hidden-xs">'.$responsavel->getNome().'</td>';
                 echo '<td class="hidden-xs">'.$responsavel->getTelefone().'</td>';

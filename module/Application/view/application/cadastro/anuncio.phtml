@@ -25,7 +25,10 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           <div class="tab-content">
             <div id="step1" class="p-m tab-pane active">
               <div class="row">
-                <?php echo $this->inputFormulario(KleoForm::traducaoCategoria, $formulario->get(KleoForm::inputCategoriaId)); ?>
+                <?php 
+                echo $this->inputFormulario(KleoForm::traducaoCategoria, $formulario->get(KleoForm::inputCategoriaId)); 
+                echo $this->inputFormulario(KleoForm::traducaoSubCategoria, $formulario->get(KleoForm::inputSubCategoriaId)); 
+                ?>
               </div>
               <div class="text-right m-t-xs">   
                 <button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-info pull-right ml10 next">Próximo</button>
@@ -37,7 +40,9 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
                 <?php
                 echo $this->inputFormulario(KleoForm::traducaoTitulo, $formulario->get(KleoForm::inputTitulo), 6);
                 echo $this->inputFormulario(KleoForm::traducaoPreco, $formulario->get(KleoForm::inputPreco), 6);
-                echo $this->inputFormulario(KleoForm::traducaoDescricao, $formulario->get(KleoForm::inputDescricao));
+                echo $this->inputFormulario(KleoForm::traducaoDescricao, $formulario->get(KleoForm::inputDescricao), 6 );
+                echo $this->inputFormulario(KleoForm::traducaoMesValidade, $formulario->get(KleoForm::inputMesValidade), 3);
+                echo $this->inputFormulario(KleoForm::traducaoDiaValidade, $formulario->get(KleoForm::inputDiaValidade), 3);
                 ?>
               </div>
               <div class="text-right m-t-xs">

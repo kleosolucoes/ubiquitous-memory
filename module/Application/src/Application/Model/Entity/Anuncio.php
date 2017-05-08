@@ -16,6 +16,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Input;
 use Zend\Validator;
+use DateTime;
 
 /**
  * @ORM\Entity 
@@ -77,6 +78,9 @@ class Anuncio extends KleoEntity implements InputFilterAwareInterface{
 
   /** @ORM\Column(type="string") */
   protected $foto5;
+
+  /** @ORM\Column(type="datetime", name="validade") */
+  protected $validade;
 
   /** @ORM\Column(type="integer") */
   protected $responsavel_id;
@@ -161,6 +165,16 @@ class Anuncio extends KleoEntity implements InputFilterAwareInterface{
     return $this->foto5;
   }
 
+  function setValidade($validade) {
+    echo 'data'.$validade;
+    $date = DateTime::createFromFormat('Y-m-d', $validade);
+    $this->validade = $date;
+  }
+
+  function getValidade() {
+    return $this->validade;
+  }
+
   function setAnuncioSituacao($anuncioSituacao) {
     $this->anuncioSituacao = $anuncioSituacao;
   }
@@ -202,6 +216,8 @@ class Anuncio extends KleoEntity implements InputFilterAwareInterface{
     $this->foto3 = (!empty($data[KleoForm::inputFoto3]) ? $data[KleoForm::inputFoto3] : null);
     $this->foto4 = (!empty($data[KleoForm::inputFoto4]) ? $data[KleoForm::inputFoto4] : null);
     $this->foto5 = (!empty($data[KleoForm::inputFoto5]) ? $data[KleoForm::inputFoto5] : null);
+    $this->setValidade((!empty($data[KleoForm::inputMesValidade] && !empty($data[KleoForm::inputDiaValidade])) ?
+                           date('Y').'-'. $data[KleoForm::inputMesValidade].'-'.$data[KleoForm::inputMesValidade] : null));
   }
 
   public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -263,9 +279,9 @@ class Anuncio extends KleoEntity implements InputFilterAwareInterface{
       ));
 
       $preco = new Input(KleoForm::inputPreco);
-//       $filter = new \Zend\I18n\Filter\NumberFormat("de_DE");
-//       $preco->getValidatorChain()
-//         ->attach(new NumberFormat("pt_BR", NumberFormatter::TYPE_DOUBLE));
+      //       $filter = new \Zend\I18n\Filter\NumberFormat("de_DE");
+      //       $preco->getValidatorChain()
+      //         ->attach(new NumberFormat("pt_BR", NumberFormatter::TYPE_DOUBLE));
       $inputFilter->add($preco);
 
       $this->inputFilterCadastrarAnuncio = $inputFilter;

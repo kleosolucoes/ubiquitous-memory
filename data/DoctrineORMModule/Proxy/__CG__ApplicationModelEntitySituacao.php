@@ -334,6 +334,17 @@ class Situacao extends \Application\Model\Entity\Situacao implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
+    public function getData_criacaoFormatada()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getData_criacaoFormatada', array());
+
+        return parent::getData_criacaoFormatada();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getHora_criacao()
     {
 
