@@ -19,6 +19,7 @@ use Application\Form\CadastroLojaForm;
 use Application\Form\CadastroShoppingForm;
 use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\ResponsavelAtualizacaoForm;
+use Application\Form\ResponsavelSenhaAtualizacaoForm;
 use Application\Form\LojaSituacaoForm;
 use Application\Form\CadastroAnuncioForm;
 use Application\Form\CadastroCategoriaForm;
@@ -152,6 +153,14 @@ class CadastroController extends KleoController {
 
   /**
      * Função padrão, traz a tela principal
+     * GET /cadastroResponsavelAlterado
+     */
+  public function responsavelSenhaCadastradoAction() {
+    return new ViewModel();
+  }
+
+  /**
+     * Função padrão, traz a tela principal
      * GET /cadastroResponsaveis
      */
   public function responsaveisAction() {
@@ -216,7 +225,8 @@ class CadastroController extends KleoController {
           $situacaoAguardandoDocumentacao = 2;
           $situacaoAtivo = 4;
 
-          if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAguardandoDocumentacao){
+          if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAguardandoDocumentacao ||
+             intval($post_data[KleoForm::inputSituacao]) === $situacaoAtivo){
             $token = $responsavel->gerarToken();
             $responsavel->setToken($token);
             $repositorioORM->getResponsavelORM()->persistir($responsavel, false);
@@ -244,8 +254,7 @@ class CadastroController extends KleoController {
           if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAtivo){
             $mensagem = '<p>Cadastro ativado</p>';
             $mensagem .= '<p>Usuario: '.$responsavel->getEmail().'</p>';
-            $mensagem .= '<p>Senha: 123456</p>';
-            $mensagem .= '<p><a href="'.self::url.'">Clique aqui para acessar</a></p>';
+            $mensagem .= '<p><a href="'.self::url.'cadastroResponsavelSenhaAtualizacao/'.$token.'">Clique aqui cadastrar sua senha</a></p>';
           }
           self::enviarEmail($emails, $titulo, $mensagem);
         }
@@ -287,7 +296,7 @@ class CadastroController extends KleoController {
   }
 
   /**
-     * Formulario para alterar situacao
+     * Formulario para alterar dados do responsavel
      * GET /cadastroResponsavelAtualizacao
      */
   public function responsavelAtualizacaoAction() {
@@ -308,6 +317,84 @@ class CadastroController extends KleoController {
       self::stringFormulario => $responsavelAtualizacaoForm,
     ));
   }
+
+  /**
+     * Formulario para alterar dados do responsavel
+     * GET /cadastroResponsavelSenhaAtualizacao
+     */
+  public function responsavelSenhaAtualizacaoAction() {
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+    if($formulario){
+      $responsavelSenhaAtualizacaoForm = $formulario;
+      $idToken = $formulario->get(KleoForm::inputId);
+      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
+    }else{
+      $token = $this->getEvent()->getRouteMatch()->getParam(self::stringToken);
+      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
+      $responsavel->setId($token);
+      $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm('ResponsavelSenhaAtualizacao', $responsavel);
+    }
+
+    return new ViewModel(
+      array(
+      self::stringFormulario => $responsavelSenhaAtualizacaoForm,
+      KleoForm::inputEmail => $responsavel->getEmail(),
+    ));
+  }
+
+  /**
+     * Atualiza a senha do responsavel
+     * GET /cadastroResponsavelSenhaAtualizar
+     */
+  public function responsavelSenhaAtualizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      try {
+        $post_data = $request->getPost();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+        $token = $post_data[KleoForm::inputId];
+        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
+
+        $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm(null, $responsavel);
+        $responsavelSenhaAtualizacaoForm->setInputFilter($responsavel->getInputFilterCadastrarSenhaResponsavel());
+
+        $responsavelSenhaAtualizacaoForm->setData($post_data);
+
+        if ($responsavelSenhaAtualizacaoForm->isValid()) {
+
+          $responsavel->exchangeArray($responsavelSenhaAtualizacaoForm->getData());
+          $responsavel->setToken(null);
+
+          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
+          $repositorioORM->getResponsavelORM()->persistir($responsavel);
+
+          $emails[] = $responsavel->getEmail();
+          $titulo = self::emailTitulo;
+          $mensagem = '';
+          $mensagem = '<p>Senha Cadastra com Sucesso</p>';
+          $mensagem .= '<p>Usuario: '.$responsavel->getEmail().'</p>';
+          $mensagem .= '<p>Senha: '.$responsavel->getSenha().'</p>';
+          $mensagem .= '<p><a href="'.self::url.'login/'.$token.'">Clique aqui acessar</a></p>';
+          self::enviarEmail($emails, $titulo, $mensagem);
+
+          return $this->redirect()->toRoute(self::rotaCadastro, array(
+            self::stringAction => 'responsavelSenhaCadastrado',
+          ));
+        } else {      
+          return $this->forward()->dispatch(self::controllerCadastro, array(
+            self::stringAction => 'responsavelSenhaAtualizacao',
+            self::stringFormulario => $responsavelSenhaAtualizacaoForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
+  }
+
 
   /**
      * Atualiza os dados do responsavel

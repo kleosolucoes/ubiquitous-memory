@@ -18,6 +18,7 @@ CREATE TABLE `responsavel` (
   `token` varchar(80) DEFAULT NULL,
   `upload_cpf` varchar(30) DEFAULT NULL,
   `upload_contrato_social` varchar(30) DEFAULT NULL,
+  `senha` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

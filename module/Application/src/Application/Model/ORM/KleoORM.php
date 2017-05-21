@@ -53,10 +53,6 @@ class KleoORM {
      */
   public function persistir($entidade) {
     try {
-      if (!($entidade instanceof EventoCelula)) {
-        $entidade->setDataEHoraDeCriacao();
-      }
-
       $this->getEntityManager()->persist($entidade);
       $this->getEntityManager()->flush($entidade);
     } catch (Exception $exc) {

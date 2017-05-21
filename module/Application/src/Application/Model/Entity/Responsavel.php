@@ -27,6 +27,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   protected $inputFilter;
   protected $inputFilterCadastrarResponsavel;
   protected $inputFilterAtualizarResponsavel;
+  protected $inputFilterCadastrarSenhaResponsavel;
   /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavel") 
      */
@@ -81,6 +82,9 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
 
   /** @ORM\Column(type="string") */
   protected $upload_contrato_social;
+
+  /** @ORM\Column(type="string") */
+  protected $senha;
 
   /**
      * Retorna o responsavel situacao ativo
@@ -219,6 +223,12 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   function setAnuncio($anuncio) {
     $this->anuncio = $anuncio;
   }
+  function getSenha() {
+    return $this->senha;
+  }
+  function setSenha($senha) {
+    $this->senha = $senha;
+  }
 
   public function exchangeArray($data) {
     $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
@@ -238,7 +248,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
     $this->email_empresa = (!empty($data[KleoForm::inputEmailEmpresa]) ? strtolower($data[KleoForm::inputEmailEmpresa]) : null);
     $this->numero_lojas = (!empty($data[KleoForm::inputNumeroLojas]) ? $data[KleoForm::inputNumeroLojas] : null);
     $this->upload_contrato_social = (!empty($data[KleoForm::inputUploadContratoSocial]) ? $data[KleoForm::inputUploadContratoSocial] : null);
-
+    $this->senha = (!empty($data[KleoForm::inputSenha]) ? $data[KleoForm::inputSenha] : null);
   }
 
   public function getInputFilterCadastrarResponsavel($validarRepetirEmail = true) {
@@ -563,6 +573,57 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
       $this->inputFilterAtualizarResponsavel = $inputFilter;
     }
     return $this->inputFilterAtualizarResponsavel;
+  }
+  
+  public function getInputFilterCadastrarSenhaResponsavel() {
+    if (!$this->inputFilterCadastrarSenhaResponsavel) {
+      $inputFilter = new InputFilter();
+      
+     $inputFilter->add(array(
+        'name' => KleoForm::inputSenha,
+        'required' => true,
+        'filter' => array(
+        array('name' => 'StripTags'), // removel xml e html string
+        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+      ),
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',
+      ),
+        array(
+        'name' => 'StringLength',
+        'options' => array(
+        'encoding' => 'UTF-8',
+        'min' => 4,
+        'max' => 8, 
+      ),
+      ),
+      ),
+      ));
+
+      $inputFilter->add(array(
+        'name' => KleoForm::inputRepetirSenha,
+        'required' => true,
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',        
+      ),
+        array(
+        'name'    => 'Identical',        
+        'options' => array(
+        'token' => KleoForm::inputSenha,
+        'messages' => array(
+        \Zend\Validator\Identical::NOT_SAME => 'Senha são diferentes',
+        \Zend\Validator\Identical::MISSING_TOKEN => 'Repita a Senha'      
+      ),
+      ),
+      ),
+      ),
+      ));
+      
+      $this->inputFilterCadastrarSenhaResponsavel = $inputFilter;
+    }
+    return $this->inputFilterCadastrarSenhaResponsavel;
   }
 
   public function setInputFilter(InputFilterInterface $inputFilter) {

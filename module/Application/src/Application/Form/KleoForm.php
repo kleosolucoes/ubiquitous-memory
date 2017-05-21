@@ -33,6 +33,8 @@ class KleoForm extends Form {
   const inputTelefoneEmpresa = 'inputTelefoneEmpresa';
   const inputEmailEmpresa = 'inputEmailEmpresa';
   const inputNumeroLojas = 'inputNumeroLojas';
+  const inputSenha = 'inputSenha';
+  const inputRepetirSenha = 'inputRepetirSenha';
 
   const inputEstadoId = 'inputEstadoId';
   const inputShoppingId = 'inputShoppingId';
@@ -80,7 +82,9 @@ class KleoForm extends Form {
   const traducaoTelefoneEmpresa = 'Telefone Empresa';
   const traducaoEmailEmpresa = 'Email Empresa';
   const traducaoNumeroLojas = 'Número de Lojas';
-  const traducaoUploadContratoSocial = 'Suba um arquivo com o contrato social';    
+  const traducaoUploadContratoSocial = 'Suba um arquivo com o contrato social';
+  const traducaoSenha = 'Senha';
+  const traducaoRepetirSenha = 'Repetir Senha';
 
   const traducaoSituacao = 'Situação';
   const traducaoEstado = 'Estado';

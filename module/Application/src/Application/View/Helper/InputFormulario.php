@@ -10,6 +10,7 @@ use Zend\Form\Element\Number;
 use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
 use Zend\Form\Element\File;
+use Zend\Form\Element\Password;
 
 /**
  * Nome: InputFormulario.php
@@ -55,6 +56,9 @@ class InputFormulario extends AbstractHelper {
     }
     if ($this->getInput() instanceOf Textarea) {
       $html .= $this->view->formTextarea($this->getInput());
+    }
+    if ($this->getInput() instanceOf Password) {
+      $html .= $this->view->formPassword($this->getInput());
     }
 
     $html .=  $this->view->formElementErrors()
