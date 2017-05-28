@@ -60,7 +60,8 @@ class InputFormulario extends AbstractHelper {
     if ($this->getInput() instanceOf Password) {
       $html .= $this->view->formPassword($this->getInput());
     }
-
+    $idDivMEnsagemDeErro = 'mensagemErro'.$this->getInput()->getName(); 
+    $html .= '<div id="'.$idDivMEnsagemDeErro.'"></div>';
     $html .=  $this->view->formElementErrors()
       ->setMessageOpenFormat('<div><p class="text-danger"><small>')
       ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')

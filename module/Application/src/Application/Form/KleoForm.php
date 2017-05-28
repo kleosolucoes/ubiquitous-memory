@@ -63,6 +63,8 @@ class KleoForm extends Form {
   const stringAction = 'action';
   const stringRequired = 'required';
   const stringValue = 'value';
+  const stringOnblur = 'onblur';
+  const stringValidacoesFormulario = 'validacoesFormulario(this);';
 
   const traducaoNome = 'Nome do Responsável';
   const traducaoDDD = 'DDD';

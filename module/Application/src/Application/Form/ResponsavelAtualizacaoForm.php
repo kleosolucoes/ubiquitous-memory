@@ -49,6 +49,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputCPF,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ])
     );
 
@@ -64,6 +66,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputDia,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
 
     ));
     $inputSelectDiaDataNascimento->setValueOptions($arrayDiaDataNascimento);
@@ -81,6 +85,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputMes,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ));
     $inputSelectMesDataNascimento->setValueOptions($arrayMesDataNascimento);
     $inputSelectMesDataNascimento->setEmptyOption(self::traducaoMes);
@@ -97,6 +103,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputAno,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ));
     $inputSelectAnoDataNascimento->setValueOptions($arrayAnoDataNascimento);
     $inputSelectAnoDataNascimento->setEmptyOption(self::traducaoAno);
@@ -109,6 +117,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputRazaoSocial,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ])
     );
 
@@ -119,6 +129,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputDDDEmpresa,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ])
     );
 
@@ -129,6 +141,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputTelefoneEmpresa,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ])
     );
 
@@ -139,6 +153,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputTelefoneEmpresa,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ])
     );
 
@@ -149,6 +165,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputNumeroLojas,
       self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+
     ])
     );
 

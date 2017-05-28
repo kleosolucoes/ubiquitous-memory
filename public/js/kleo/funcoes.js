@@ -25,6 +25,15 @@ function submeterFormulario(form){
   form.submit();
 }
 
+function isEmail(email){
+  er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/; 
+	if( !er.exec(email) ){
+    return false;
+  }else{
+    return true;
+  }
+}
+
 $(window).bind("load", function () {
   // Remove splash screen after load
   $('.splash').css('display', 'none')

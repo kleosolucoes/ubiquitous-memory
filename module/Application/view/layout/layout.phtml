@@ -1,6 +1,6 @@
 <?php 
 echo $this->doctype();
-$versao = 0.2;
+$versao = '0.1.8';
 ?>
 
 <html lang="pt-br">
@@ -173,6 +173,7 @@ $versao = 0.2;
     <!-- Scripts -->
     <?php
     echo $this->headScript()
+      ->prependFile($this->basePath('js/kleo/validacoes.js?v='.$versao))
       ->prependFile($this->basePath('js/kleo/funcoes.js?v='.$versao))
       ->prependFile($this->basePath('js/custom.js'))
       ->prependFile($this->basePath('plugins/countdown/jquery.syotimer.js'))
