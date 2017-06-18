@@ -5,7 +5,7 @@ use Application\Form\KleoForm;
 $formulario = $this->formulario;
 $formulario->prepare();
 
-$formulario->setAttribute(KleoForm::stringAction, 'cadastroLojaFinalizar');
+$formulario->setAttribute(KleoForm::stringAction, 'admLojaFinalizar');
 echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
@@ -22,7 +22,7 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ));
           echo $this->inputFormulario(KleoForm::traducaoShopping, $formulario->get(KleoForm::inputShoppingId));
           echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
-          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroLojas")'), 2);
+          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/admLojas")'), 2);
           ?>
         </div>
       </div>

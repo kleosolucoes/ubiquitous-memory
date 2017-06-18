@@ -5,7 +5,7 @@ use Application\Form\KleoForm;
 $formulario = $this->formulario;
 $formulario->prepare();
 
-$formulario->setAttribute(KleoForm::stringAction, '/cadastroResponsavelSenhaAtualizar');
+$formulario->setAttribute(KleoForm::stringAction, '/pubResponsavelSenhaAtualizar');
 echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));

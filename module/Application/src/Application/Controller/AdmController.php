@@ -26,11 +26,11 @@ use Application\Form\CadastroCategoriaForm;
 use Application\Form\KleoForm;
 
 /**
- * Nome: CadastroController.php
+ * Nome: AdmController.php
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
- * Descricao: Controle de todas ações de crud
+ * Descricao: Controle de todas ações da admintração
  */
-class CadastroController extends KleoController {
+class AdmController extends KleoController {
 
   /**
      * Contrutor sobrecarregado com os serviços de ORM
@@ -42,126 +42,15 @@ class CadastroController extends KleoController {
     }
   }
 
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastro
-     */
-  public function indexAction() {    
+  public function indexAction() {
+    $this->setLayoutAdm();
     return new ViewModel();
   }
 
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavel
-     */
-  public function responsavelAction() {
-
-    $formulario = $this->params()->fromRoute(self::stringFormulario);
-    if($formulario){
-      $cadastroResponsavelForm = $formulario;
-    }else{
-      $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResponsavel');
-    }
-
-    return new ViewModel(
-      array(
-      self::stringFormulario => $cadastroResponsavelForm,
-    )
-    );
-  }
 
   /**
      * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelFinalizar
-     */
-  public function responsavelFinalizarAction() {
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      try {
-        $post_data = $request->getPost();
-        $responsavel = new Responsavel();
-        $cadastrarResponsavelForm = new CadastroResponsavelForm();
-        $cadastrarResponsavelForm->setInputFilter($responsavel->getInputFilterCadastrarResponsavel());
-        $cadastrarResponsavelForm->setData($post_data);
-
-        /* validação */
-        if ($cadastrarResponsavelForm->isValid()) {
-          $validatedData = $cadastrarResponsavelForm->getData();
-          $responsavel->exchangeArray($cadastrarResponsavelForm->getData());
-          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
-          $repositorioORM->getResponsavelORM()->persistir($responsavel);
-
-          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(1);
-          $responsavelSituacao = new ResponsavelSituacao();
-          $responsavelSituacao->setResponsavel($responsavel);
-          $responsavelSituacao->setSituacao($situacao);
-
-          $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
-
-          $emails[] = $validatedData[KleoForm::inputEmail];
-
-          $titulo = self::emailTitulo;
-          $mensagem = '<p>Seu cadastro inicial foi concluido</p>
-          <p>Em breve um dos nosso executivos entrará em contato.</p>';
-
-          self::enviarEmail($emails, $titulo, $mensagem);
-          unset($emails);
-          $emails[] = self::emailLeo;
-          $emails[] = self::emailKort;
-          $urlResponsaveis = self::url . 'cadastroResponsaveis';
-
-          $titulo = 'Primeiro Contato';
-          $mensagem = '<p>NomeFantasia '. $responsavel->getNomeFantasia(). '</p>';
-          $mensagem .= '<p>Resposavel '. $responsavel->getNome(). '</p>';
-          $mensagem .= '<p>Telefone <a href="tel:'.$responsavel->getTelefone().'">'.$responsavel->getTelefone().'</a></p>';
-          $mensagem .= '<p>Email '. $responsavel->getEmail(). '</p>';
-          $mensagem .= '<p><a href="'.$urlResponsaveis.'">Visualizar</a></p>';
-
-          self::enviarEmail($emails, $titulo, $mensagem);
-
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
-            self::stringAction => 'responsavelFinalizado',
-            self::stringMensagem => 'Cadastro concluido.'
-          ));
-        } else {
-          return $this->forward()->dispatch(self::controllerCadastro, array(
-            self::stringAction => 'responsavel',
-            self::stringFormulario => $cadastrarResponsavelForm,
-          ));
-        }
-      } catch (Exception $exc) {
-        echo $exc->getMessage();
-      }
-    }
-    return new ViewModel();
-  }
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelFinalizado
-     */
-  public function responsavelFinalizadoAction() {
-    return new ViewModel();
-  } 
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelAlterado
-     */
-  public function responsavelAlteradoAction() {
-    return new ViewModel();
-  }
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelAlterado
-     */
-  public function responsavelSenhaCadastradoAction() {
-    return new ViewModel();
-  }
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsaveis
+     * GET /admResponsaveis
      */
   public function responsaveisAction() {
     $this->setLayoutAdm();
@@ -176,7 +65,7 @@ class CadastroController extends KleoController {
 
   /**
      * Formulario para alterar situacao
-     * GET /cadastroResponsavelSituacao
+     * GET /admResponsavelSituacao
      */
   public function responsavelSituacaoAction() {
     $this->setLayoutAdm();    
@@ -186,7 +75,7 @@ class CadastroController extends KleoController {
     $sessao = self::getSessao();
     $idResponsavel = $sessao->idSessao;
     if(empty($idResponsavel)){
-      return $this->redirect()->toRoute(self::rotaCadastro, array(
+      return $this->redirect()->toRoute(self::rotaAdm, array(
         self::stringAction => 'responsaveis',
       ));
     }
@@ -206,7 +95,7 @@ class CadastroController extends KleoController {
 
   /**
   * Ação para alterar situacao
-  * GET /cadastroResponsavelSituacaoFinalizar
+  * GET /admResponsavelSituacaoFinalizar
   */
   public function responsavelSituacaoFinalizarAction() {
     $request = $this->getRequest();
@@ -249,17 +138,17 @@ class CadastroController extends KleoController {
           if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAguardandoDocumentacao){
             $mensagem = '<p>Precisamos que você atualize seus dados</p>';
             $mensagem .= '<p>Clique no link abaixo para atualizar</p>';
-            $mensagem .= '<p><a href="'.self::url.'cadastroResponsavelAtualizacao/'.$token.'">Clique aqui</a></p>';
+            $mensagem .= '<p><a href="'.self::url.'pubResponsavelAtualizacao/'.$token.'">Clique aqui</a></p>';
           }
           if(intval($post_data[KleoForm::inputSituacao]) === $situacaoAtivo){
             $mensagem = '<p>Cadastro ativado</p>';
             $mensagem .= '<p>Usuario: '.$responsavel->getEmail().'</p>';
-            $mensagem .= '<p><a href="'.self::url.'cadastroResponsavelSenhaAtualizacao/'.$token.'">Clique aqui cadastrar sua senha</a></p>';
+            $mensagem .= '<p><a href="'.self::url.'pubResponsavelSenhaAtualizacao/'.$token.'">Clique aqui cadastrar sua senha</a></p>';
           }
           self::enviarEmail($emails, $titulo, $mensagem);
         }
 
-        return $this->redirect()->toRoute(self::rotaCadastro, array(
+        return $this->redirect()->toRoute(self::rotaAdm, array(
           self::stringAction => 'responsaveis',
         ));
 
@@ -271,7 +160,7 @@ class CadastroController extends KleoController {
 
   /**
      * Formulario para ver responsavel
-     * GET /cadastroResponsavelVer
+     * GET /admResponsavelVer
      */
   public function responsavelVerAction() {
     $this->setLayoutAdm();    
@@ -281,7 +170,7 @@ class CadastroController extends KleoController {
     $sessao = self::getSessao();
     $idResponsavel = $sessao->idSessao;
     if(empty($idResponsavel)){
-      return $this->redirect()->toRoute(self::rotaCadastro, array(
+      return $this->redirect()->toRoute(self::rotaAdm, array(
         self::stringAction => 'responsaveis',
       ));
     }
@@ -295,198 +184,10 @@ class CadastroController extends KleoController {
     ));
   }
 
-  /**
-     * Formulario para alterar dados do responsavel
-     * GET /cadastroResponsavelAtualizacao
-     */
-  public function responsavelAtualizacaoAction() {
-
-    $formulario = $this->params()->fromRoute(self::stringFormulario);
-    if($formulario){
-      $responsavelAtualizacaoForm = $formulario;
-    }else{
-      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-      $token = $this->getEvent()->getRouteMatch()->getParam(self::stringToken);
-      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
-      $responsavel->setId($token);
-      $responsavelAtualizacaoForm = new ResponsavelAtualizacaoForm('ResponsavelAtualizacao', $responsavel);
-    }
-
-    return new ViewModel(
-      array(
-      self::stringFormulario => $responsavelAtualizacaoForm,
-    ));
-  }
-
-  /**
-     * Formulario para alterar dados do responsavel
-     * GET /cadastroResponsavelSenhaAtualizacao
-     */
-  public function responsavelSenhaAtualizacaoAction() {
-
-    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    $formulario = $this->params()->fromRoute(self::stringFormulario);
-    if($formulario){
-      $responsavelSenhaAtualizacaoForm = $formulario;
-      $idToken = $formulario->get(KleoForm::inputId);
-      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
-    }else{
-      $token = $this->getEvent()->getRouteMatch()->getParam(self::stringToken);
-      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
-      $responsavel->setId($token);
-      $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm('ResponsavelSenhaAtualizacao', $responsavel);
-    }
-
-    return new ViewModel(
-      array(
-      self::stringFormulario => $responsavelSenhaAtualizacaoForm,
-      KleoForm::inputEmail => $responsavel->getEmail(),
-    ));
-  }
-
-  /**
-     * Atualiza a senha do responsavel
-     * GET /cadastroResponsavelSenhaAtualizar
-     */
-  public function responsavelSenhaAtualizarAction() {
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      try {
-        $post_data = $request->getPost();
-        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-        $token = $post_data[KleoForm::inputId];
-        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
-
-        $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm(null, $responsavel);
-        $responsavelSenhaAtualizacaoForm->setInputFilter($responsavel->getInputFilterCadastrarSenhaResponsavel());
-
-        $responsavelSenhaAtualizacaoForm->setData($post_data);
-
-        if ($responsavelSenhaAtualizacaoForm->isValid()) {
-
-          $responsavel->exchangeArray($responsavelSenhaAtualizacaoForm->getData());
-          $responsavel->setToken(null);
-
-          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
-          $repositorioORM->getResponsavelORM()->persistir($responsavel);
-
-          $emails[] = $responsavel->getEmail();
-          $titulo = self::emailTitulo;
-          $mensagem = '';
-          $mensagem = '<p>Senha Cadastra com Sucesso</p>';
-          $mensagem .= '<p>Usuario: '.$responsavel->getEmail().'</p>';
-          $mensagem .= '<p>Senha: '.$responsavel->getSenha().'</p>';
-          $mensagem .= '<p><a href="'.self::url.'login/'.$token.'">Clique aqui acessar</a></p>';
-          self::enviarEmail($emails, $titulo, $mensagem);
-
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
-            self::stringAction => 'responsavelSenhaCadastrado',
-          ));
-        } else {      
-          return $this->forward()->dispatch(self::controllerCadastro, array(
-            self::stringAction => 'responsavelSenhaAtualizacao',
-            self::stringFormulario => $responsavelSenhaAtualizacaoForm,
-          ));
-        }
-      } catch (Exception $exc) {
-        echo $exc->getMessage();
-      }
-    }
-    return new ViewModel();
-  }
-
-
-  /**
-     * Atualiza os dados do responsavel
-     * GET /cadastroResponsavelAtualizar
-     */
-  public function responsavelAtualizarAction() {
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      try {
-        $post_data = $request->getPost();
-        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-        $token = $post_data[KleoForm::inputId];
-        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token); 
-
-        $responsavelAtualizacaoForm = new ResponsavelAtualizacaoForm(null, $responsavel);
-        $responsavelAtualizacaoForm->setInputFilter($responsavel->getInputFilterAtualizarResponsavel(false));
-
-        $post = array_merge_recursive(
-          $request->getPost()->toArray(),
-          $request->getFiles()->toArray()
-        );
-
-        $responsavelAtualizacaoForm->setData($post);
-
-        if ($responsavelAtualizacaoForm->isValid()) {
-
-          $responsavel->exchangeArray($responsavelAtualizacaoForm->getData());
-          $responsavel->setToken(null);
-
-          $responsavel = self::escreveDocumentos($responsavel);
-
-          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());                  
-          $repositorioORM->getResponsavelORM()->persistir($responsavel);
-
-          $responsavelSituacaoAtivo = $responsavel->getResponsavelSituacaoAtivo();
-          $responsavelSituacaoAtivo->setDataEHoraDeInativacao();
-          $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacaoAtivo, false);
-
-          $situacaoDocumentacaoEntregues = 3;
-          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId($situacaoDocumentacaoEntregues);
-          $responsavelSituacao = new ResponsavelSituacao();
-          $responsavelSituacao->setResponsavel($responsavel);
-          $responsavelSituacao->setSituacao($situacao);
-
-          $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
-
-          $emails[] = $validatedData[KleoForm::inputEmail];
-
-          $titulo = self::emailTitulo;
-          $mensagem = '<p>Dados atualizados.</p>
-                    <p>Em breve um dos nosso executivos entrará em contato.</p>';
-
-          self::enviarEmail($emails, $titulo, $mensagem);
-          unset($emails);
-          $emails[] = self::emailLeo;
-          $emails[] = self::emailKort;
-
-          $titulo = 'Documentos Entregues';
-          $mensagem = '<p>NomeFantasia '. $responsavel->getNomeFantasia(). '</p>';
-          $mensagem .= '<p>Responsavel '. $responsavel->getNome(). '</p>';
-          $mensagem .= '<p>Telefone <a href="tel:'.$responsavel->getTelefone().'">'.$responsavel->getTelefone().'</a></p>';
-          $mensagem .= '<p>Email '. $responsavel->getEmail(). '</p>';
-
-          self::enviarEmail($emails, $titulo, $mensagem);
-
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
-            self::stringAction => 'responsavelAlterado',
-            self::stringMensagem => 'Atualização concluida.'
-          ));
-        } else {      
-          return $this->forward()->dispatch(self::controllerCadastro, array(
-            self::stringAction => 'responsavelAtualizacao',
-            self::stringFormulario => $responsavelAtualizacaoForm,
-          ));
-        }
-      } catch (Exception $exc) {
-        echo $exc->getMessage();
-      }
-    }
-    return new ViewModel();
-  }
-
-  /**
-     * Seta o layout da administracao
-     */
-  private function setLayoutAdm() {
-    $this->layout('layout/adm');
-  }
 
   /**
      * Função de cadastro de empresa
-     * GET /cadastroLoja
+     * GET /admLoja
      */
   public function lojaAction() {
     $this->setLayoutAdm();
@@ -499,7 +200,7 @@ class CadastroController extends KleoController {
       $cadastroLojaForm = $formulario;
       $formulario->setarShoppings($shoppings);
     }else{
-      $cadastroLojaForm = new CadastroLojaForm('cadastroLoja', $shoppings);
+      $cadastroLojaForm = new CadastroLojaForm('admLoja', $shoppings);
     }
     return new ViewModel(
       array(self::stringFormulario => $cadastroLojaForm,)
@@ -508,7 +209,7 @@ class CadastroController extends KleoController {
 
   /**
      * Função para validar e finalizar cadastro
-     * GET /cadastroLojaFinalizar
+     * GET /admLojaFinalizar
      */
   public function LojaFinalizarAction() {
     $request = $this->getRequest();
@@ -559,7 +260,7 @@ class CadastroController extends KleoController {
 
           self::enviarEmail($emails, $titulo, $mensagem);
 
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
+          return $this->redirect()->toRoute(self::rotaAdm, array(
             self::stringAction => 'lojas',
           ));
         } else {
@@ -577,7 +278,7 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de empresas
-     * GET /cadastroLojas
+     * GET /admLojas
      */
   public function lojasAction() {
     $this->setLayoutAdm();
@@ -591,7 +292,7 @@ class CadastroController extends KleoController {
 
   /**
      * Formulario para alterar situacao da loja
-     * GET /cadastroLojaSituacao
+     * GET /admLojaSituacao
      */
   public function lojaSituacaoAction() {
     $this->setLayoutAdm();    
@@ -601,7 +302,7 @@ class CadastroController extends KleoController {
     $sessao = self::getSessao();
     $idLoja = $sessao->idSessao;
     if(empty($idLoja)){
-      return $this->redirect()->toRoute(self::rotaCadastro, array(
+      return $this->redirect()->toRoute(self::rotaAdm, array(
         self::stringAction => 'lojas',
       ));
     }
@@ -621,7 +322,7 @@ class CadastroController extends KleoController {
 
   /**
   * Ação para alterar situacao
-  * GET /cadastroLojaSituacaoFinalizar
+  * GET /admLojaSituacaoFinalizar
   */
   public function lojaSituacaoFinalizarAction() {
     $request = $this->getRequest();
@@ -663,7 +364,7 @@ class CadastroController extends KleoController {
           }
           self::enviarEmail($emails, $titulo, $mensagem);
         }
-        return $this->redirect()->toRoute(self::rotaCadastro, array(
+        return $this->redirect()->toRoute(self::rotaAdm, array(
           self::stringAction => 'lojas',
         ));
 
@@ -676,7 +377,7 @@ class CadastroController extends KleoController {
 
   /**
      * Função de cadastro de shopping
-     * GET /cadastroShopping
+     * GET /admShopping
      */
   public function shoppingAction() {
     $this->setLayoutAdm();
@@ -700,7 +401,7 @@ class CadastroController extends KleoController {
 
   /**
      * Função para validar e finalizar cadastro
-     * GET /cadastroShoppingFinalizar
+     * GET /admShoppingFinalizar
      */
   public function shoppingFinalizarAction() {
     $request = $this->getRequest();
@@ -724,7 +425,7 @@ class CadastroController extends KleoController {
           $shopping->setEstado($estado);
           $repositorioORM->getShoppingORM()->persistir($shopping);
 
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
+          return $this->redirect()->toRoute(self::rotaAdm, array(
             self::stringAction => 'shoppings',
           ));
         } else {
@@ -742,7 +443,7 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de shoppings
-     * GET /cadastroShoppings
+     * GET /admShoppings
      */
   public function shoppingsAction() {
     $this->setLayoutAdm();
@@ -757,7 +458,7 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de anuncios
-     * GET /cadastroAnuncios
+     * GET /admAnuncios
      */
   public function anunciosAction() {
     $this->setLayoutAdm();
@@ -772,7 +473,7 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de anuncio
-     * GET /cadastroAnuncio
+     * GET /admAnuncio
      */
   public function anuncioAction() {
     $this->setLayoutAdm();
@@ -797,7 +498,7 @@ class CadastroController extends KleoController {
 
   /**
      * Função para validar e finalizar cadastro
-     * GET /cadastroAnuncioFinalizar
+     * GET /admAnuncioFinalizar
      */
   public function anuncioFinalizarAction() {
     $request = $this->getRequest();
@@ -852,7 +553,7 @@ class CadastroController extends KleoController {
           $anuncioSubCategoria->setCategoria($subCategoria);
           $repositorioORM->getAnuncioCategoriaORM()->persistir($anuncioSubCategoria);
 
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
+          return $this->redirect()->toRoute(self::rotaAdm, array(
             self::stringAction => 'anuncios',
           ));
         } else {
@@ -870,7 +571,7 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de categorias
-     * GET /cadastroCategorias
+     * GET /admCategorias
      */
   public function categoriasAction() {
     $this->setLayoutAdm();
@@ -885,7 +586,7 @@ class CadastroController extends KleoController {
 
   /**
      * Tela com listagem de categoria
-     * GET /cadastroCategoria
+     * GET /admCategoria
      */
   public function categoriaAction() {
     $this->setLayoutAdm();
@@ -906,7 +607,7 @@ class CadastroController extends KleoController {
 
   /**
      * Função para validar e finalizar cadastro
-     * GET /cadastroCategoriaFinalizar
+     * GET /admCategoriaFinalizar
      */
   public function categoriaFinalizarAction() {
     $request = $this->getRequest();
@@ -927,7 +628,7 @@ class CadastroController extends KleoController {
           $categoria->exchangeArray($cadastrarCategoriaForm->getData());
           $repositorioORM->getCategoriaORM()->persistir($categoria);
 
-          return $this->redirect()->toRoute(self::rotaCadastro, array(
+          return $this->redirect()->toRoute(self::rotaAdm, array(
             self::stringAction => 'categorias',
           ));
         } else {

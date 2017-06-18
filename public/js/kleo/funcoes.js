@@ -3,7 +3,7 @@
 function kleo(action, id) {  
   $(".splash").css("display", "block");
   $.post(
-    '/cadastroKleo',
+    '/admKleo',
     {
       action: action,
       id: id                  

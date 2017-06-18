@@ -100,6 +100,12 @@ function validacoesFormulario(campo){
         mensagemDeErro = 'Preencha o número de lojas';
       }
       break;
+    case 'inputSenha':
+      if(!isEmail(campo.value)){
+        temErro = true;
+        mensagemDeErro = 'Preencha a senha';
+      }
+      break;
     default: break;
   }
 

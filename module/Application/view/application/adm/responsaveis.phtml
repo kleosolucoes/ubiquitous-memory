@@ -27,9 +27,9 @@
                 echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome();
                 if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $tipoPrimeiroContato
                    || $responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === $tipoDocumentosEntregues){                  
-                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("cadastroResponsavelSituacao", '.$responsavel->getId().');'));
+                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admResponsavelSituacao", '.$responsavel->getId().');'));
                 }
-                echo $this->botao('Ver', $this->funcaoOnClick('kleo("cadastroResponsavelVer", '.$responsavel->getId().');'));
+                echo $this->botao('Ver', $this->funcaoOnClick('kleo("admResponsavelVer", '.$responsavel->getId().');'));
                 echo '</td>';
                 echo '</tr>';
               }

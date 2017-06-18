@@ -5,7 +5,7 @@ use Application\Form\KleoForm;
 $formulario = $this->formulario;
 $formulario->prepare();
 
-$formulario->setAttribute(KleoForm::stringAction, 'cadastroCategoriaFinalizar');
+$formulario->setAttribute(KleoForm::stringAction, 'admCategoriaFinalizar');
 echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
@@ -20,7 +20,7 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           echo $this->inputFormulario(KleoForm::traducaoSubCategoria, $formulario->get(KleoForm::inputCategoriaId));
           echo $this->inputFormulario(KleoForm::traducaoCategoria, $formulario->get(KleoForm::inputNome));
           echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
-          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/cadastroCategorias")'), 2);
+          echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/admCategorias")'), 2);
           ?>
         </div>
       </div>

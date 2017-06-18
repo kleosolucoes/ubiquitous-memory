@@ -1,4 +1,4 @@
-<?php echo $this->cabecalhoPagina('Listagem de Lojas', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("cadastroLoja", 0);'))); ?> 
+<?php echo $this->cabecalhoPagina('Listagem de Lojas', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admLoja", 0);'))); ?> 
 <div class="content transition animate-panel fadeIn">
   <div class="row">
     <div class="col-lg-12">
@@ -26,7 +26,7 @@
                 echo '<td>';
                 echo $loja->getLojaSituacaoAtivo()->getSituacao()->getNome();
                 if($loja->getLojaSituacaoAtivo()->getSituacao()->getId() === $tipoPrimeiroContato){                  
-                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("cadastroLojaSituacao", '.$loja->getId().');'));
+                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admLojaSituacao", '.$loja->getId().');'));
                 }
                 echo '</td>';
                 echo '</tr>';

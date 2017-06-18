@@ -26,8 +26,9 @@ class KleoController extends AbstractActionController {
   const stringAction = 'action';
   const stringId = 'id';
   const stringToken = 'token';
-  const controllerCadastro = 'Application\Controller\Cadastro';
-  const rotaCadastro = 'cadastro';
+  const controllerPub = 'Application\Controller\Pub';
+  const rotaPub = 'pub';
+  const rotaAdm = 'adm';
   const url = 'http://ubiquitous-memory-falecomleonardopereira890682.codeanyapp.com/';
   const stringMensagem = 'mensagem';
   const diretorioDocumentos = '/../../../../public/assets';
@@ -175,7 +176,12 @@ class KleoController extends AbstractActionController {
     return $entidade;
   }
 
-
+  /**
+     * Seta o layout da administracao
+     */
+  public function setLayoutAdm() {
+    $this->layout('layout/adm');
+  }
 
 
   /**

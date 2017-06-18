@@ -4,6 +4,7 @@ namespace Application\Model\ORM;
 
 use Application\Model\Entity\Responsavel;
 use Application\Controller\KleoController;
+use Application\Form\KleoForm;
 use Doctrine\ORM\EntityManager;
 use Exception;
 
@@ -28,7 +29,19 @@ class ResponsavelORM extends KleoORM {
         ->findOneBy(array(KleoController::stringToken => $token));
       return $entidade;
     } catch (Exception $exc) {
-      echo $exc->getMessages();
+      echo $exc->getMessage();
+    }
+  }
+  
+  public function encontrarPorEmail($email) {
+    $entidade = null;
+    try {
+      $entidade = $this->getEntityManager()
+        ->getRepository($this->getEntity())
+        ->findOneBy(array('email' => $email));
+      return $entidade;
+    } catch (Exception $exc) {
+      echo $exc->getMessage();
     }
   }
 }

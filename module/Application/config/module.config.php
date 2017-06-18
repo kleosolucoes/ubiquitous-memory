@@ -8,17 +8,16 @@ use Application\Controller\IndexController;
 return array(
     # definir e gerenciar controllers
     'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' => IndexController::class
-        ),
         'factories' => array(
-            'Application\Controller\Cadastro' => 'Application\Controller\Factory\CadastroControllerFactory',
+            'Application\Controller\Index' => 'Application\Controller\Factory\IndexControllerFactory',
+            'Application\Controller\Pub' => 'Application\Controller\Factory\PubControllerFactory',
+            'Application\Controller\Adm' => 'Application\Controller\Factory\AdmControllerFactory',
         ),
     ),
     'router' => array(
         'routes' => array(
             'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type' => 'Literal',
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
@@ -27,16 +26,30 @@ return array(
                     ),
                 ),
             ),
-            'cadastro' => array(
+            'pub' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/cadastro[:action][/:token]',
+                    'route' => '/pub[:action][/:token]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
                         'token' => '[a-zA-Z0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Cadastro',
+                        'controller' => 'Application\Controller\Pub',
+                        'action' => 'login',
+                    ),
+                ),
+            ),
+            'adm' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/adm[:action][/:token]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z]+',
+                        'token' => '[a-zA-Z0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Adm',
                         'action' => 'index',
                     ),
                 ),
@@ -71,11 +84,6 @@ return array(
         'template_map' => array(
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'layout/adm' => __DIR__ . '/../view/layout/layout-adm.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'application/adm/empresa' => __DIR__ . '/../view/application/adm/empresa.phtml',
-            'application/adm/empresa-cadastro' => __DIR__ . '/../view/application/adm/empresa-cadastro.phtml',
-            'application/adm/empresas' => __DIR__ . '/../view/application/adm/empresas.phtml',
-            'application/cadsatro/index' => __DIR__ . '/../view/application/cadastro/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ),
@@ -97,13 +105,13 @@ return array(
                 )
             )
         ),
-//        'authentication' => array(
-//            'orm_default' => array(
-//                'object_manager' => 'Doctrine\ORM\EntityManager',
-//                'identity_class' => 'Application\Model\Entity\Pessoa',
-//                'identity_property' => 'email',
-//                'credential_property' => 'senha',
-//            ),
-//        ),
+       'authentication' => array(
+            'orm_default' => array(
+                'object_manager' => 'Doctrine\ORM\EntityManager',
+                'identity_class' => 'Application\Model\Entity\Responsavel',
+                'identity_property' => 'email',
+                'credential_property' => 'senha',
+            ),
+        ),
     ),
 );

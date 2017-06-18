@@ -227,7 +227,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
     return $this->senha;
   }
   function setSenha($senha) {
-    $this->senha = $senha;
+    $this->senha = md5($senha);
   }
 
   public function exchangeArray($data) {

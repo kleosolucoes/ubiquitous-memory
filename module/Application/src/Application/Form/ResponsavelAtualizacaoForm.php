@@ -40,7 +40,8 @@ class ResponsavelAtualizacaoForm extends CadastroResponsavelForm {
     $inputNomeFantasia->setValue($responsavel->getNomeFantasia());
     
     $inputCNPJ = $this->get(self::inputCNPJ);
-    $inputCNPJ->setValue($responsavel->getCNPJ());
+    $cnpjAjustado = str_pad($responsavel->getCNPJ(), 14, 0, STR_PAD_LEFT);
+    $inputCNPJ->setValue($cnpjAjustado);
     
     $this->add(
       (new Number())

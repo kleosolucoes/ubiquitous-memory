@@ -11,11 +11,22 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Doctrine\ORM\EntityManager;
 
-class IndexController extends AbstractActionController
-{
-    public function indexAction()
-    {
-        return new ViewModel();
+class IndexController extends KleoController {
+
+  /**
+     * Contrutor sobrecarregado com os serviços de ORM
+     */
+  public function __construct(EntityManager $doctrineORMEntityManager = null) {
+
+    if (!is_null($doctrineORMEntityManager)) {
+      parent::__construct($doctrineORMEntityManager);
     }
+  }
+
+  public function indexAction(){
+    return new ViewModel();
+  }
+
 }
